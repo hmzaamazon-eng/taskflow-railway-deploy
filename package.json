@@ -1,0 +1,12 @@
+{
+  "name": "taskflow-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily Team To-Do & Work Tracker — single-file app served as a static site.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
