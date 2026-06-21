@@ -357,6 +357,14 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 .fba-del{background:transparent;border:none;color:var(--text-3);cursor:pointer;padding:5px;border-radius:7px;display:grid;place-items:center}
 .fba-del:hover{color:#ef4444;background:color-mix(in srgb,#ef4444 12%,transparent)}
 .fba-del svg{width:16px;height:16px}
+/* inline-editable cells */
+.fba-edit{width:100%;border:1px solid transparent;background:transparent;color:var(--text);font:inherit;padding:6px 8px;border-radius:8px;transition:.15s}
+.fba-edit::placeholder{color:var(--text-3)}
+.fba-edit:hover{border-color:var(--border)}
+.fba-edit:focus{outline:none;border-color:var(--brand-1);background:var(--surface)}
+.fba-tbl .pname-input{font-weight:600}
+.fba-tbl .pasin-input{font-size:12px;color:var(--text-3);margin-top:3px}
+.fba-tbl .num-input{text-align:right;font-variant-numeric:tabular-nums}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -1489,16 +1497,32 @@ function renderFba(){
     return;
   }
   // Highest search volume first (nulls last) so the best opportunities rise.
+  // Sort is applied on (re)render, not while typing, so edits don't jump around.
   const order=list.slice().sort((a,b)=>(b.searchVol??-1)-(a.searchVol??-1));
   const rows=order.map(p=>`<tr>
-    <td><div class="pname">${esc(p.name||"Untitled")}</div>${p.asin?`<div class="pasin">${esc(p.asin)}</div>`:""}</td>
-    <td class="num">${fmtInt(p.searchVol)}</td>
-    <td class="num">${fmtInt(p.competitors)}</td>
+    <td>
+      <input class="fba-edit pname-input" data-id="${p.id}" data-field="name" value="${esc(p.name||"")}" placeholder="Product name">
+      <input class="fba-edit pasin-input" data-id="${p.id}" data-field="asin" value="${esc(p.asin||"")}" placeholder="ASIN / SKU (optional)">
+    </td>
+    <td class="num"><input class="fba-edit num-input" type="number" min="0" step="1" data-id="${p.id}" data-field="searchVol" value="${p.searchVol??""}" placeholder="—"></td>
+    <td class="num"><input class="fba-edit num-input" type="number" min="0" step="1" data-id="${p.id}" data-field="competitors" value="${p.competitors??""}" placeholder="—"></td>
     <td class="num"><button class="fba-del" title="Remove product" onclick="deleteProduct('${p.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></td>
   </tr>`).join("");
   tbl.innerHTML=`<thead><tr>
     <th>Product</th><th class="num">Search vol.</th><th class="num">Competitors</th><th class="num"></th>
   </tr></thead><tbody>${rows}</tbody>`;
+}
+// Live inline edit: update the product and save (debounced), without re-rendering
+// the table — so the field keeps focus while you type.
+function onFbaEdit(e){
+  const el=e.target; if(!el.classList||!el.classList.contains("fba-edit")) return;
+  const id=el.dataset.id, field=el.dataset.field; if(!id||!field) return;
+  const p=state.products.find(x=>x.id===id); if(!p) return;
+  if(field==="name") p.name=el.value;
+  else if(field==="asin") p.asin=el.value;
+  else if(field==="searchVol") p.searchVol=intOrNull(el.value);
+  else if(field==="competitors") p.competitors=intOrNull(el.value);
+  saveProducts();
 }
 function addProduct(){
   const name=$("#pName").value.trim();
@@ -1702,6 +1726,7 @@ function bind(){
   // FBA Finder
   $("#addProductBtn").addEventListener("click",addProduct);
   $("#bulkAddBtn").addEventListener("click",bulkAddProducts);
+  $("#fbaTable").addEventListener("input",onFbaEdit);   // inline row editing
   ["pName","pAsin","pSearchVol","pCompetitors"].forEach(id=>$("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); }));
   // task modal
   $("#closeTaskModal").addEventListener("click",()=>closeModal("#taskModal"));
