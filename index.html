@@ -1272,6 +1272,11 @@ function openPreview(id,i){
   const body=$("#previewBody"); const type=f.type||"";
   if(type.startsWith("image/")){ body.innerHTML=`<img src="${previewBlobURL}" alt="${esc(f.name)}">`; }
   else if(type==="application/pdf"){ body.innerHTML=`<iframe src="${previewBlobURL}" title="${esc(f.name)}"></iframe>`; }
+  else if(type==="text/html"||/\.html?$/i.test(f.name)){
+    // Render HTML files as a real page (not source). Sandboxed: scripts run so
+    // charts/dashboards work, but it can't access the shared app's data.
+    body.innerHTML=`<iframe src="${previewBlobURL}" title="${esc(f.name)}" sandbox="allow-scripts allow-popups allow-modals"></iframe>`;
+  }
   else if(type.startsWith("text/")||/json|csv|xml/.test(type)){
     fetch(previewBlobURL).then(r=>r.text()).then(txt=>{ body.innerHTML=`<pre>${esc(txt.slice(0,20000))}</pre>`; }).catch(()=>previewFallback(f));
   } else { previewFallback(f); }
