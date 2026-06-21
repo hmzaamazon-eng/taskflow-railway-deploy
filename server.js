@@ -11,6 +11,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { Pool } = require("pg");
+const { seedProducts } = require("./api/_seed");
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, "index.html");
@@ -72,6 +73,12 @@ async function initDb() {
       }
       dbReady = true;
       console.log("Postgres connected — task persistence is ON.");
+      try {
+        const n = await seedProducts(pool);
+        if (n) console.log(`Seeded ${n} starter products into FBA Finder.`);
+      } catch (e) {
+        console.error("Product seed skipped:", e.message);
+      }
       return;
     } catch (e) {
       console.error(
