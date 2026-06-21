@@ -6,8 +6,10 @@ browser** — not trapped in one browser's local storage.
 
 ## Files
 - `index.html` — the whole front-end app.
-- `server.js` — Node server: serves `index.html` **and** a tiny REST API
-  (`GET`/`PUT /api/tasks`) backed by Postgres.
+- `server.js` — Node server (Railway): serves `index.html` **and** a tiny REST
+  API (`GET`/`PUT /api/tasks`) backed by Postgres.
+- `api/tasks.js` — the same API as a **Vercel serverless function**.
+- `vercel.json` — Vercel routing (serve `index.html`, send `/api/*` to the function).
 - `package.json` — dependencies (`pg`) + `npm start` → `node server.js`.
 - `railway.json` — start command + health check config.
 
@@ -15,8 +17,8 @@ browser** — not trapped in one browser's local storage.
 - Tasks are stored in a Postgres `tasks` table (created automatically on boot).
 - The browser keeps a **local cache** too, so the app loads instantly and keeps
   working offline; it syncs back to the server as soon as it can.
-- The server reads `DATABASE_URL` (Railway sets this when you add Postgres). If
-  it's missing, the app still runs but warns that changes won't be shared.
+- The API reads `DATABASE_URL`. If it's missing, the app still runs but reports
+  that changes won't be shared.
 
 ## Enable persistence on Railway (one-time)
 1. In your Railway project: **New → Database → Add PostgreSQL**.
@@ -25,6 +27,21 @@ browser** — not trapped in one browser's local storage.
    `DATABASE_URL = ${{Postgres.DATABASE_URL}}` on the app service.)
 3. Redeploy. On boot the logs should show **"Postgres connected — task
    persistence is ON."** Done — data now saves and is shared by everyone.
+
+## Enable persistence on Vercel (one-time)
+Vercel runs the app as a **static file + serverless function** (not `server.js`).
+The pieces are already in place (`api/tasks.js`, `vercel.json`).
+1. Import the repo into Vercel (**Add New… → Project**). No build command needed.
+2. In the project: **Storage → Create Database → Neon (Postgres)** → choose the
+   *Vercel-Managed* option. Vercel injects `DATABASE_URL` (pooled) automatically.
+3. **Redeploy** so the function picks up the variable. Saving now works and is
+   shared by everyone with the link.
+
+> **Vercel limitation:** serverless functions cap the request/response body at
+> **~4.5 MB**. This app sends the whole task list (including base64 file
+> attachments) in one request, so keep total data — especially attachments —
+> under ~4.5 MB on Vercel. If you need lots of large attachments, **Railway**
+> (which uses `server.js` with a 30 MB limit) is the better host.
 
 ---
 

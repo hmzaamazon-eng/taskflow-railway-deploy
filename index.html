@@ -343,6 +343,24 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 .preview-body img{max-width:100%;max-height:76vh;display:block}
 .preview-body iframe{width:100%;height:76vh;border:none;background:#fff;display:block}
 .preview-body pre{margin:0;padding:18px;white-space:pre-wrap;word-break:break-word;font-size:13px;width:100%;max-height:76vh;overflow:auto;color:var(--text)}
+/* FBA Finder */
+.fba-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.fba-kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.fba-kpi .k{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.fba-kpi .v{font-size:24px;font-weight:700;font-family:var(--font-display);margin-top:4px;letter-spacing:-.02em}
+.fba-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px}
+.fba-tbl th{position:sticky;top:0;text-align:left;background:var(--surface-3);color:var(--text-2);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--border);white-space:nowrap;z-index:1}
+.fba-tbl td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+.fba-tbl tbody tr:hover{background:var(--surface-3)}
+.fba-tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fba-tbl .pname{font-weight:600;color:var(--text)}
+.fba-tbl .pasin{font-size:12px;color:var(--text-3)}
+.fba-pos{color:#16a34a;font-weight:600}
+.fba-neg{color:#ef4444;font-weight:600}
+.fba-empty{padding:34px;text-align:center;color:var(--text-3)}
+.fba-del{background:transparent;border:none;color:var(--text-3);cursor:pointer;padding:5px;border-radius:7px;display:grid;place-items:center}
+.fba-del:hover{color:#ef4444;background:color-mix(in srgb,#ef4444 12%,transparent)}
+.fba-del svg{width:16px;height:16px}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -379,6 +397,8 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
       <button class="nav-item" data-view="daily"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Daily Report</button>
       <button class="nav-item" data-view="monthly"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>Monthly Report</button>
       <button class="nav-item" data-view="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Analytics</button>
+      <div class="nav-label">Research</div>
+      <button class="nav-item" data-view="fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/><path d="M11 8.5v5M9.5 12.5h2a1 1 0 0 0 0-2h-1a1 1 0 0 1 0-2h2"/></svg>FBA Finder</button>
       <div class="nav-label">Manage</div>
       <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>Data &amp; Backup</button>
     </nav>
@@ -589,6 +609,32 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
         </div>
         <div class="card section" style="padding:18px"><div class="kv"><span class="k">Tasks stored</span><span class="v" id="dataCount">0</span></div><div class="kv"><span class="k">Storage used</span><span class="v" id="dataSize">0 KB</span></div></div>
       </section>
+
+      <!-- ===== FBA FINDER ===== -->
+      <section class="view" id="view-fba">
+        <div class="view-head">
+          <div><h1>FBA Finder</h1><div class="sub">Product research — track candidates and see profit, margin &amp; ROI</div></div>
+        </div>
+
+        <div class="fba-kpis" id="fbaKpis"></div>
+
+        <div class="card" style="padding:18px;margin-bottom:16px">
+          <div style="font-family:var(--font-display);font-weight:600;margin-bottom:12px">Add a product</div>
+          <div class="filters">
+            <div class="fld grow"><span class="field-label">Product</span><input class="input" id="pName" placeholder="e.g. Stainless water bottle" /></div>
+            <div class="fld"><span class="field-label">ASIN / SKU</span><input class="input" id="pAsin" placeholder="B0…" /></div>
+            <div class="fld"><span class="field-label">Buy cost ($)</span><input class="input" id="pCost" type="number" min="0" step="0.01" placeholder="0.00" /></div>
+            <div class="fld"><span class="field-label">Sell price ($)</span><input class="input" id="pPrice" type="number" min="0" step="0.01" placeholder="0.00" /></div>
+            <div class="fld"><span class="field-label">Amazon + FBA fees ($)</span><input class="input" id="pFees" type="number" min="0" step="0.01" placeholder="0.00" /></div>
+            <div class="fld"><span class="field-label">&nbsp;</span><button class="btn btn-primary" id="addProductBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</button></div>
+          </div>
+          <div class="sub" id="pPreview" style="margin-top:10px"></div>
+        </div>
+
+        <div class="card" style="padding:0;overflow:auto">
+          <table class="fba-tbl" id="fbaTable"></table>
+        </div>
+      </section>
     </main>
 
     <!-- bottom nav (mobile) -->
@@ -690,12 +736,13 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 /* ===================== STATE & STORAGE ===================== */
 const STORE_KEY="taskflow.tasks.v1";
 const PREF_KEY ="taskflow.prefs.v1";
+const PROD_KEY ="taskflow.products.v1";
 const CATEGORIES=["Product Research","Supplier Contact","Listing Optimization","Design","Website Development","Calls","Other"];
 const MEMBERS=["Hamza","Abdallah","Shared"];
 const MEM_KEY={Hamza:"hamza",Abdallah:"abdallah",Shared:"shared"};
 
 const state={
-  tasks:[], workspace:"hamza", view:"dashboard", theme:"light",
+  tasks:[], products:[], workspace:"hamza", view:"dashboard", theme:"light",
   monthSel:null,
   filters:{person:"all",status:"all",category:"all",date:"",q:""}
 };
@@ -767,6 +814,32 @@ async function syncNow(){
 }
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY,JSON.stringify({theme:state.theme,workspace:state.workspace})); }catch(e){} }
 
+/* ---- FBA Finder products: same shared-server + local-cache model as tasks ---- */
+const API_PRODUCTS="/api/products";
+let _pSyncTimer=null, _pPending=false, _pSyncing=false;
+function cacheProducts(){ try{ localStorage.setItem(PROD_KEY,JSON.stringify(state.products)); }catch(e){} }
+function readProdCache(){ try{ const a=JSON.parse(localStorage.getItem(PROD_KEY)); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+async function loadProducts(){
+  try{
+    const res=await fetch(API_PRODUCTS,{cache:"no-store"});
+    if(res.ok){ const d=await res.json(); state.products=Array.isArray(d.products)?d.products:[]; cacheProducts(); return; }
+    if(res.status===503){ state.products=readProdCache(); return; }
+  }catch(e){ /* offline */ }
+  state.products=readProdCache();
+}
+function saveProducts(){ cacheProducts(); scheduleProdSync(); return true; }
+function scheduleProdSync(){ _pPending=true; if(_pSyncTimer) clearTimeout(_pSyncTimer); _pSyncTimer=setTimeout(prodSyncNow,400); }
+async function prodSyncNow(){
+  if(_pSyncing || !_pPending) return;
+  _pSyncing=true; _pPending=false;
+  const body=JSON.stringify({products:state.products});
+  try{
+    const res=await fetch(API_PRODUCTS,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+    if(!res.ok){ _pPending=true; if(res.status!==503) toast("Couldn't save products — retrying…","err"); }
+  }catch(e){ _pPending=true; }
+  finally{ _pSyncing=false; if(_pPending){ if(_pSyncTimer) clearTimeout(_pSyncTimer); _pSyncTimer=setTimeout(prodSyncNow,2000); } }
+}
+
 /* ===================== UTILITIES ===================== */
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -788,7 +861,7 @@ function pct(done,total){ return total?Math.round(done/total*100):0; }
 
 /* ===================== RENDER ROOT ===================== */
 function renderAll(){
-  [renderDashboard,renderTasks,renderDaily,renderMonthly,renderAnalytics,renderDataPanel]
+  [renderDashboard,renderTasks,renderDaily,renderMonthly,renderAnalytics,renderFba,renderDataPanel]
     .forEach(fn=>{ try{ fn(); }catch(e){ console.error("render error:",e); } });
 }
 function svgIcon(name){
@@ -1272,6 +1345,11 @@ function openPreview(id,i){
   const body=$("#previewBody"); const type=f.type||"";
   if(type.startsWith("image/")){ body.innerHTML=`<img src="${previewBlobURL}" alt="${esc(f.name)}">`; }
   else if(type==="application/pdf"){ body.innerHTML=`<iframe src="${previewBlobURL}" title="${esc(f.name)}"></iframe>`; }
+  else if(type==="text/html"||/\.html?$/i.test(f.name)){
+    // Render HTML files as a real page (not source). Sandboxed: scripts run so
+    // charts/dashboards work, but it can't access the shared app's data.
+    body.innerHTML=`<iframe src="${previewBlobURL}" title="${esc(f.name)}" sandbox="allow-scripts allow-popups allow-modals"></iframe>`;
+  }
   else if(type.startsWith("text/")||/json|csv|xml/.test(type)){
     fetch(previewBlobURL).then(r=>r.text()).then(txt=>{ body.innerHTML=`<pre>${esc(txt.slice(0,20000))}</pre>`; }).catch(()=>previewFallback(f));
   } else { previewFallback(f); }
@@ -1401,6 +1479,77 @@ function renderDataPanel(){
   updateScopeCount();
 }
 
+/* ===================== FBA FINDER ===================== */
+const money=n=>"$"+(Number(n)||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+// profit = sell price − buy cost − Amazon/FBA fees
+function fbaCalc(p){
+  const cost=Number(p.cost)||0, price=Number(p.price)||0, fees=Number(p.fees)||0;
+  const profit=price-cost-fees;
+  const margin=price>0?profit/price*100:0;   // net margin on revenue
+  const roi=cost>0?profit/cost*100:0;          // return on cash invested
+  return {cost,price,fees,profit,margin,roi};
+}
+const signClass=n=>n>0?"fba-pos":n<0?"fba-neg":"";
+function renderFba(){
+  const kp=$("#fbaKpis"); const list=state.products;
+  const calcs=list.map(fbaCalc);
+  const winners=calcs.filter(c=>c.profit>0).length;
+  const avgRoi=calcs.length?calcs.reduce((s,c)=>s+c.roi,0)/calcs.length:0;
+  const avgMargin=calcs.length?calcs.reduce((s,c)=>s+c.margin,0)/calcs.length:0;
+  if(kp) kp.innerHTML=`
+    <div class="fba-kpi"><div class="k">Products</div><div class="v">${list.length}</div></div>
+    <div class="fba-kpi"><div class="k">Profitable</div><div class="v ${winners?"fba-pos":""}">${winners}</div></div>
+    <div class="fba-kpi"><div class="k">Avg. margin</div><div class="v ${signClass(avgMargin)}">${avgMargin.toFixed(1)}%</div></div>
+    <div class="fba-kpi"><div class="k">Avg. ROI</div><div class="v ${signClass(avgRoi)}">${avgRoi.toFixed(1)}%</div></div>`;
+  const tbl=$("#fbaTable"); if(!tbl)return;
+  if(!list.length){
+    tbl.innerHTML=`<tbody><tr><td class="fba-empty">No products yet. Add your first candidate above to see profit, margin &amp; ROI.</td></tr></tbody>`;
+    return;
+  }
+  // Best ROI first so winners rise to the top.
+  const order=list.map((p,i)=>({p,c:calcs[i]})).sort((a,b)=>b.c.roi-a.c.roi);
+  const rows=order.map(({p,c})=>`<tr>
+    <td><div class="pname">${esc(p.name||"Untitled")}</div>${p.asin?`<div class="pasin">${esc(p.asin)}</div>`:""}</td>
+    <td class="num">${money(c.cost)}</td>
+    <td class="num">${money(c.price)}</td>
+    <td class="num">${money(c.fees)}</td>
+    <td class="num ${signClass(c.profit)}">${money(c.profit)}</td>
+    <td class="num ${signClass(c.margin)}">${c.margin.toFixed(1)}%</td>
+    <td class="num ${signClass(c.roi)}">${c.roi.toFixed(1)}%</td>
+    <td class="num"><button class="fba-del" title="Remove product" onclick="deleteProduct('${p.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></td>
+  </tr>`).join("");
+  tbl.innerHTML=`<thead><tr>
+    <th>Product</th><th class="num">Buy cost</th><th class="num">Sell price</th><th class="num">Fees</th>
+    <th class="num">Profit</th><th class="num">Margin</th><th class="num">ROI</th><th class="num"></th>
+  </tr></thead><tbody>${rows}</tbody>`;
+}
+function updateFbaPreview(){
+  const el=$("#pPreview"); if(!el)return;
+  const c=fbaCalc({cost:$("#pCost").value,price:$("#pPrice").value,fees:$("#pFees").value});
+  if(!c.price && !c.cost && !c.fees){ el.textContent="Enter cost, sell price and fees to preview profit, margin and ROI."; return; }
+  el.innerHTML=`Profit <b class="${signClass(c.profit)}">${money(c.profit)}</b> · Margin <b class="${signClass(c.margin)}">${c.margin.toFixed(1)}%</b> · ROI <b class="${signClass(c.roi)}">${c.roi.toFixed(1)}%</b>`;
+}
+function addProduct(){
+  const name=$("#pName").value.trim();
+  if(!name){ toast("Add a product name","warn"); $("#pName").focus(); return; }
+  state.products.push({
+    id:uid(), createdAt:Date.now(),
+    name, asin:$("#pAsin").value.trim(),
+    cost:Math.max(0,parseFloat($("#pCost").value)||0),
+    price:Math.max(0,parseFloat($("#pPrice").value)||0),
+    fees:Math.max(0,parseFloat($("#pFees").value)||0)
+  });
+  saveProducts(); renderFba();
+  ["pName","pAsin","pCost","pPrice","pFees"].forEach(id=>{ $("#"+id).value=""; });
+  updateFbaPreview(); $("#pName").focus(); toast("Product added","ok");
+}
+function deleteProduct(id){
+  const p=state.products.find(x=>x.id===id); if(!p)return;
+  confirmAction("Remove product?",`Delete "${esc(p.name||"this product")}" from FBA Finder?`,"Delete",()=>{
+    state.products=state.products.filter(x=>x.id!==id); saveProducts(); renderFba(); toast("Product removed","ok");
+  });
+}
+
 /* ---- flexible export scope ---- */
 function getExportScope(){
   const v=($("#exportScope")||{}).value||"all";
@@ -1519,7 +1668,7 @@ function switchView(v){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,data:renderDataPanel};
+  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
@@ -1562,6 +1711,11 @@ function bind(){
   // new task
   $("#newTaskBtn").addEventListener("click",()=>openTaskModal());
   $("#newTaskBtn2").addEventListener("click",()=>openTaskModal());
+  // FBA Finder
+  $("#addProductBtn").addEventListener("click",addProduct);
+  ["pCost","pPrice","pFees"].forEach(id=>$("#"+id).addEventListener("input",updateFbaPreview));
+  $("#pName").addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); });
+  $("#pFees").addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); });
   // task modal
   $("#closeTaskModal").addEventListener("click",()=>closeModal("#taskModal"));
   $("#cancelTask").addEventListener("click",()=>closeModal("#taskModal"));
@@ -1630,7 +1784,7 @@ async function init(){
   const personMap={hamza:"Hamza",abdallah:"Abdallah",shared:"Shared"};
   state.filters.person=personMap[state.workspace]; $("#fPerson").value=personMap[state.workspace];
   state.monthSel=thisMonth();
-  await load();                        // fetch the shared task list from the server
+  await Promise.all([load(), loadProducts()]);  // fetch shared tasks + FBA products
   renderAll();
 }
 // redraw current view after full load (fonts/layout settle) and on resize
@@ -1641,6 +1795,9 @@ let _rzT; window.addEventListener("resize",()=>{ clearTimeout(_rzT); _rzT=setTim
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="visible" && !_pendingSync && !_syncing){
     load().then(renderAll).catch(()=>{});
+  }
+  if(document.visibilityState==="visible" && !_pPending && !_pSyncing){
+    loadProducts().then(()=>{ if(state.view==="fba") renderFba(); }).catch(()=>{});
   }
 });
 init();

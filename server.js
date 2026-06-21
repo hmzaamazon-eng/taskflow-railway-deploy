@@ -29,6 +29,12 @@ const DATABASE_URL = process.env.DATABASE_URL || "";
 let pool = null;
 let dbReady = false;
 
+// Each collection is a {id, data, updated_at} table. Names are a fixed
+// allowlist (used directly in SQL), never user input — no injection risk.
+const COLLECTIONS = ["tasks", "products"];
+const ROUTES = { "/api/tasks": "tasks", "/api/products": "products" };
+const PAYLOAD_KEY = { tasks: "tasks", products: "products" };
+
 function needsSSL(url) {
   // Railway's internal network and local Postgres don't use SSL; public
   // proxy connections (and most managed providers) do.
@@ -55,13 +61,15 @@ async function initDb() {
   // Retry a few times: on a fresh deploy the DB may still be starting up.
   for (let attempt = 1; attempt <= 5; attempt++) {
     try {
-      await pool.query(
-        `CREATE TABLE IF NOT EXISTS tasks (
-           id         TEXT PRIMARY KEY,
-           data       JSONB NOT NULL,
-           updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-         )`
-      );
+      for (const table of COLLECTIONS) {
+        await pool.query(
+          `CREATE TABLE IF NOT EXISTS ${table} (
+             id         TEXT PRIMARY KEY,
+             data       JSONB NOT NULL,
+             updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+           )`
+        );
+      }
       dbReady = true;
       console.log("Postgres connected — task persistence is ON.");
       return;
@@ -75,21 +83,21 @@ async function initDb() {
   }
 }
 
-async function getTasks() {
-  const { rows } = await pool.query("SELECT data FROM tasks ORDER BY updated_at ASC");
+async function getRows(table) {
+  const { rows } = await pool.query(`SELECT data FROM ${table} ORDER BY updated_at ASC`);
   return rows.map((r) => r.data);
 }
 
-async function replaceTasks(tasks) {
+async function replaceRows(table, items) {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
-    await client.query("DELETE FROM tasks");
-    for (const t of tasks) {
-      if (!t || typeof t.id !== "string") continue;
+    await client.query(`DELETE FROM ${table}`);
+    for (const it of items) {
+      if (!it || typeof it.id !== "string") continue;
       await client.query(
-        "INSERT INTO tasks (id, data) VALUES ($1, $2) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()",
-        [t.id, t]
+        `INSERT INTO ${table} (id, data) VALUES ($1, $2) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()`,
+        [it.id, it]
       );
     }
     await client.query("COMMIT");
@@ -140,7 +148,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ---- API ----
-  if (url === "/api/tasks") {
+  const table = ROUTES[url];
+  if (table) {
     if (!dbReady) {
       return sendJSON(res, 503, {
         error: "storage_unavailable",
@@ -148,10 +157,10 @@ const server = http.createServer(async (req, res) => {
           "Server storage is not configured. Add a Postgres database in Railway.",
       });
     }
+    const key = PAYLOAD_KEY[table];
     try {
       if (req.method === "GET") {
-        const tasks = await getTasks();
-        return sendJSON(res, 200, { tasks });
+        return sendJSON(res, 200, { [key]: await getRows(table) });
       }
       if (req.method === "PUT" || req.method === "POST") {
         const raw = await readBody(req);
@@ -161,12 +170,12 @@ const server = http.createServer(async (req, res) => {
         } catch (e) {
           return sendJSON(res, 400, { error: "bad_json" });
         }
-        const tasks = Array.isArray(parsed) ? parsed : parsed.tasks;
-        if (!Array.isArray(tasks)) {
-          return sendJSON(res, 400, { error: "expected_tasks_array" });
+        const items = Array.isArray(parsed) ? parsed : parsed[key];
+        if (!Array.isArray(items)) {
+          return sendJSON(res, 400, { error: "expected_array", field: key });
         }
-        await replaceTasks(tasks);
-        return sendJSON(res, 200, { ok: true, count: tasks.length });
+        await replaceRows(table, items);
+        return sendJSON(res, 200, { ok: true, count: items.length });
       }
       res.writeHead(405, { Allow: "GET, PUT" });
       return res.end("Method Not Allowed");
