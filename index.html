@@ -344,10 +344,6 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 .preview-body iframe{width:100%;height:76vh;border:none;background:#fff;display:block}
 .preview-body pre{margin:0;padding:18px;white-space:pre-wrap;word-break:break-word;font-size:13px;width:100%;max-height:76vh;overflow:auto;color:var(--text)}
 /* FBA Finder */
-.fba-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.fba-kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
-.fba-kpi .k{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.fba-kpi .v{font-size:24px;font-weight:700;font-family:var(--font-display);margin-top:4px;letter-spacing:-.02em}
 .fba-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px}
 .fba-tbl th{position:sticky;top:0;text-align:left;background:var(--surface-3);color:var(--text-2);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--border);white-space:nowrap;z-index:1}
 .fba-tbl td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
@@ -615,8 +611,6 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
         <div class="view-head">
           <div><h1>FBA Finder</h1><div class="sub">Product research — track candidates and see profit, margin &amp; ROI</div></div>
         </div>
-
-        <div class="fba-kpis" id="fbaKpis"></div>
 
         <div class="card" style="padding:18px;margin-bottom:16px">
           <div style="font-family:var(--font-display);font-weight:600;margin-bottom:12px">Add a product</div>
@@ -1491,16 +1485,8 @@ function fbaCalc(p){
 }
 const signClass=n=>n>0?"fba-pos":n<0?"fba-neg":"";
 function renderFba(){
-  const kp=$("#fbaKpis"); const list=state.products;
+  const list=state.products;
   const calcs=list.map(fbaCalc);
-  const winners=calcs.filter(c=>c.profit>0).length;
-  const avgRoi=calcs.length?calcs.reduce((s,c)=>s+c.roi,0)/calcs.length:0;
-  const avgMargin=calcs.length?calcs.reduce((s,c)=>s+c.margin,0)/calcs.length:0;
-  if(kp) kp.innerHTML=`
-    <div class="fba-kpi"><div class="k">Products</div><div class="v">${list.length}</div></div>
-    <div class="fba-kpi"><div class="k">Profitable</div><div class="v ${winners?"fba-pos":""}">${winners}</div></div>
-    <div class="fba-kpi"><div class="k">Avg. margin</div><div class="v ${signClass(avgMargin)}">${avgMargin.toFixed(1)}%</div></div>
-    <div class="fba-kpi"><div class="k">Avg. ROI</div><div class="v ${signClass(avgRoi)}">${avgRoi.toFixed(1)}%</div></div>`;
   const tbl=$("#fbaTable"); if(!tbl)return;
   if(!list.length){
     tbl.innerHTML=`<tbody><tr><td class="fba-empty">No products yet. Add your first candidate above to see profit, margin &amp; ROI.</td></tr></tbody>`;
