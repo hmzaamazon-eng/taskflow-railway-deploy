@@ -1,14 +1,30 @@
 # TaskFlow — Daily Team To-Do & Work Tracker
 
-A single-file team productivity tracker (HTML + CSS + vanilla JS). All data is
-stored in the browser's local storage. This folder wraps it in a tiny Node
-server so it can be deployed on Railway (or any Node host).
+A team productivity tracker (HTML + CSS + vanilla JS) with a small Node + Postgres
+backend, so tasks are **saved on the server and shared across every device and
+browser** — not trapped in one browser's local storage.
 
 ## Files
-- `index.html` — the whole app (this is the file you've been using).
-- `server.js` — a zero-dependency static server that serves `index.html`.
-- `package.json` — tells Railway to run `npm start` → `node server.js`.
+- `index.html` — the whole front-end app.
+- `server.js` — Node server: serves `index.html` **and** a tiny REST API
+  (`GET`/`PUT /api/tasks`) backed by Postgres.
+- `package.json` — dependencies (`pg`) + `npm start` → `node server.js`.
 - `railway.json` — start command + health check config.
+
+## How saving works
+- Tasks are stored in a Postgres `tasks` table (created automatically on boot).
+- The browser keeps a **local cache** too, so the app loads instantly and keeps
+  working offline; it syncs back to the server as soon as it can.
+- The server reads `DATABASE_URL` (Railway sets this when you add Postgres). If
+  it's missing, the app still runs but warns that changes won't be shared.
+
+## Enable persistence on Railway (one-time)
+1. In your Railway project: **New → Database → Add PostgreSQL**.
+2. Railway automatically exposes `DATABASE_URL` to the app service. (If your
+   app and DB are separate services, add a reference variable
+   `DATABASE_URL = ${{Postgres.DATABASE_URL}}` on the app service.)
+3. Redeploy. On boot the logs should show **"Postgres connected — task
+   persistence is ON."** Done — data now saves and is shared by everyone.
 
 ---
 
@@ -43,9 +59,8 @@ To redeploy after changes: just run `railway up` again.
 ## Notes
 - Railway sets the `PORT` environment variable automatically; `server.js`
   reads it and binds to `0.0.0.0`. You don't need to configure anything.
-- This is a static front-end app — there's no database. Each visitor's tasks
-  live in their own browser. Use the in-app **Backup / Restore** to move data
-  between devices or browsers.
-- Prefer something even simpler for a static file? You can also drag this
-  folder onto **Netlify Drop** (netlify.com/drop), or use **GitHub Pages** or
-  **Vercel** — all free for static sites.
+- Tasks are shared by everyone with the link (no login). The in-app
+  **Backup / Restore** still works for exporting/importing JSON snapshots.
+- This now needs a Node host with a Postgres database (Railway, Render, Fly,
+  etc.). Pure static hosts like GitHub Pages won't run the API, so saving
+  wouldn't be shared there.
