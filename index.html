@@ -701,16 +701,70 @@ const state={
 };
 const charts={};
 
-function load(){
-  try{ state.tasks=JSON.parse(localStorage.getItem(STORE_KEY))||[]; }catch(e){ state.tasks=[]; }
-  if(!Array.isArray(state.tasks)) state.tasks=[];
+const API_TASKS="/api/tasks";
+let _syncTimer=null, _pendingSync=false, _syncing=false;
+
+// Theme/workspace are per-browser UI prefs — they stay in localStorage.
+function loadPrefs(){
   try{
     const p=JSON.parse(localStorage.getItem(PREF_KEY))||{};
     if(p.theme) state.theme=p.theme;
     if(p.workspace) state.workspace=p.workspace;
   }catch(e){}
 }
-function save(){ try{ localStorage.setItem(STORE_KEY,JSON.stringify(state.tasks)); return true; }catch(e){ toast("Storage is full — that attachment is too large to save. Remove it or use a smaller file.","err"); return false; } }
+// Local cache of tasks so the UI loads instantly and tolerates being offline.
+function cacheTasks(){ try{ localStorage.setItem(STORE_KEY,JSON.stringify(state.tasks)); }catch(e){} }
+function readCache(){ try{ const a=JSON.parse(localStorage.getItem(STORE_KEY)); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+
+// Pull the shared task list from the server. The server (Postgres) is the
+// source of truth so every device/browser sees the same data. Falls back to
+// the local cache if the server or database is unreachable.
+async function load(){
+  loadPrefs();
+  try{
+    const res=await fetch(API_TASKS,{cache:"no-store"});
+    if(res.ok){
+      const d=await res.json();
+      state.tasks=Array.isArray(d.tasks)?d.tasks:[];
+      cacheTasks();
+      return;
+    }
+    if(res.status===503){
+      state.tasks=readCache();
+      toast("Server storage isn't set up yet — add a Postgres database in Railway so tasks are saved & shared.","warn");
+      return;
+    }
+  }catch(e){ /* offline — fall through to cache */ }
+  state.tasks=readCache();
+}
+
+// Optimistic save: update the local cache immediately (so the UI is instant
+// and every existing caller keeps working), then push to the server in the
+// background. Returns true so callers that check the result still behave.
+function save(){ cacheTasks(); scheduleSync(); return true; }
+
+function scheduleSync(){
+  _pendingSync=true;
+  if(_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer=setTimeout(syncNow,400);
+}
+async function syncNow(){
+  if(_syncing || !_pendingSync) return;   // in-flight sync re-checks pending when it finishes
+  _syncing=true; _pendingSync=false;
+  const body=JSON.stringify({tasks:state.tasks});
+  try{
+    const res=await fetch(API_TASKS,{method:"PUT",headers:{"Content-Type":"application/json"},body});
+    if(!res.ok){
+      _pendingSync=true;
+      if(res.status===503) toast("Server storage isn't set up yet — changes saved on this device only.","warn");
+      else toast("Couldn't save to the server — retrying…","err");
+    }
+  }catch(e){ _pendingSync=true; /* offline — retry later */ }
+  finally{
+    _syncing=false;
+    if(_pendingSync){ if(_syncTimer) clearTimeout(_syncTimer); _syncTimer=setTimeout(syncNow,2000); }
+  }
+}
 function savePrefs(){ try{ localStorage.setItem(PREF_KEY,JSON.stringify({theme:state.theme,workspace:state.workspace})); }catch(e){} }
 
 /* ===================== UTILITIES ===================== */
@@ -1568,19 +1622,27 @@ window.removePendingFile=removePendingFile; window.downloadTaskFile=downloadTask
 window.openPreview=openPreview; window.removePendingLink=removePendingLink;
 
 /* ===================== INIT ===================== */
-function init(){
-  load(); populateSelects(); bind();
-  applyTheme();
+async function init(){
+  loadPrefs(); applyTheme();          // apply saved theme immediately (avoids flash while loading)
+  populateSelects(); bind();
   injectChartDownloads();
   $$("#wsSwitch .ws-btn").forEach(b=>b.classList.toggle("active",b.dataset.ws===state.workspace));
   const personMap={hamza:"Hamza",abdallah:"Abdallah",shared:"Shared"};
   state.filters.person=personMap[state.workspace]; $("#fPerson").value=personMap[state.workspace];
   state.monthSel=thisMonth();
+  await load();                        // fetch the shared task list from the server
   renderAll();
 }
 // redraw current view after full load (fonts/layout settle) and on resize
 window.addEventListener("load",()=>renderCurrentView());
 let _rzT; window.addEventListener("resize",()=>{ clearTimeout(_rzT); _rzT=setTimeout(renderCurrentView,180); });
+// When returning to the tab, refresh from the server so changes made on other
+// devices show up — but not while we still have unsynced local edits.
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible" && !_pendingSync && !_syncing){
+    load().then(renderAll).catch(()=>{});
+  }
+});
 init();
 </script>
 </body>
