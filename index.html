@@ -609,7 +609,7 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
       <!-- ===== FBA FINDER ===== -->
       <section class="view" id="view-fba">
         <div class="view-head">
-          <div><h1>FBA Finder</h1><div class="sub">Product research — track candidates and see profit, margin &amp; ROI</div></div>
+          <div><h1>FBA Finder</h1><div class="sub">Product research — track candidate niches, search volume &amp; competitors</div></div>
         </div>
 
         <div class="card" style="padding:18px;margin-bottom:16px">
@@ -621,6 +621,13 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
             <div class="fld"><span class="field-label">Competitors</span><input class="input" id="pCompetitors" type="number" min="0" step="1" placeholder="e.g. 18" /></div>
             <div class="fld"><span class="field-label">&nbsp;</span><button class="btn btn-primary" id="addProductBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</button></div>
           </div>
+        </div>
+
+        <div class="card" style="padding:18px;margin-bottom:16px">
+          <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Add many at once</div>
+          <div class="sub" style="margin-bottom:10px">Paste one product per line. Duplicates and ones already in the list are skipped — fill in search volume &amp; competitors after.</div>
+          <textarea class="textarea" id="pBulk" rows="6" style="width:100%;box-sizing:border-box" placeholder="disco party decorations&#10;love island party decorations&#10;mermaid party decorations"></textarea>
+          <div style="margin-top:10px"><button class="btn btn-primary" id="bulkAddBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add all</button></div>
         </div>
 
         <div class="card" style="padding:0;overflow:auto">
@@ -1506,6 +1513,24 @@ function addProduct(){
   ["pName","pAsin","pSearchVol","pCompetitors"].forEach(id=>{ $("#"+id).value=""; });
   $("#pName").focus(); toast("Product added","ok");
 }
+function bulkAddProducts(){
+  const ta=$("#pBulk"); const raw=ta.value||"";
+  // one product per line; drop blanks and trim
+  const lines=raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(!lines.length){ toast("Paste at least one product name","warn"); ta.focus(); return; }
+  const have=new Set(state.products.map(p=>(p.name||"").trim().toLowerCase()));
+  const seen=new Set();
+  let added=0, skipped=0;
+  for(const name of lines){
+    const key=name.toLowerCase();
+    if(have.has(key)||seen.has(key)){ skipped++; continue; }
+    seen.add(key);
+    state.products.push({ id:uid(), createdAt:Date.now(), name, asin:"", searchVol:null, competitors:null });
+    added++;
+  }
+  if(added){ saveProducts(); renderFba(); ta.value=""; }
+  toast(`Added ${added} product${added===1?"":"s"}${skipped?` · ${skipped} skipped (duplicate)`:""}`, added?"ok":"warn");
+}
 function deleteProduct(id){
   const p=state.products.find(x=>x.id===id); if(!p)return;
   confirmAction("Remove product?",`Delete "${esc(p.name||"this product")}" from FBA Finder?`,"Delete",()=>{
@@ -1676,6 +1701,7 @@ function bind(){
   $("#newTaskBtn2").addEventListener("click",()=>openTaskModal());
   // FBA Finder
   $("#addProductBtn").addEventListener("click",addProduct);
+  $("#bulkAddBtn").addEventListener("click",bulkAddProducts);
   ["pName","pAsin","pSearchVol","pCompetitors"].forEach(id=>$("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); }));
   // task modal
   $("#closeTaskModal").addEventListener("click",()=>closeModal("#taskModal"));
