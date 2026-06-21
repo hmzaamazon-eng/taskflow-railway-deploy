@@ -344,7 +344,7 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 .preview-body iframe{width:100%;height:76vh;border:none;background:#fff;display:block}
 .preview-body pre{margin:0;padding:18px;white-space:pre-wrap;word-break:break-word;font-size:13px;width:100%;max-height:76vh;overflow:auto;color:var(--text)}
 /* FBA Finder */
-.fba-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:980px}
+.fba-tbl{width:100%;border-collapse:collapse;font-size:13.5px;min-width:480px}
 .fba-tbl th{position:sticky;top:0;text-align:left;background:var(--surface-3);color:var(--text-2);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--border);white-space:nowrap;z-index:1}
 .fba-tbl td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
 .fba-tbl tbody tr:hover{background:var(--surface-3)}
@@ -619,12 +619,8 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
             <div class="fld"><span class="field-label">ASIN / SKU</span><input class="input" id="pAsin" placeholder="B0…" /></div>
             <div class="fld"><span class="field-label">Search volume</span><input class="input" id="pSearchVol" type="number" min="0" step="1" placeholder="e.g. 12000" /></div>
             <div class="fld"><span class="field-label">Competitors</span><input class="input" id="pCompetitors" type="number" min="0" step="1" placeholder="e.g. 18" /></div>
-            <div class="fld"><span class="field-label">Buy cost ($)</span><input class="input" id="pCost" type="number" min="0" step="0.01" placeholder="0.00" /></div>
-            <div class="fld"><span class="field-label">Sell price ($)</span><input class="input" id="pPrice" type="number" min="0" step="0.01" placeholder="0.00" /></div>
-            <div class="fld"><span class="field-label">Amazon + FBA fees ($)</span><input class="input" id="pFees" type="number" min="0" step="0.01" placeholder="0.00" /></div>
             <div class="fld"><span class="field-label">&nbsp;</span><button class="btn btn-primary" id="addProductBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add</button></div>
           </div>
-          <div class="sub" id="pPreview" style="margin-top:10px"></div>
         </div>
 
         <div class="card" style="padding:0;overflow:auto">
@@ -1475,52 +1471,27 @@ function renderDataPanel(){
   updateScopeCount();
 }
 
-/* ===================== FBA FINDER ===================== */
-const money=n=>"$"+(Number(n)||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
-// profit = sell price − buy cost − Amazon/FBA fees
-function fbaCalc(p){
-  const cost=Number(p.cost)||0, price=Number(p.price)||0, fees=Number(p.fees)||0;
-  const profit=price-cost-fees;
-  const margin=price>0?profit/price*100:0;   // net margin on revenue
-  const roi=cost>0?profit/cost*100:0;          // return on cash invested
-  return {cost,price,fees,profit,margin,roi};
-}
-const signClass=n=>n>0?"fba-pos":n<0?"fba-neg":"";
+/* ===================== FBA FINDER (product research) ===================== */
 const intOrNull=v=>{ const n=parseInt(v,10); return isNaN(n)?null:Math.max(0,n); };
 const fmtInt=n=>(n==null?"—":Number(n).toLocaleString());
 function renderFba(){
   const list=state.products;
-  const calcs=list.map(fbaCalc);
   const tbl=$("#fbaTable"); if(!tbl)return;
   if(!list.length){
-    tbl.innerHTML=`<tbody><tr><td colspan="10" class="fba-empty">No products yet. Add your first candidate above to see profit, margin &amp; ROI.</td></tr></tbody>`;
+    tbl.innerHTML=`<tbody><tr><td colspan="4" class="fba-empty">No products yet. Add your first candidate above.</td></tr></tbody>`;
     return;
   }
-  // Best ROI first so winners rise to the top.
-  const order=list.map((p,i)=>({p,c:calcs[i]})).sort((a,b)=>b.c.roi-a.c.roi);
-  const rows=order.map(({p,c})=>`<tr>
+  // Highest search volume first (nulls last) so the best opportunities rise.
+  const order=list.slice().sort((a,b)=>(b.searchVol??-1)-(a.searchVol??-1));
+  const rows=order.map(p=>`<tr>
     <td><div class="pname">${esc(p.name||"Untitled")}</div>${p.asin?`<div class="pasin">${esc(p.asin)}</div>`:""}</td>
     <td class="num">${fmtInt(p.searchVol)}</td>
     <td class="num">${fmtInt(p.competitors)}</td>
-    <td class="num">${money(c.cost)}</td>
-    <td class="num">${money(c.price)}</td>
-    <td class="num">${money(c.fees)}</td>
-    <td class="num ${signClass(c.profit)}">${money(c.profit)}</td>
-    <td class="num ${signClass(c.margin)}">${c.margin.toFixed(1)}%</td>
-    <td class="num ${signClass(c.roi)}">${c.roi.toFixed(1)}%</td>
     <td class="num"><button class="fba-del" title="Remove product" onclick="deleteProduct('${p.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></td>
   </tr>`).join("");
   tbl.innerHTML=`<thead><tr>
-    <th>Product</th><th class="num">Search vol.</th><th class="num">Competitors</th>
-    <th class="num">Buy cost</th><th class="num">Sell price</th><th class="num">Fees</th>
-    <th class="num">Profit</th><th class="num">Margin</th><th class="num">ROI</th><th class="num"></th>
+    <th>Product</th><th class="num">Search vol.</th><th class="num">Competitors</th><th class="num"></th>
   </tr></thead><tbody>${rows}</tbody>`;
-}
-function updateFbaPreview(){
-  const el=$("#pPreview"); if(!el)return;
-  const c=fbaCalc({cost:$("#pCost").value,price:$("#pPrice").value,fees:$("#pFees").value});
-  if(!c.price && !c.cost && !c.fees){ el.textContent="Enter cost, sell price and fees to preview profit, margin and ROI."; return; }
-  el.innerHTML=`Profit <b class="${signClass(c.profit)}">${money(c.profit)}</b> · Margin <b class="${signClass(c.margin)}">${c.margin.toFixed(1)}%</b> · ROI <b class="${signClass(c.roi)}">${c.roi.toFixed(1)}%</b>`;
 }
 function addProduct(){
   const name=$("#pName").value.trim();
@@ -1529,14 +1500,11 @@ function addProduct(){
     id:uid(), createdAt:Date.now(),
     name, asin:$("#pAsin").value.trim(),
     searchVol:intOrNull($("#pSearchVol").value),
-    competitors:intOrNull($("#pCompetitors").value),
-    cost:Math.max(0,parseFloat($("#pCost").value)||0),
-    price:Math.max(0,parseFloat($("#pPrice").value)||0),
-    fees:Math.max(0,parseFloat($("#pFees").value)||0)
+    competitors:intOrNull($("#pCompetitors").value)
   });
   saveProducts(); renderFba();
-  ["pName","pAsin","pSearchVol","pCompetitors","pCost","pPrice","pFees"].forEach(id=>{ $("#"+id).value=""; });
-  updateFbaPreview(); $("#pName").focus(); toast("Product added","ok");
+  ["pName","pAsin","pSearchVol","pCompetitors"].forEach(id=>{ $("#"+id).value=""; });
+  $("#pName").focus(); toast("Product added","ok");
 }
 function deleteProduct(id){
   const p=state.products.find(x=>x.id===id); if(!p)return;
@@ -1708,9 +1676,7 @@ function bind(){
   $("#newTaskBtn2").addEventListener("click",()=>openTaskModal());
   // FBA Finder
   $("#addProductBtn").addEventListener("click",addProduct);
-  ["pCost","pPrice","pFees"].forEach(id=>$("#"+id).addEventListener("input",updateFbaPreview));
-  $("#pName").addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); });
-  $("#pFees").addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); });
+  ["pName","pAsin","pSearchVol","pCompetitors"].forEach(id=>$("#"+id).addEventListener("keydown",e=>{ if(e.key==="Enter") addProduct(); }));
   // task modal
   $("#closeTaskModal").addEventListener("click",()=>closeModal("#taskModal"));
   $("#cancelTask").addEventListener("click",()=>closeModal("#taskModal"));
