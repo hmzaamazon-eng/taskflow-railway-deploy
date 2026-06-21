@@ -5,6 +5,7 @@
 // Each collection is a {id, data, updated_at} Postgres table. Table names come
 // from a fixed allowlist (used directly in SQL), never from user input.
 const { Pool } = require("pg");
+const { seedProducts } = require("./_seed");
 
 const DATABASE_URL = process.env.DATABASE_URL || "";
 const ALLOWED = new Set(["tasks", "products"]);
@@ -38,6 +39,13 @@ function ensureTable(table) {
            updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
          )`
       )
+      // After the products table exists, run the one-time starter seed.
+      // Idempotent (marker-guarded), so failures here must not block the API.
+      .then(async () => {
+        if (table === "products") {
+          try { await seedProducts(pool); } catch (e) { console.error("seed skipped:", e.message); }
+        }
+      })
       .catch((e) => {
         _init[table] = null; // allow a retry on the next request
         throw e;
