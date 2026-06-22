@@ -500,6 +500,64 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .wb-status-metrics span{white-space:nowrap}
 .wb-status-chev{color:var(--text-3);flex:none}
 @media(max-width:680px){.wb-status-metrics{display:none}}
+/* Amazon Bot */
+.bot-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+.bot-bar .fld{min-width:150px}
+.bot-status{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-3);font-weight:600}
+.bot-status .dot{width:9px;height:9px;border-radius:50%;background:var(--text-3)}
+.bot-chats-btn{display:none}@media(max-width:880px){.bot-chats-btn{display:inline-flex}}
+.bot-status.live .dot{background:#16a34a;box-shadow:0 0 0 3px color-mix(in srgb,#16a34a 22%,transparent)}
+.bot-status.local .dot{background:#dd9b34;box-shadow:0 0 0 3px color-mix(in srgb,#dd9b34 22%,transparent)}
+.bot-layout{display:grid;grid-template-columns:260px 1fr;gap:16px;align-items:start}
+@media(max-width:880px){.bot-layout{grid-template-columns:1fr}.bot-side{display:none}.bot-side.show{display:block}}
+.bot-side{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px;max-height:72vh;overflow:auto}
+.bot-side .newbtn{width:100%;margin-bottom:10px}
+.bot-search{width:100%;box-sizing:border-box;margin-bottom:10px}
+.bot-chat-item{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:10px;padding:9px 11px;cursor:pointer;font:inherit;color:var(--text);margin-bottom:4px;display:block}
+.bot-chat-item:hover{background:var(--surface-3)}
+.bot-chat-item.active{background:color-mix(in srgb,var(--brand-1) 12%,transparent);border-color:color-mix(in srgb,var(--brand-1) 30%,transparent)}
+.bot-chat-item .t{font-weight:600;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bot-chat-item .m{font-size:11.5px;color:var(--text-3);margin-top:2px;display:flex;gap:7px;flex-wrap:wrap}
+.bot-chat-tag{background:var(--surface-3);border-radius:5px;padding:1px 6px;font-weight:600}
+.bot-main{display:flex;flex-direction:column;min-height:62vh}
+.bot-thread{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;overflow:auto;max-height:64vh;min-height:300px}
+.bot-msg{margin-bottom:16px;display:flex;gap:11px}
+.bot-msg .av{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff}
+.bot-msg.user .av{background:var(--surface-3);color:var(--text-2)}
+.bot-msg.bot .av{background:linear-gradient(135deg,var(--brand-1),var(--brand-2))}
+.bot-msg .bubble{flex:1;min-width:0}
+.bot-msg .who{font-size:11.5px;color:var(--text-3);font-weight:600;margin-bottom:4px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.bot-msg .txt{font-size:14.5px;line-height:1.6;color:var(--text);word-wrap:break-word;overflow-wrap:anywhere}
+.bot-msg.user .txt{background:var(--surface-3);border-radius:11px;padding:10px 13px;display:inline-block}
+.bot-ans h4{font-family:var(--font-display);font-size:13px;margin:12px 0 3px;color:var(--brand-1);text-transform:uppercase;letter-spacing:.04em}
+.bot-ans h4:first-child{margin-top:0}
+.bot-ans p{margin:0 0 6px}.bot-ans ul{margin:4px 0 8px;padding-left:19px}.bot-ans li{margin:3px 0}
+.bot-ans b{color:var(--text)}
+.bot-pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--surface-3);color:var(--text-2)}
+.bot-pill.risk-high{background:color-mix(in srgb,#ef4444 14%,transparent);color:#ef4444}
+.bot-pill.risk-medium{background:color-mix(in srgb,#dd9b34 16%,transparent);color:#b97e1d}
+.bot-pill.risk-low{background:color-mix(in srgb,#16a34a 14%,transparent);color:#16a34a}
+.bot-conf{height:7px;border-radius:99px;background:var(--surface-3);overflow:hidden;margin:5px 0 2px;max-width:220px}
+.bot-conf i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-1),var(--brand-2))}
+.bot-src{font-size:12px;color:var(--text-3);margin-top:8px;border-top:1px dashed var(--border);padding-top:7px}
+.bot-msg-actions{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.bot-mini{background:transparent;border:1px solid var(--border);color:var(--text-3);font:inherit;font-size:11.5px;font-weight:600;border-radius:7px;padding:4px 9px;cursor:pointer}
+.bot-mini:hover{color:var(--brand-1);border-color:var(--brand-1)}
+.bot-mini.saved{color:#16a34a;border-color:#16a34a}
+.bot-compose{display:flex;gap:9px;align-items:flex-end;margin-top:12px}
+.bot-compose textarea{flex:1;resize:none;min-height:46px;max-height:160px}
+.bot-typing{color:var(--text-3);font-size:13px;font-style:italic;padding:4px 0}
+.bot-suggest{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.bot-suggest button{background:var(--surface-3);border:1px solid var(--border);color:var(--text-2);font:inherit;font-size:12.5px;border-radius:99px;padding:6px 12px;cursor:pointer}
+.bot-suggest button:hover{border-color:var(--brand-1);color:var(--brand-1)}
+.bot-empty{text-align:center;color:var(--text-3);padding:34px 16px}
+.bot-empty .big{font-family:var(--font-display);font-weight:600;font-size:18px;color:var(--text);margin-bottom:6px}
+.bot-know-item{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--surface)}
+.bot-know-item .kc{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:color-mix(in srgb,var(--brand-1) 12%,transparent);color:var(--brand-1);flex:none;white-space:nowrap}
+.bot-know-item .kc.official{background:color-mix(in srgb,#0369a1 14%,transparent);color:#0369a1}
+.bot-know-item .kb{flex:1;min-width:0}.bot-know-item .kb b{font-size:14px;word-break:break-word}.bot-know-item .kb p{margin:3px 0 0;color:var(--text-3);font-size:12.5px;word-break:break-word}
+.bot-know-item .kdel{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px;flex:none}
+.bot-know-item .kdel:hover{color:#ef4444;background:color-mix(in srgb,#ef4444 12%,transparent)}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -541,6 +599,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
       <div class="nav-label">Grow</div>
       <button class="nav-item" data-view="operator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>Operator 30</button>
       <button class="nav-item" data-view="workbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>Master Workbook</button>
+      <button class="nav-item" data-view="bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1.1" fill="currentColor"/><circle cx="15" cy="13" r="1.1" fill="currentColor"/><path d="M2 12v3M22 12v3"/></svg>Amazon Bot</button>
       <div class="nav-label">Manage</div>
       <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>Data &amp; Backup</button>
     </nav>
@@ -796,6 +855,14 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
           <div><h1>Master Workbook</h1><div class="sub">Amazon FBA USA command center — import reports, analyze deeply, get recommendations. Per account: ANAKZ · HMZA · BD</div></div>
         </div>
         <div id="wbRoot"></div>
+      </section>
+
+      <!-- ===== AMAZON BOT ===== -->
+      <section class="view" id="view-bot">
+        <div class="view-head">
+          <div><h1>Amazon Bot</h1><div class="sub">Your private Amazon FBA USA strategist — account-aware, framework-driven, source-cited.</div></div>
+        </div>
+        <div id="botRoot"></div>
       </section>
     </main>
 
@@ -3156,8 +3223,457 @@ function switchView(v){
   renderCurrentView();
   window.scrollTo({top:0,behavior:"smooth"});
 }
+/* ===================== AMAZON BOT ===================== */
+const BOT_ACCOUNTS=["General","ANAKZ","HMZA","BD"];
+const BOT_MODES=[["general","General Amazon Expert"],["product","Product Research Expert"],["inventory","Inventory Expert"],["ppc","PPC Expert"],["listing","Listing Expert"],["compliance","Compliance Expert"],["supplier","Supplier Expert"],["profit","Profit Expert"]];
+const BOT_DBNAME="taskflow_bot_v1";
+let _botDB=null,_botDBfail=false,_botLoaded=false;
+let botAIStatus={checked:false,configured:false,provider:null,model:null};
+let botChats=[], botKnow=[];
+let botUI={tab:"chat",account:"General",mode:"general",chatId:null,kbQuery:"",histQuery:"",busy:false,sideOpen:false};
+
+/* ---- storage (IndexedDB w/ localStorage fallback) ---- */
+function botOpenDB(){ return new Promise(resolve=>{ if(_botDB){resolve(_botDB);return;} if(_botDBfail||typeof indexedDB==="undefined"){resolve(null);return;} let req; try{req=indexedDB.open(BOT_DBNAME,1);}catch(e){_botDBfail=true;resolve(null);return;} req.onupgradeneeded=e=>{const db=e.target.result; if(!db.objectStoreNames.contains("chats"))db.createObjectStore("chats",{keyPath:"id"}); if(!db.objectStoreNames.contains("knowledge"))db.createObjectStore("knowledge",{keyPath:"id"});}; req.onsuccess=e=>{_botDB=e.target.result;_botDB.onerror=()=>{};resolve(_botDB);}; req.onerror=()=>{_botDBfail=true;resolve(null);}; req.onblocked=()=>resolve(null); }); }
+async function botAll(store){ const db=await botOpenDB(); if(!db){ try{return JSON.parse(localStorage.getItem("tf_bot_"+store))||[];}catch(e){return [];} } try{const tx=db.transaction(store,"readonly");return (await idbReq(tx.objectStore(store).getAll()))||[];}catch(e){return [];} }
+async function botPut(store,obj){ const db=await botOpenDB(); if(!db){ const arr=await botAll(store); const i=arr.findIndex(x=>x.id===obj.id); if(i>=0)arr[i]=obj;else arr.push(obj); try{localStorage.setItem("tf_bot_"+store,JSON.stringify(arr));}catch(e){} return; } try{const tx=db.transaction(store,"readwrite");tx.objectStore(store).put(obj);await new Promise(r=>{tx.oncomplete=()=>r();tx.onerror=()=>r();tx.onabort=()=>r();});}catch(e){} }
+async function botDel(store,id){ const db=await botOpenDB(); if(!db){ let arr=await botAll(store); arr=arr.filter(x=>x.id!==id); try{localStorage.setItem("tf_bot_"+store,JSON.stringify(arr));}catch(e){} return; } try{const tx=db.transaction(store,"readwrite");tx.objectStore(store).delete(id);await new Promise(r=>{tx.oncomplete=()=>r();tx.onerror=()=>r();tx.onabort=()=>r();});}catch(e){} }
+async function botClearStore(store){ const db=await botOpenDB(); if(!db){ try{localStorage.removeItem("tf_bot_"+store);}catch(e){} return; } try{const tx=db.transaction(store,"readwrite");tx.objectStore(store).clear();await new Promise(r=>{tx.oncomplete=()=>r();tx.onerror=()=>r();tx.onabort=()=>r();});}catch(e){} }
+async function loadBot(){ if(_botLoaded)return; try{botChats=await botAll("chats");}catch(e){botChats=[];} try{botKnow=await botAll("knowledge");}catch(e){botKnow=[];} botSortChats(); botSortKnow(); _botLoaded=true; botCheckAI(); }
+function botCheckAI(){ try{ fetch("/api/bot",{cache:"no-store"}).then(r=>r.json()).then(d=>{ botAIStatus={checked:true,configured:!!(d&&d.configured),provider:(d&&d.provider)||null,model:(d&&d.model)||null}; if(state.view==="bot")renderBot(); }).catch(()=>{ botAIStatus={checked:true,configured:false,provider:null,model:null}; if(state.view==="bot")renderBot(); }); }catch(e){} }
+function botSortChats(){ botChats.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)); }
+function botSortKnow(){ botKnow.sort((a,b)=>(b.addedAt||0)-(a.addedAt||0)); }
+function botSafe(fn,d){ try{return fn();}catch(e){return d;} }
+
+/* ---- render ---- */
+function renderBot(){ const root=$("#botRoot"); if(!root)return;
+  if(!_botLoaded){ root.innerHTML='<div class="card" style="padding:30px;text-align:center;color:var(--text-3)">Loading Amazon Bot…</div>'; loadBot().then(()=>{ if(state.view==="bot")renderBot(); }).catch(()=>{}); return; }
+  try{ root.innerHTML=botShell(); botAfterRender(); }
+  catch(e){ console.error("bot render",e); root.innerHTML='<div class="card" style="padding:24px;color:#ef4444">Something went wrong — your chats and knowledge are safe. Switch tabs or reload.</div>'; }
+}
+function botShell(){
+  const tabs=[["chat","Chat"],["knowledge","Knowledge Base"],["official","Official Library"],["data","Data Center"]];
+  const tb=tabs.map(([k,t])=>{ const n=k==="knowledge"?botKnow.filter(x=>x.scope!=="official").length:k==="official"?botKnow.filter(x=>x.scope==="official").length:0; return `<button class="op-tab ${botUI.tab===k?"active":""}" onclick="botGo('${k}')">${t}${(k==="knowledge"||k==="official")?` (${n})`:""}</button>`; }).join("");
+  let body; try{ body=({chat:botChatTab,knowledge:()=>botKnowTab("knowledge"),official:()=>botKnowTab("official"),data:botDataTab}[botUI.tab]||botChatTab)(); }
+  catch(e){ console.error(e); body='<div class="card" style="padding:20px;color:#ef4444">Couldn\'t render this tab — your data is safe.</div>'; }
+  return `<div class="op-tabs">${tb}</div><div id="botBody">${body}</div>`;
+}
+function botGo(t){ botUI.tab=t; renderBot(); }
+function botAfterRender(){ const th=$("#botThread"); if(th)th.scrollTop=th.scrollHeight; if(botUI.tab==="knowledge"||botUI.tab==="official")botRefreshKnowList(); }
+
+/* ---- chat tab ---- */
+function botChatTab(){
+  const ai=botAIStatus.configured?`<span class="bot-status live"><span class="dot"></span>AI live · ${esc(botAIStatus.provider||"")}</span>`:`<span class="bot-status local"><span class="dot"></span>Local engine</span>`;
+  const accOpts=BOT_ACCOUNTS.map(a=>`<option ${botUI.account===a?"selected":""}>${a}</option>`).join("");
+  const modeOpts=BOT_MODES.map(([k,t])=>`<option value="${k}" ${botUI.mode===k?"selected":""}>${t}</option>`).join("");
+  const bar=`<div class="bot-bar">
+    <button class="btn btn-ghost btn-sm bot-chats-btn" onclick="botToggleSide()">Chats</button>
+    <div class="fld"><span class="field-label">Account</span><select class="select" onchange="botSetAccount(this.value)">${accOpts}</select></div>
+    <div class="fld"><span class="field-label">Mode</span><select class="select" onchange="botSetMode(this.value)">${modeOpts}</select></div>
+    <button class="btn btn-ghost btn-sm" onclick="botDownloadChat()">Download</button>
+    <button class="btn btn-ghost btn-sm" onclick="botPrintChat()">Print/PDF</button>
+    <button class="btn btn-ghost btn-sm" style="color:#ef4444" onclick="botClearChat()">Clear chat</button>
+    ${ai}
+  </div>`;
+  return bar+`<div class="bot-layout"><div class="bot-side ${botUI.sideOpen?"show":""}">${botSidebar()}</div><div class="bot-main">${botMain()}</div></div>`;
+}
+function botSidebar(){ return `<button class="btn btn-primary newbtn" onclick="botNewChat()">+ New chat</button><input class="input bot-search" id="botSearchInput" placeholder="Search chats…" value="${esc(botUI.histQuery)}" oninput="botSearch(this.value)"><div id="botChatList">${botChatListHtml()}</div>`; }
+function botChatListHtml(){ const q=(botUI.histQuery||"").toLowerCase();
+  let list=botChats.filter(c=>!q||(c.title||"").toLowerCase().includes(q)||(c.messages||[]).some(m=>(m.content||"").toLowerCase().includes(q)));
+  if(!list.length) return '<div class="sub" style="padding:8px">No chats yet.</div>';
+  return list.slice(0,50).map(c=>`<button class="bot-chat-item ${c.id===botUI.chatId?"active":""}" onclick="botOpenChat('${c.id}')"><div class="t">${esc(c.title||"New chat")}</div><div class="m"><span class="bot-chat-tag">${esc(c.account||"General")}</span><span class="bot-chat-tag">${esc(botModeLabel(c.mode))}</span><span>${botFmtDate(c.updatedAt)}</span></div></button>`).join("");
+}
+function botSearch(v){ botUI.histQuery=v; const el=$("#botChatList"); if(el)el.innerHTML=botChatListHtml(); }
+function botMain(){
+  const chat=botCurrentChat();
+  if(!chat||!(chat.messages||[]).length) return botGreeting();
+  const msgs=(chat.messages||[]).map((m,i)=>botMsgHtml(m,i)).join("");
+  return `<div class="bot-thread" id="botThread">${msgs}${botUI.busy?'<div class="bot-typing">Amazon Bot is thinking…</div>':""}</div>${botComposer()}`;
+}
+function botGreeting(){
+  const sug=["Should I reorder this product?","Why is my ACOS high?","How do I prepare for Q4?","Is this product good for Amazon FBA?","How many units should I order?","How do I improve my listing conversion?"];
+  return `<div class="bot-thread" id="botThread"><div class="bot-empty"><div class="big">Ask your Amazon Bot anything</div><div class="sub" style="max-width:46ch;margin:0 auto">It answers from an Amazon FBA USA perspective${botUI.account!=="General"?` using <b>${esc(botUI.account)}</b>'s Master Workbook data`:""}. Pick an account &amp; mode above for sharper, data-backed answers.</div><div class="bot-suggest" style="justify-content:center;margin-top:14px">${sug.map(s=>`<button onclick="botQuick(this)">${esc(s)}</button>`).join("")}</div></div></div>${botComposer()}`;
+}
+function botComposer(){
+  return `<div class="bot-compose">
+    <label class="bot-mini" style="cursor:pointer;padding:11px 12px" title="Attach a file to Knowledge Base"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.5l-8.5 8.5a5 5 0 0 1-7-7l9-9a3 3 0 0 1 4 4l-9 9a1 1 0 0 1-1.5-1.5l8.5-8.5"/></svg><input type="file" hidden accept=".txt,.md,.csv,.tsv,.json,.xlsx,.xls,.pdf,.docx" onchange="botHandleFiles(this.files,'knowledge')"></label>
+    <textarea class="textarea" id="botInput" placeholder="Ask about inventory, PPC, profit, listings, suppliers, compliance…" rows="1" onkeydown="botKey(event)" oninput="botGrow(this)"></textarea>
+    <button class="btn btn-primary" onclick="botSend()" ${botUI.busy?"disabled":""}>Send</button>
+  </div>`;
+}
+function botMsgHtml(m,i){
+  if(m.role==="user") return `<div class="bot-msg user"><div class="av">You</div><div class="bubble"><div class="who">You</div><div class="txt">${esc(m.content).replace(/\n/g,"<br>")}</div></div></div>`;
+  const meta=m.meta||{};
+  const actions=`<div class="bot-msg-actions"><button class="bot-mini" onclick="botCopy(${i})">Copy</button><button class="bot-mini ${meta.saved?"saved":""}" onclick="botToggleSave(${i})">${meta.saved?"★ Saved":"☆ Save"}</button><button class="bot-mini" onclick="botRegen(${i})">Regenerate</button></div>`;
+  return `<div class="bot-msg bot"><div class="av">AB</div><div class="bubble"><div class="who">Amazon Bot <span class="bot-chat-tag">${esc(meta.mode||"")}</span><span class="bot-chat-tag">${meta.engine==="ai"?"AI":"Local"}</span></div><div class="txt bot-ans">${m.html||("<p>"+esc(m.content).replace(/\n/g,"<br>")+"</p>")}</div>${actions}</div></div>`;
+}
+function botKey(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); botSend(); } }
+function botGrow(t){ t.style.height="auto"; t.style.height=Math.min(160,t.scrollHeight)+"px"; }
+function botQuick(btn){ const inp=$("#botInput"); if(inp)inp.value=btn.textContent; botSend(); }
+function botToggleSide(){ botUI.sideOpen=!botUI.sideOpen; renderBot(); }
+function botSetAccount(a){ botUI.account=a; const c=botCurrentChat(); if(c){c.account=a;botPersistChat(c);} }
+function botSetMode(m){ botUI.mode=m; const c=botCurrentChat(); if(c){c.mode=m;botPersistChat(c);} }
+function botCurrentChat(){ return botChats.find(c=>c.id===botUI.chatId)||null; }
+function botCreateChat(){ const c={id:"chat_"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),title:"New chat",account:botUI.account,mode:botUI.mode,messages:[],createdAt:Date.now(),updatedAt:Date.now()}; botChats.unshift(c); botUI.chatId=c.id; return c; }
+function botNewChat(){ botUI.chatId=null; renderBot(); const inp=$("#botInput"); if(inp)inp.focus(); }
+function botOpenChat(id){ botUI.chatId=id; const c=botCurrentChat(); if(c){ botUI.account=c.account||"General"; botUI.mode=c.mode||"general"; } botUI.sideOpen=false; renderBot(); }
+function botPersistChat(c){ c.updatedAt=Date.now(); botPut("chats",c); }
+function botModeLabel(m){ const f=BOT_MODES.find(x=>x[0]===m); return f?f[1].replace(" Expert",""):"General"; }
+function botFmtDate(ts){ if(!ts)return""; const d=new Date(ts),now=new Date(); if(d.toDateString()===now.toDateString())return d.toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit"}); return d.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
+
+async function botSend(){
+  if(botUI.busy)return;
+  const inp=$("#botInput"); if(!inp)return;
+  const text=(inp.value||"").trim();
+  if(!text){ toast("Type a question","warn"); return; }
+  if(text.length>6000){ toast("Message too long — please shorten it","warn"); return; }
+  let chat=botCurrentChat(); if(!chat) chat=botCreateChat();
+  chat.account=botUI.account; chat.mode=botUI.mode;
+  chat.messages.push({role:"user",content:text,ts:Date.now()});
+  if(!chat.title||chat.title==="New chat") chat.title=text.slice(0,60);
+  inp.value=""; botUI.busy=true; chat.updatedAt=Date.now(); botSortChats(); renderBot();
+  try{ const ans=await botAnswer(chat,text); chat.messages.push(ans); }
+  catch(e){ console.error(e); chat.messages.push({role:"bot",content:"Something went wrong generating that answer. Your chat is saved — please try again.",html:"<p>Something went wrong generating that answer. Your chat is saved — please try again.</p>",meta:{engine:"local",mode:botModeLabel(chat.mode)}}); }
+  botUI.busy=false; botPersistChat(chat); botSortChats(); renderBot();
+}
+async function botRegen(i){ const c=botCurrentChat(); if(!c||botUI.busy)return; let u=i-1; while(u>=0&&c.messages[u].role!=="user")u--; if(u<0){toast("Nothing to regenerate","warn");return;} const q=c.messages[u].content; c.messages=c.messages.slice(0,u+1); botUI.busy=true; renderBot(); try{ const ans=await botAnswer(c,q); c.messages.push(ans); }catch(e){ c.messages.push({role:"bot",content:"Couldn't regenerate.",html:"<p>Couldn't regenerate.</p>",meta:{engine:"local"}}); } botUI.busy=false; botPersistChat(c); renderBot(); }
+function botCopy(i){ const c=botCurrentChat(); if(!c||!c.messages[i])return; const t=c.messages[i].content||""; if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(()=>toast("Copied","ok")).catch(()=>toast("Copy failed","err")); } else toast("Copy not supported here","warn"); }
+function botToggleSave(i){ const c=botCurrentChat(); if(!c||!c.messages[i])return; const m=c.messages[i]; m.meta=m.meta||{}; m.meta.saved=!m.meta.saved; botPersistChat(c); renderBot(); toast(m.meta.saved?"Saved answer":"Removed from saved","ok"); }
+function botClearChat(){ const c=botCurrentChat(); if(!c){toast("No chat open","warn");return;} confirmAction("Delete this chat?","This permanently deletes this conversation. Other chats and your knowledge are kept.","Delete chat",async()=>{ await botDel("chats",c.id); botChats=botChats.filter(x=>x.id!==c.id); botUI.chatId=null; renderBot(); toast("Chat deleted","ok"); }); }
+function botDownloadChat(){ const c=botCurrentChat(); if(!c||!c.messages.length){toast("Open a chat first","warn");return;} let t=`Amazon Bot — ${c.title}\nAccount: ${c.account} · Mode: ${botModeLabel(c.mode)} · ${new Date(c.createdAt).toLocaleString()}\n\n`; c.messages.forEach(m=>{ t+=(m.role==="user"?"YOU:\n":"AMAZON BOT:\n")+(m.content||"")+"\n\n--------------------------------------\n\n"; }); try{ downloadBlob(new Blob([t],{type:"text/plain"}),"amazon-bot-"+((c.title||"chat").replace(/[^\w]+/g,"-").toLowerCase().slice(0,40))+".txt"); toast("Chat downloaded","ok"); }catch(e){toast("Download failed","err");} }
+function botPrintChat(){ const c=botCurrentChat(); if(!c||!c.messages.length){toast("Open a chat first","warn");return;} let w; try{w=window.open("","_blank");}catch(e){} if(!w){toast("Allow pop-ups to print/PDF","warn");return;} const body=c.messages.map(m=>`<div style="margin:0 0 16px"><div style="font-weight:700;color:${m.role==="user"?"#475569":"#4f46e5"};margin-bottom:3px">${m.role==="user"?"You":"Amazon Bot"}</div><div>${m.role==="bot"?(m.html||("<p>"+esc(m.content)+"</p>")):esc(m.content).replace(/\n/g,"<br>")}</div></div>`).join(""); w.document.write(`<!doctype html><title>${esc(c.title)}</title><body style="font-family:system-ui,Segoe UI,sans-serif;max-width:760px;margin:30px auto;padding:0 18px;line-height:1.6;color:#1e293b"><h2 style="font-family:sans-serif">${esc(c.title)}</h2><p style="color:#64748b">${esc(c.account)} · ${esc(botModeLabel(c.mode))} · ${new Date(c.createdAt).toLocaleString()}</p><hr>${body}</body>`); w.document.close(); setTimeout(()=>{try{w.print();}catch(e){}},350); }
+
+/* ---- answer engine ---- */
+function botSystemPrompt(){ return "You are Amazon Bot, an elite Amazon FBA USA expert and operator. Answer every question from an Amazon-selling perspective, even if short. Prioritize sources strictly: (1) official Amazon sources (Seller Central Help, Seller University, Ads Academy, official policy); (2) the user's account data provided in context; (3) the user's uploaded SOPs/notes in context; (4) expert frameworks (The Amazon Jungle, 12 Months to $1 Million, Working Backwards, The Mom Test, Influence, Profit First, Work the System) as thinking tools only — never copy book text; (5) general Amazon FBA knowledge as a last resort. RULES: never invent official Amazon policy or numbers; if data is missing say 'Insufficient data' and list exactly what's needed; separate facts from estimates and label estimates; for compliance/IP/trademark/restricted-product/account-health, be extra careful and tell the user to verify in official Amazon Seller Central documentation (and an IP attorney for trademark). Structure every serious answer with these headings: Direct answer; Amazon FBA reasoning; Official Amazon logic (if available); Account data used (if available); Framework used; Recommended actions (practical, prioritized — Do now / Check / Avoid); What's missing; Risk level; Confidence level (0-100%). Be concise and action-oriented; no filler."; }
+async function botAccountContext(acc){ try{ await mwbEnsureLoaded(acc); }catch(e){} const st=mwb.data[acc]; if(!st) return {acc,has:false}; const ds=st.dataset,manual=st.manual||{}; const has=(mwb.reports[acc]||[]).length||Object.keys(ds.skus||{}).length||Object.keys(manual).some(k=>String(manual[k]).trim()!==""&&k!=="lastPeriod"); if(!has) return {acc,has:false}; const sales=botSafe(()=>mwbAnalyzeSales(ds,manual),{}); const inv=botSafe(()=>mwbAnalyzeInventory(ds,manual,0),{}); const profit=botSafe(()=>mwbAnalyzeProfit(ds,manual),{}); const ppc=botSafe(()=>mwbAnalyzePPC(ds,manual,sales.totalRevenue),{}); const ret=botSafe(()=>mwbAnalyzeReturns(ds),{}); return {acc,has:true,ds,manual,sales,inv,profit,ppc,ret,reports:(mwb.reports[acc]||[]).length}; }
+function botSearchKnowledge(q){ const terms=q.toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>3); if(!terms.length||!botKnow.length)return []; const scored=botKnow.map(k=>{ const hay=((k.title||"")+" "+(k.text||"")+" "+(k.note||"")).toLowerCase(); let score=0; terms.forEach(t=>{ if(hay.indexOf(t)>=0)score++; }); return {k,score}; }).filter(x=>x.score>0).sort((a,b)=>((b.k.scope==="official")-(a.k.scope==="official"))||b.score-a.score); return scored.slice(0,3).map(x=>({title:x.k.title,scope:x.k.scope,snippet:(x.k.text||x.k.note||"").slice(0,260)})); }
+async function botAnswer(chat,question){
+  const account=chat.account,mode=chat.mode;
+  let ctx=null; if(account!=="General"){ ctx=await botAccountContext(account); }
+  const kb=botSearchKnowledge(question);
+  if(botAIStatus.configured){
+    try{
+      const sys=botSystemPrompt();
+      const contextText=botBuildContextText(account,ctx,kb,mode);
+      const hist=(chat.messages||[]).filter(m=>m.role==="user"||m.role==="bot").slice(-8).map(m=>({role:m.role==="bot"?"assistant":"user",content:m.content||""}));
+      if(hist.length&&hist[hist.length-1].role==="user") hist[hist.length-1]={role:"user",content:(contextText?contextText+"\n\n":"")+"Question: "+question};
+      else hist.push({role:"user",content:(contextText?contextText+"\n\n":"")+"Question: "+question});
+      const res=await fetch("/api/bot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sys,messages:hist})});
+      const d=await res.json();
+      if(d&&d.ok&&d.reply){ const src=[]; if(ctx&&ctx.has)src.push("Master Workbook ("+account+")"); kb.forEach(k=>src.push((k.scope==="official"?"Official Library":"Knowledge Base")+": "+k.title)); src.push("AI ("+(d.provider||"model")+")"); return {role:"bot",content:d.reply,html:botMarkdown(d.reply)+`<div class="bot-src"><b>Sources used:</b> ${src.map(esc).join(" · ")}</div>`,ts:Date.now(),meta:{engine:"ai",mode:botModeLabel(mode),saved:false}}; }
+    }catch(e){ /* fall through to local */ }
+  }
+  const local=botLocalAnswer(question,account,mode,ctx,kb);
+  return {role:"bot",content:local.text,html:local.html,ts:Date.now(),meta:{engine:"local",mode:botModeLabel(mode),risk:local.risk,confidence:local.confidence,saved:false}};
+}
+function botBuildContextText(account,ctx,kb,mode){
+  let s="Mode: "+botModeLabel(mode)+" expert.\nAccount: "+(account==="General"?"General (no specific account).":account)+"\n";
+  if(ctx&&ctx.has){ const x=ctx,m=x.manual||{}; s+="Master Workbook data for "+account+":\n";
+    if(x.sales)s+=`- Revenue ${fMoney(x.sales.totalRevenue)}; units ${fNum(x.sales.totalUnits)}; velocity ${isN(x.sales.daily)?fNum1(x.sales.daily)+"/day":"n/a"}.\n`;
+    if(x.inv){ s+=`- Inventory: ${x.inv.stockout||0} stockout-risk, ${x.inv.low||0} low, ${x.inv.over||0} overstock; lead time ${isN(x.inv.lead)?x.inv.lead+"d":"unknown"}; buffer ${x.inv.bufferDays||"?"}d.\n`; const r0=x.inv.rows&&x.inv.rows.find(r=>isN(r.daysLeft)); if(r0)s+=`  Tightest SKU ${r0.sku}: ${fNum(r0.stock)} units, ${fNum1(r0.daily)}/day, ${isN(r0.daysLeft)?Math.round(r0.daysLeft):"?"}d left, reorder≈${isN(r0.reorderQty)?fNum(r0.reorderQty):"?"}.\n`; }
+    if(x.profit)s+=`- Profit: net ${fMoney(x.profit.net)}, margin ${isN(x.profit.margin)?fPct(x.profit.margin):"n/a"}, ROI ${isN(x.profit.roi)?fPct(x.profit.roi):"n/a"}.\n`;
+    if(x.ppc)s+=`- PPC: spend ${fMoney(x.ppc.spend)}, ACOS ${isN(x.ppc.acos)?fPct(x.ppc.acos):"n/a"}, TACOS ${isN(x.ppc.tacos)?fPct(x.ppc.tacos):"n/a"}, wasted ${fMoney(x.ppc.wasted)}.\n`;
+    if(x.ret&&x.ret.totalReturns)s+=`- Returns rate ${fPct(x.ret.rate)}.\n`;
+    const mk=Object.keys(m).filter(k=>String(m[k]).trim()!==""&&k!=="lastPeriod"); if(mk.length)s+="- Manual inputs: "+mk.map(k=>k+"="+m[k]).join(", ")+".\n";
+  } else if(account!=="General"){ s+="No saved Master Workbook data for "+account+" yet — answer best-effort and list what to upload.\n"; }
+  if(kb&&kb.length){ s+="Relevant items from the user's library (prioritize official):\n"; kb.forEach(k=>{ s+=`- [${k.scope==="official"?"OFFICIAL":"NOTE"}] ${k.title}: ${(k.snippet||"").slice(0,300)}\n`; }); }
+  const up=botSafe(()=>mwbUpcoming(new Date(),60),[]); if(up&&up.length)s+="Upcoming USA events: "+up.slice(0,3).map(e=>`${e.name} in ${e.daysLeft}d`).join(", ")+".\n";
+  return s;
+}
+function botMarkdown(s){ s=esc(String(s||"")); s=s.replace(/^######?\s*(.*)$/gm,'<h4>$1</h4>').replace(/^#{1,3}\s*(.*)$/gm,'<h4>$1</h4>'); s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/__([^_]+)__/g,'<b>$1</b>'); const lines=s.split(/\n/); let out="",inList=false; for(const ln of lines){ const m=ln.match(/^\s*(?:[-*•]|\d+\.)\s+(.*)/); if(m){ if(!inList){out+="<ul>";inList=true;} out+="<li>"+m[1]+"</li>"; } else { if(inList){out+="</ul>";inList=false;} if(/^<h4>/.test(ln.trim()))out+=ln; else if(ln.trim()==="")out+=""; else out+="<p>"+ln+"</p>"; } } if(inList)out+="</ul>"; return out; }
+
+function botConfidence(ctx,keys,missingCount){ let c=ctx&&ctx.has?70:45; if(ctx&&ctx.has){ const m=ctx.manual||{}; (keys||[]).forEach(k=>{ if(isN(mNum(m[k])))c+=5; }); } c-=Math.min(22,(missingCount||0)*5); return Math.max(25,Math.min(92,Math.round(c))); }
+function botFormatAnswer(A){
+  let h="";
+  if(A.direct)h+=`<h4>Direct answer</h4><p>${esc(A.direct)}</p>`;
+  if(A.reasoning&&A.reasoning.length)h+=`<h4>Amazon FBA reasoning</h4><ul>${A.reasoning.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  if(A.official)h+=`<h4>Official Amazon logic</h4><p>${esc(A.official)}</p>`;
+  if(A.account&&A.account.length)h+=`<h4>Account data used</h4><ul>${A.account.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  if(A.frameworks&&A.frameworks.length)h+=`<h4>Framework used</h4><ul>${A.frameworks.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  if(A.actions&&A.actions.length)h+=`<h4>Recommended actions</h4><ul>${A.actions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  if(A.missing&&A.missing.length)h+=`<h4>What's missing</h4><ul>${A.missing.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  const rc=A.risk==="High"?"risk-high":A.risk==="Medium"?"risk-medium":"risk-low";
+  h+=`<h4>Risk &amp; confidence</h4><p><span class="bot-pill ${rc}">Risk: ${esc(A.risk||"Low")}</span></p><div class="bot-conf"><i style="width:${A.confidence||50}%"></i></div><p style="font-size:12.5px;color:var(--text-3);margin-top:2px">Confidence ${A.confidence||50}%</p>`;
+  if(A.sources&&A.sources.length)h+=`<div class="bot-src"><b>Sources used:</b> ${A.sources.map(esc).join(" · ")}</div>`;
+  const t=[]; if(A.direct)t.push("DIRECT ANSWER: "+A.direct); if(A.reasoning&&A.reasoning.length)t.push("REASONING:\n- "+A.reasoning.join("\n- ")); if(A.official)t.push("OFFICIAL AMAZON LOGIC: "+A.official); if(A.account&&A.account.length)t.push("ACCOUNT DATA USED:\n- "+A.account.join("\n- ")); if(A.frameworks&&A.frameworks.length)t.push("FRAMEWORK USED:\n- "+A.frameworks.join("\n- ")); if(A.actions&&A.actions.length)t.push("RECOMMENDED ACTIONS:\n- "+A.actions.join("\n- ")); if(A.missing&&A.missing.length)t.push("WHAT'S MISSING:\n- "+A.missing.join("\n- ")); t.push("RISK: "+(A.risk||"Low")+" · CONFIDENCE: "+(A.confidence||50)+"%"); if(A.sources&&A.sources.length)t.push("SOURCES USED: "+A.sources.join(" · "));
+  return {html:h,text:t.join("\n\n"),risk:A.risk||"Low",confidence:A.confidence||50,sources:A.sources};
+}
+function botIntent(q,mode){ const s=" "+q.toLowerCase()+" "; const has=(...w)=>w.some(x=>s.includes(x));
+  if(has("reorder","re-order","restock","stock out","stockout","run out","how many unit","units should i order","inventory","days left","safety stock","buffer stock")) return "inventory";
+  if(has("acos","tacos","ppc","ad spend","campaign","keyword","bid","sponsored","wasted spend","cpc","ctr")) return "ppc";
+  if(has("profit","margin","roi","break-even","break even","landed cost","net profit","cogs","fees")) return "profit";
+  if(has("listing","title","bullet","description","a+","conversion","images","cvr","convert","seo")) return "listing";
+  if(has("trademark","patent","restricted","compliance","policy","gated","ungate","claim","brand registry","counterfeit","ip ","infring","hijack")) return "compliance";
+  if(has("supplier","alibaba","moq","sample","negotiat","manufacturer","inspection","packaging","factory","sourcing")) return "supplier";
+  if(has("good for amazon","launch this","is this niche","saturated","validate","demand","opportunity","compare two","is this product","scalable")) return "product";
+  if(has("q4","prime day","mother","father","valentine","halloween","christmas","black friday","cyber monday","holiday","seasonal","event")) return "events";
+  if(has("sales drop","sales dropping","sales down","revenue drop","why are sales","sales fell")) return "salesdrop";
+  if(has("price","pricing","lower the price","raise price")) return "pricing";
+  return {inventory:"inventory",ppc:"ppc",profit:"profit",listing:"listing",compliance:"compliance",supplier:"supplier",product:"product"}[mode]||"general";
+}
+function botLocalAnswer(q,account,mode,ctx,kb){
+  const intent=botIntent(q,mode);
+  const A={direct:"",reasoning:[],official:"",account:[],frameworks:[],missing:[],actions:[],risk:"Low",confidence:55,sources:[]};
+  if(ctx&&ctx.has)A.sources.push("Master Workbook ("+account+")");
+  if(kb&&kb.length)kb.forEach(k=>A.sources.push((k.scope==="official"?"Official Library":"Knowledge Base")+": "+k.title));
+  ({inventory:botAnsInventory,ppc:botAnsPPC,profit:botAnsProfit,listing:botAnsListing,product:botAnsProduct,supplier:botAnsSupplier,compliance:botAnsCompliance,events:botAnsEvents,salesdrop:botAnsSalesDrop,pricing:botAnsPricing,general:botAnsGeneral}[intent]||botAnsGeneral)(A,q,account,ctx);
+  if(kb&&kb.length)A.reasoning.push('From your library — "'+kb[0].title+'": '+(kb[0].snippet||"").slice(0,200));
+  if(!A.sources.length)A.sources.push("General Amazon FBA knowledge");
+  if(!botAIStatus.configured)A.sources.push("Built-in local engine — add an AI key in Data Center for full conversational answers");
+  return botFormatAnswer(A);
+}
+function botAnsInventory(A,q,account,ctx){
+  A.official="Amazon FBA inventory planning: stockouts lose sales velocity and can drop organic rank/Best-Seller momentum (expensive to rebuild). Keep cover for supplier lead time + a safety buffer, and watch your FBA capacity limit.";
+  A.frameworks.push("Profit First: only reorder what cash flow supports — don't trap cash in slow stock.");
+  A.frameworks.push("Working Backwards: confirm real demand (velocity + seasonality) before sizing the order.");
+  if(ctx&&ctx.has&&ctx.inv&&ctx.inv.rows&&ctx.inv.rows.length){
+    const inv=ctx.inv; const r=inv.rows.find(x=>x.status==="stockout")||inv.rows.find(x=>x.status==="low")||inv.rows.find(x=>isN(x.daysLeft));
+    if(r&&isN(r.daysLeft)){
+      A.account.push(`${r.sku||"Top SKU"}: stock ${fNum(r.stock)}, ~${fNum1(r.daily)} units/day, ${fDays(r.daysLeft)} of cover`+(isN(inv.lead)?`, lead time ${fDays(inv.lead)}`:""));
+      if(isN(r.reorderQty)&&r.reorderQty>0)A.account.push(`Reorder ≈ ${fNum(r.reorderQty)} units to cover lead time + ${fNum(inv.bufferDays)}-day safety buffer (estimate)`);
+      if(r.status==="stockout"){ A.risk="High"; A.direct=`Yes — reorder now. ${r.sku||"Your tightest SKU"} runs out in ~${fDays(r.daysLeft)}, before a ${fDays(inv.lead)} reorder can arrive.`; A.actions.push(`Do now: place a PO for ~${fNum(r.reorderQty)} units`); A.actions.push("Check: if rank-critical, air-ship a partial qty to bridge the gap"); }
+      else if(r.status==="low"){ A.risk="Medium"; A.direct=`Reorder soon. ${r.sku||"This SKU"} has ${fDays(r.daysLeft)} of cover — inside the danger zone for a ${fDays(inv.lead)} lead time.`; A.actions.push(`Do now: prepare a PO for ~${fNum(r.reorderQty)} units within a few days`); }
+      else { A.risk="Low"; A.direct=`Healthy for now (~${fDays(r.daysLeft)} of cover). Reorder as it approaches lead time + buffer.`; A.actions.push(`Set a reorder trigger at ~${fNum(nz(inv.lead)+nz(inv.bufferDays))} days of cover`); }
+    } else { A.direct="I can see this account but not enough per-SKU data to size a reorder precisely."; }
+    if(inv.stockout>0)A.actions.push(`${inv.stockout} SKU(s) at stockout risk — see Master Workbook → Recommendations for the full list`);
+  } else {
+    A.direct="Best-effort rule: never let stock drop below (avg daily sales × lead time) + safety stock. I can't give an exact quantity without your numbers.";
+  }
+  const m=(ctx&&ctx.manual)||{};
+  if(!isN(mwbLeadTime(m)))A.missing.push("Supplier lead time (or production + shipping days)");
+  if(!ctx||!ctx.has)A.missing.push("Current inventory + sales velocity (upload Inventory + Business reports, or enter units/day in Master Workbook)");
+  A.actions.push("Upload an Inventory report and set supplier lead time for an exact reorder quantity & date");
+  A.confidence=botConfidence(ctx,["leadTime","currentInventory","unitsPerDay"],A.missing.length);
+}
+function botAnsPPC(A,q,account,ctx){
+  A.official="Amazon Ads: ACOS = ad spend ÷ ad sales; TACOS = ad spend ÷ total revenue. Rising TACOS with flat revenue means you're renting sales. Isolate converting search terms into exact match; negate zero-order terms; use placement multipliers where conversion is best.";
+  A.frameworks.push("Amazon Ads Academy: structure by intent (research → performance → brand), judge scaling by TACOS not just ACOS.");
+  A.frameworks.push("Profit First: never scale a campaign whose ACOS exceeds your break-even ACOS.");
+  if(ctx&&ctx.has&&ctx.ppc&&(ctx.ppc.spend||ctx.ppc.tacos)){
+    const p=ctx.ppc;
+    A.account.push(`Spend ${fMoney(p.spend)}, ACOS ${isN(p.acos)?fPct(p.acos):"n/a"}, TACOS ${isN(p.tacos)?fPct(p.tacos):"n/a"}, target ACOS ${fPct(p.target)}`);
+    if(p.wasted>0)A.account.push(`Wasted spend ${fMoney(p.wasted)} on ${p.bad.length} zero-order terms`);
+    if(isN(p.tacos)&&p.tacos>=20){ A.risk="Medium"; A.direct=`Your TACOS (${fPct(p.tacos)}) is high — you're renting too much revenue through ads. Tighten before scaling.`; }
+    else if(isN(p.acos)&&isN(p.target)&&p.acos>p.target){ A.risk="Medium"; A.direct=`ACOS (${fPct(p.acos)}) is above target (${fPct(p.target)}). Fix efficiency before adding budget.`; }
+    else { A.direct="Ads look efficient. You can scale the profitable campaigns carefully while watching TACOS."; }
+    if(p.wasted>0)A.actions.push(`Do now: add the top zero-order terms as negatives (recover ~${fMoney(p.wasted)})`);
+    if(p.toExact&&p.toExact.length)A.actions.push(`Do now: graduate ${p.toExact.length} converting term(s) to exact match and negate them in discovery`);
+    const inc=(p.campActions||[]).filter(c=>c.action==="increase").length, dec=(p.campActions||[]).filter(c=>c.action==="decrease").length;
+    if(inc)A.actions.push(`Scale: ${inc} below-target campaign(s) can take +15–25% budget`);
+    if(dec)A.actions.push(`Cut: ${dec} inefficient campaign(s) — reduce bids/budget or restructure`);
+  } else {
+    A.direct="Why ACOS is usually high: poor listing conversion, bidding on broad/irrelevant terms, no negatives, or wrong match types. Diagnose with the search-term report.";
+    A.missing.push("PPC campaign report + Search-Term report (upload in Master Workbook) for exact ACOS/TACOS, wasted spend and keyword actions");
+  }
+  if(!ctx||!ctx.has)A.missing.push("Your revenue (for TACOS) and target ACOS");
+  A.actions.push("Upload PPC + Search-Term reports for term-level waste and exact-match opportunities");
+  A.confidence=botConfidence(ctx,["ppcSpend","targetAcos","tacos","acos"],A.missing.length);
+}
+function botAnsProfit(A,q,account,ctx){
+  A.official="Amazon fees on FBA: a referral fee (commonly ~15%, category-dependent) + an FBA fulfillment fee (by size/weight) + monthly storage (and an aged-inventory surcharge after 181 days). True net = revenue − COGS − Amazon fees − ad spend − returns.";
+  A.frameworks.push("Profit First: decide on profit, not revenue — separate COGS, ad budget, and profit before scaling.");
+  if(ctx&&ctx.has&&ctx.profit&&(ctx.profit.totalRevenue||isN(ctx.profit.margin))){
+    const p=ctx.profit;
+    A.account.push(`Net ${fMoney(p.net)} on ${fMoney(p.totalRevenue)} revenue · margin ${isN(p.margin)?fPct(p.margin):"n/a"} · ROI ${isN(p.roi)?fPct(p.roi):"n/a"}`);
+    if(isN(p.margin)&&p.margin<0){ A.risk="High"; A.direct=`This is losing money — net margin is ${fPct(p.margin)}. Do not scale; fix or cut.`; A.actions.push("Do now: cut ad waste, test a price increase, or pause the unprofitable SKU(s)"); }
+    else if(isN(p.margin)&&p.margin<10){ A.risk="Medium"; A.direct=`Thin margin (${fPct(p.margin)}) — little room for fee/ad swings. Improve before scaling.`; A.actions.push("Check: reduce landed cost, lift price, and trim low-ROI ad spend"); }
+    else { A.direct=`Profitability looks workable (margin ${isN(p.margin)?fPct(p.margin):"n/a"}). Confirm per-SKU before scaling spend.`; }
+    const r0=(p.rows||[]).find(r=>isN(r.breakEvenAcos)); if(r0)A.account.push(`Break-even price ≈ ${fMoney(r0.breakEvenPrice)}, break-even ACOS ≈ ${fPct(r0.breakEvenAcos)} (estimate)`);
+  } else {
+    A.direct="To know true profit: Net = (selling price − product cost − Amazon referral fee − FBA fee − ad cost/unit − returns reserve) × units. Estimate until you upload fee data.";
+  }
+  const m=(ctx&&ctx.manual)||{};
+  if(!isN(mNum(m.productCost)))A.missing.push("Product cost (COGS) per unit");
+  if(!ctx||!ctx.has)A.missing.push("A Sales/Business report and a Fee report (for exact fees vs estimates)");
+  A.actions.push("Enter product cost + upload a Fee report in Master Workbook for exact margin, ROI and break-even");
+  A.confidence=botConfidence(ctx,["productCost","sellingPrice","amazonFees","fbaFees"],A.missing.length);
+}
+function botAnsListing(A,q,ctx){
+  A.official="Conversion levers, by usual impact: main image → price/offer → review count & rating → title clarity → image stack (benefits/usage/size) → A+ content. Unit Session Rate (CVR) = orders ÷ sessions in Business Reports.";
+  A.frameworks.push("Influence (Cialdini): use social proof (reviews), clarity, and honest scarcity/urgency; reduce buyer risk to lift trust.");
+  A.frameworks.push("Working Backwards: write the listing from the customer's need and the objection each image must answer.");
+  if(ctx&&ctx.has&&ctx.sales&&ctx.sales.top&&ctx.sales.top.length){ const t=ctx.sales.top[0]; if(t&&isN(t.sessions)&&t.sessions>0){ const cvr=sdiv(t.orders||t.unitsSold,t.sessions)*100; if(isN(cvr))A.account.push(`${t.sku}: ~${fPct(cvr)} CVR from ${fNum(t.sessions)} sessions`+(cvr<10?" — below the ~12–15% many categories see":"")); } }
+  A.direct="Improve conversion before buying more traffic: it lowers ACOS, lifts organic rank and improves margin on every unit.";
+  A.actions.push("Do now: test a cleaner, benefit-led main image (highest-leverage change)");
+  A.actions.push("Check: add a size/scale image and a comparison image to cut returns and answer objections");
+  A.actions.push("Check: A+ / Premium A+ live, title front-loads the main keyword, 5 benefit-led bullets");
+  A.actions.push("If Brand Registered: run a one-variable A/B test in Manage Your Experiments (main image first)");
+  A.missing.push("Sessions & unit-session-rate (CVR) per SKU from a Business report, to target the weakest listings");
+  A.confidence=botConfidence(ctx,["sessions","conversionRate"],A.missing.length);
+}
+function botAnsProduct(A,q,ctx){
+  A.official="Amazon product viability rests on real demand (search volume/sales), beatable competition (reviews, listing quality), healthy margin after all fees, and a genuine differentiator.";
+  A.frameworks.push("The Mom Test: validate with real demand signals (sales/search data), not opinions — avoid fake validation.");
+  A.frameworks.push("12 Months to $1 Million: screen for demand, margin and a way to stand out; one strong product beats many weak ones.");
+  A.frameworks.push("Working Backwards: define the target customer and the problem the product solves before sourcing.");
+  A.direct="A product is 'good for FBA' when demand is proven, competition is beatable, margin survives all Amazon fees, and you have a real differentiator. Score those four before committing cash.";
+  A.actions.push("Check: monthly demand, top competitors' review counts & listing quality, and your margin after fees (use the FBA calculator)");
+  A.actions.push("Avoid: saturated niches dominated by 1,000+ review incumbents unless you have a clear edge");
+  A.actions.push("Do now: confirm a differentiator customers actually want (reviews reveal gaps)");
+  A.missing.push("Target price, product cost, expected fees, competitor review counts, and monthly demand estimate");
+  if(ctx&&ctx.has)A.missing.push("If comparing existing SKUs, I can rank them by margin/velocity from your data");
+  A.confidence=botConfidence(ctx,[],A.missing.length);
+  A.risk="Medium";
+}
+function botAnsSupplier(A,q){
+  A.official="";
+  A.frameworks.push("Work the System: turn supplier comms into a repeatable SOP (sample → terms → QC → inspection) so quality is consistent.");
+  A.frameworks.push("Profit First: negotiate landed cost and payment terms that protect your cash conversion cycle.");
+  A.direct="Treat sourcing as a process: qualify the supplier, get samples, negotiate MOQ/terms, and inspect before shipping. Don't skip QC to save time.";
+  A.actions.push("Do now: message 3–5 suppliers; ask MOQ, unit price at 2–3 quantities, lead time, customization, and certifications");
+  A.actions.push("Negotiate MOQ: offer a smaller first order at a slightly higher unit price; commit to larger repeat POs once quality is proven");
+  A.actions.push("Check: always order samples; agree on a QC checklist and a third-party inspection before balance payment");
+  A.actions.push("Protect cash: aim for 30% deposit / 70% after inspection, and improve terms on repeat orders");
+  A.reasoning.push("Sample MOQ message: \"We're a US brand planning recurring orders. For our first order we'd like [X] units to validate quality; if it meets spec we'll scale to [Y]/month. Can you support [X] MOQ, and what's your price at [X], [2X], [5X]?\"");
+  A.missing.push("Product, target unit cost, desired MOQ, and any customization/packaging needs");
+  A.confidence=60;
+  A.risk="Low";
+}
+function botAnsCompliance(A,q){
+  A.official="Compliance, IP, trademark, restricted-product and account-health questions must be verified against official Amazon Seller Central documentation — and trademark/IP matters with a qualified attorney. I won't state policy as fact unless it's from an official source.";
+  A.frameworks.push("Work the System: keep a compliance binder (invoices, brand authorization, safety/compliance docs) ready before you ever need it.");
+  A.direct="Be cautious here. I can flag risk and point you to the right official source, but I won't invent or confirm Amazon policy. Verify specifics in Seller Central.";
+  A.reasoning.push("Common risks: selling gated/restricted categories without approval, IP/trademark infringement, unapproved claims (medical/safety), and listing hijacks.");
+  A.actions.push("Do now: check the exact rule in Seller Central Help / the relevant policy page before acting");
+  A.actions.push("Trademark/IP: consult an IP attorney; enroll your brand in Amazon Brand Registry once your trademark is registered");
+  A.actions.push("Avoid: unverified claims and any gray-area sourcing that risks an authenticity complaint");
+  A.missing.push("The specific product/category and the exact concern, plus any official Amazon page or document you've uploaded");
+  A.risk="High"; A.confidence=Math.min(70,botConfidence(null,[],A.missing.length));
+  A.sources.unshift("Verify in official Amazon Seller Central documentation");
+}
+function botAnsEvents(A,q,account,ctx){
+  A.official="Seasonal demand on Amazon spikes around US holidays and shopping events; because of supplier lead times, inventory and ad prep must start weeks ahead.";
+  A.frameworks.push("Working Backwards: plan from the event date backwards through lead time to today.");
+  const up=botSafe(()=>mwbUpcoming(new Date(),120),[]);
+  if(up&&up.length){ const e=up[0]; A.direct=`${e.name} is in ${e.daysLeft} days (typical lift +${e.lift[0]}–${e.lift[1]}%${e.gift?", gift-related":""}). Prep inventory and ads now if lead times are tight.`;
+    A.account.push("Next events: "+up.slice(0,3).map(x=>`${x.name} (${x.daysLeft}d, +${x.lift[0]}–${x.lift[1]}%)`).join(" · "));
+    A.actions.push(`Do now: increase inventory buffer ${e.gift?"30–40%":"15–25%"} for affected/gift SKUs`);
+    A.actions.push("Do now: prepare PPC budget + event creative early; raise budgets a few days before the spike");
+    A.actions.push("Check: lead time vs days-to-event — if the PO can't land in time, air-ship a portion");
+    if(ctx&&ctx.has&&ctx.inv&&ctx.inv.stockout>0)A.account.push(`Heads-up: ${ctx.inv.stockout} SKU(s) already at stockout risk before the event`);
+  } else { A.direct="Plan seasonal demand backwards from the event date through your lead time. Build inventory and ad budget before the spike."; }
+  A.missing.push("Which SKUs are gift/seasonal, plus their lead times, to size the buffer precisely");
+  A.confidence=botConfidence(ctx,["leadTime"],A.missing.length);
+  A.risk="Medium";
+}
+function botAnsSalesDrop(A,q,account,ctx){
+  A.official="A sales drop is usually one of: lost Buy Box/Featured Offer, a price change, a competitor move, going out of stock, reduced ad budget/visibility, seasonality, a listing suppression, or an account-health issue.";
+  A.frameworks.push("Working Backwards: diagnose by funnel layer — traffic (sessions) vs conversion (CVR) vs availability (stock).");
+  A.direct="Diagnose in order: are sessions down (traffic/rank/ads) or is CVR down (listing/price/reviews) — and are you in stock with the Buy Box?";
+  A.actions.push("Check: in stock? Buy Box held? recent price change? listing live (not suppressed)?");
+  A.actions.push("Check: sessions trend (traffic problem) vs unit-session-rate trend (listing/offer problem) in Business Reports");
+  A.actions.push("Check: did ad budget/impressions drop, or did a competitor cut price / launch?");
+  A.actions.push("Check: Account Health for any policy/listing issues");
+  if(ctx&&ctx.has){ if(ctx.inv&&ctx.inv.stockout>0)A.account.push(`${ctx.inv.stockout} SKU(s) at stockout risk — low stock throttles sales/rank`); if(ctx.ppc&&isN(ctx.ppc.tacos))A.account.push(`TACOS ${fPct(ctx.ppc.tacos)} — check if ad visibility changed`); }
+  A.missing.push("Sessions & CVR trend, Buy Box %, price history, and ad spend trend to pinpoint the cause");
+  A.confidence=botConfidence(ctx,[],A.missing.length);
+  A.risk="Medium";
+}
+function botAnsPricing(A,q,account,ctx){
+  A.official="Price affects conversion, Buy Box, and margin simultaneously. On Amazon, small price moves can swing both CVR and profit sharply, so model the margin impact before changing price.";
+  A.frameworks.push("Profit First: protect margin — a price cut must be justified by enough extra volume to grow profit, not just revenue.");
+  A.frameworks.push("Influence: price signals quality; the lowest price isn't always the most profitable position.");
+  A.direct="Don't change price on instinct — model it. A 10% cut often needs a large volume jump just to hold profit. Test and watch margin, not just sales.";
+  if(ctx&&ctx.has&&ctx.profit&&isN(ctx.profit.margin))A.account.push(`Current margin ${fPct(ctx.profit.margin)} — a price cut eats directly into this`);
+  A.actions.push("Do now: compute net margin at the new price before changing it");
+  A.actions.push("Check: competitor prices and your Buy Box — match strategically, don't race to the bottom");
+  A.actions.push("Test: small change, watch CVR + units + total profit for 1–2 weeks");
+  A.missing.push("Product cost, fees, and current price to model margin at the new price");
+  A.confidence=botConfidence(ctx,["productCost","sellingPrice"],A.missing.length);
+}
+function botAnsGeneral(A,q,account,ctx){
+  A.direct="I read every question as an Amazon FBA USA operator. Tell me the product/SKU or pick an account above and I'll use its Master Workbook data for a precise, data-backed answer.";
+  A.frameworks.push("The Amazon Jungle: think like a seller — demand, competition, margin, and risk before any move.");
+  A.frameworks.push("Work the System: turn recurring decisions into SOPs so the business scales without you.");
+  A.reasoning.push("For inventory/PPC/profit/listing questions, selecting the account makes my answer use real numbers (stock, velocity, ACOS/TACOS, margin).");
+  A.actions.push("Pick an account (ANAKZ / HMZA / BD) + a mode for a sharper answer");
+  A.actions.push("Or upload the relevant report in Master Workbook (Business, Inventory, PPC, Search-Term, Fee)");
+  A.missing.push("The specific product/SKU or account context, and the report most relevant to your question");
+  A.confidence=ctx&&ctx.has?60:45;
+}
+
+/* ---- knowledge base / official library ---- */
+function botKnowTab(scope){
+  const title=scope==="official"?"Official Knowledge Library":"Knowledge Base";
+  const desc=scope==="official"?"Amazon Seller University / Ads Academy / Seller Central Help / policy PDFs / fee sheets. The bot prioritizes these as official sources.":"Your SOPs, notes, product research, supplier sheets and saved strategies. The bot searches these when answering.";
+  return `<div class="card" style="padding:18px;margin-bottom:14px">
+      <div style="font-family:var(--font-display);font-weight:600;margin-bottom:4px">${title}</div>
+      <div class="sub" style="margin-bottom:12px">${desc}</div>
+      <div class="bot-bar">
+        <label class="btn btn-primary" style="cursor:pointer">Upload file<input type="file" hidden multiple accept=".txt,.md,.csv,.tsv,.json,.xlsx,.xls,.pdf,.docx" onchange="botHandleFiles(this.files,'${scope}')"></label>
+        <input class="input" placeholder="Search ${title}…" value="${esc(botUI.kbQuery)}" oninput="botKbSearch(this.value)" style="flex:1;min-width:160px">
+      </div>
+      <div class="bot-bar" style="margin-top:4px">
+        <input class="input" id="botNoteTitle" placeholder="Note title (e.g. ‘My restock rule’)" style="flex:1;min-width:150px">
+        <input class="input" id="botNoteBody" placeholder="The detail the bot should use…" style="flex:2;min-width:180px">
+        <button class="btn btn-ghost" onclick="botSaveNote('${scope}')">Add note</button>
+      </div>
+    </div>
+    <div class="card" style="padding:16px"><div class="sub" id="botKnowCount" style="margin-bottom:10px"></div><div id="botKnowList"></div></div>`;
+}
+function botKnowListHtml(scope){ const q=(botUI.kbQuery||"").toLowerCase(); const items=botKnow.filter(k=>(scope==="official")?k.scope==="official":k.scope!=="official").filter(k=>!q||(((k.title||"")+(k.note||"")+(k.text||"")).toLowerCase().includes(q))); if(!items.length)return '<div class="bot-empty"><div class="sub">Nothing here yet — upload a file or add a note above.</div></div>'; return items.map(botKnowItem).join(""); }
+function botKnowItem(k){ const kind=k.scope==="official"?"Official":(k.kind==="url"?"URL":k.kind==="note"?"Note":((k.fileType||"file").toUpperCase())); return `<div class="bot-know-item"><span class="kc ${k.scope==="official"?"official":""}">${esc(kind)}</span><div class="kb"><b>${esc(k.title||"Untitled")}</b><p>${esc((k.note||k.text||"").slice(0,160)||"No preview")}${k.size?" · "+(k.size/1024).toFixed(0)+" KB":""} · ${botFmtDate(k.addedAt)}</p></div><button class="kdel" title="Delete" onclick="botDelKnowledge('${k.id}')">×</button></div>`; }
+function botKbSearch(v){ botUI.kbQuery=v; botRefreshKnowList(); }
+function botRefreshKnowList(){ const scope=botUI.tab==="official"?"official":"knowledge"; const list=$("#botKnowList"); if(list)list.innerHTML=botKnowListHtml(scope); const c=$("#botKnowCount"); if(c){ const n=botKnow.filter(k=>(scope==="official")?k.scope==="official":k.scope!=="official").length; c.textContent=n+" source"+(n===1?"":"s"); } }
+async function botAddKnowledge(obj){ obj.id=obj.id||("kn_"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)); obj.addedAt=obj.addedAt||Date.now(); botKnow.unshift(obj); await botPut("knowledge",obj); }
+async function botHandleFiles(fileList,scope){
+  const files=[...(fileList||[])]; if(!files.length)return; scope=(scope==="official")?"official":"knowledge"; let added=0;
+  for(const file of files){
+    try{
+      const name=file.name||"file", lower=name.toLowerCase(), fileType=(name.split(".").pop()||"").toLowerCase();
+      if(file.size>8*1024*1024){ toast(`"${name}" is over 8 MB — skipped`,"warn"); continue; }
+      let text="";
+      if(/\.(txt|md|csv|tsv|json|log)$/.test(lower)){ try{text=await file.text();}catch(e){} }
+      else if(/\.(xlsx|xls)$/.test(lower)){ try{ const XL=await mwbLoadXLSX(); const buf=await file.arrayBuffer(); const wb=XL.read(new Uint8Array(buf),{type:"array"}); text=wb.SheetNames.map(n=>XL.utils.sheet_to_csv(wb.Sheets[n])).join("\n"); }catch(e){ text=""; } }
+      text=(text||"").slice(0,200000);
+      const obj={scope,kind:"file",title:name,fileType,size:file.size,text,note:text?"":"Stored as a source — text couldn't be auto-extracted from this file type. Add a note with the key points so the bot can use it."};
+      await botAddKnowledge(obj); added++;
+      toast(text?`Added "${name}"`:`Saved "${name}" — add a note so the bot can use it`,text?"ok":"warn");
+    }catch(e){ toast("Couldn't read a file — skipped","err"); }
+  }
+  if(added&&(botUI.tab==="knowledge"||botUI.tab==="official"))botRefreshKnowList(); renderBot();
+}
+function botSaveNote(scope){ const t=($("#botNoteTitle")||{}).value; const b=($("#botNoteBody")||{}).value; const title=(t||"").trim(); if(!title){toast("Add a note title","warn");return;} botAddKnowledge({scope:(scope==="official")?"official":"knowledge",kind:"note",title,note:(b||"").trim(),text:(b||"").trim()}).then(()=>{ toast("Note saved","ok"); renderBot(); }); }
+function botDelKnowledge(id){ const k=botKnow.find(x=>x.id===id); confirmAction("Delete this source?",`Remove "${esc((k&&k.title)||"this source")}" from your library? This can't be undone.`,"Delete",async()=>{ await botDel("knowledge",id); botKnow=botKnow.filter(x=>x.id!==id); renderBot(); toast("Source deleted","ok"); }); }
+
+/* ---- data center ---- */
+function botDataTab(){
+  const ai=botAIStatus.configured?`<span class="bot-pill risk-low">AI live · ${esc(botAIStatus.provider||"")}${botAIStatus.model?" ("+esc(botAIStatus.model)+")":""}</span>`:`<span class="bot-pill risk-medium">Local engine</span>`;
+  const aiNote=botAIStatus.configured?`Live AI is on. Answers use your configured model with account data + knowledge as context.`:`The bot runs on its built-in local engine (real, data-backed answers from Master Workbook + your knowledge). To enable full conversational AI, set an <b>ANTHROPIC_API_KEY</b> (or <b>OPENAI_API_KEY</b>) environment variable on your Railway/Vercel deployment — optionally <b>BOT_MODEL</b> — then redeploy. The key stays server-side and is never exposed to the browser.`;
+  return `
+  <div class="card" style="padding:18px;margin-bottom:14px">
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">AI connection</div>
+    <div class="sub">Status: ${ai}</div>
+    <div class="sub" style="margin-top:8px">${aiNote}</div>
+    <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="botCheckAI();toast('Re-checking AI status…','ok')">Re-check status</button>
+  </div>
+  <div class="card" style="padding:18px;margin-bottom:14px">
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Add a knowledge URL</div>
+    <div class="sub" style="margin-bottom:10px">Saved as a source with your notes. (Direct URL fetching isn't enabled — paste the key points so the bot can use them.)</div>
+    <div class="bot-bar">
+      <input class="input" id="botUrl" placeholder="https://sellercentral.amazon.com/…" style="flex:1;min-width:180px">
+      <input class="input" id="botUrlNote" placeholder="What's useful here (notes)" style="flex:1;min-width:160px">
+      <button class="btn btn-primary" onclick="botAddUrl()">Add URL</button>
+    </div>
+  </div>
+  <div class="card" style="padding:18px">
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Backup &amp; data</div>
+    <div class="sub" style="margin-bottom:10px">${botKnow.length} knowledge source${botKnow.length===1?"":"s"} · ${botChats.length} chat${botChats.length===1?"":"s"} stored on this device.</div>
+    <div class="bot-bar">
+      <button class="btn btn-ghost" onclick="botExportAll()">Export all (backup)</button>
+      <label class="btn btn-ghost" style="cursor:pointer">Import backup<input type="file" hidden accept=".json,application/json" onchange="botImportBackup(this.files)"></label>
+      <button class="btn btn-ghost" style="color:#ef4444" onclick="botClearKnowConfirm()">Clear knowledge</button>
+      <button class="btn btn-ghost" style="color:#ef4444" onclick="botClearChatsConfirm()">Clear all chats</button>
+    </div>
+  </div>`;
+}
+function botAddUrl(){ const u=(($("#botUrl")||{}).value||"").trim(); if(!u){toast("Paste a URL","warn");return;} const note=(($("#botUrlNote")||{}).value||"").trim(); botAddKnowledge({scope:"knowledge",kind:"url",title:u,note:note||"Saved URL source",text:note}).then(()=>{ toast("URL saved as a source","ok"); renderBot(); }); }
+function botExportAll(){ try{ const data={app:"TaskFlow Amazon Bot",version:1,exportedAt:Date.now(),chats:botChats,knowledge:botKnow}; downloadBlob(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),"amazon-bot-backup-"+todayStr()+".json"); toast("Backup downloaded","ok"); }catch(e){toast("Export failed","err");} }
+function botImportBackup(fl){ const f=fl&&fl[0]; if(!f)return; const r=new FileReader(); r.onload=async()=>{ try{ const d=JSON.parse(r.result); if(!d||(!Array.isArray(d.chats)&&!Array.isArray(d.knowledge))){toast("Not a valid Amazon Bot backup","err");return;} let n=0; if(Array.isArray(d.knowledge))for(const k of d.knowledge){ if(k&&k.id&&!botKnow.some(x=>x.id===k.id)){ botKnow.push(k); await botPut("knowledge",k); n++; } } if(Array.isArray(d.chats))for(const c of d.chats){ if(c&&c.id&&!botChats.some(x=>x.id===c.id)){ botChats.push(c); await botPut("chats",c); n++; } } botSortChats(); botSortKnow(); toast(`Imported ${n} item(s)`,"ok"); renderBot(); }catch(e){toast("Couldn't read backup file","err");} }; r.onerror=()=>toast("Couldn't read file","err"); r.readAsText(f); }
+function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes every uploaded file, note and URL source. Your chats are kept. This can't be undone.","Clear knowledge",async()=>{ botKnow=[]; await botClearStore("knowledge"); renderBot(); toast("Knowledge cleared","ok"); }); }
+function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
+
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,workbook:renderWorkbook,data:renderDataPanel};
+  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
