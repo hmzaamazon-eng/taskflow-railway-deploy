@@ -474,6 +474,32 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .wb-ev-days{font-size:12.5px;font-weight:600;color:var(--text-2);background:var(--surface-3);padding:4px 11px;border-radius:8px;white-space:nowrap}
 .wb-ev-days.soon{background:color-mix(in srgb,#ef4444 13%,transparent);color:#ef4444}
 .wb-ev-rec{font-size:13.5px;color:var(--text-2);margin-top:9px;line-height:1.55}
+/* portfolio roll-up (all accounts, green/amber/red) */
+.wb-portfolio{padding:16px 18px;margin-bottom:18px}
+.wb-portfolio-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.wb-portfolio-head b{font-family:var(--font-display);font-size:16px}
+.wb-portfolio-head .sub{font-size:13px}
+.wb-pf-overall{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--text-2)}
+.wb-status-row{display:flex;align-items:center;gap:13px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:9px;cursor:pointer;transition:.14s;font:inherit;color:var(--text)}
+.wb-status-row:last-child{margin-bottom:0}
+.wb-status-row:hover{border-color:var(--brand-1);transform:translateX(2px)}
+.wb-dot{width:12px;height:12px;border-radius:50%;flex:none;background:var(--text-3);box-shadow:0 0 0 4px color-mix(in srgb,var(--text-3) 18%,transparent)}
+.wb-dot.green{background:#16a34a;box-shadow:0 0 0 4px color-mix(in srgb,#16a34a 20%,transparent)}
+.wb-dot.amber{background:#dd9b34;box-shadow:0 0 0 4px color-mix(in srgb,#dd9b34 22%,transparent)}
+.wb-dot.red{background:#ef4444;box-shadow:0 0 0 4px color-mix(in srgb,#ef4444 20%,transparent)}
+.wb-dot.mut{background:var(--text-3);box-shadow:0 0 0 4px color-mix(in srgb,var(--text-3) 16%,transparent)}
+.wb-status-body{flex:1;min-width:0}
+.wb-status-top{display:flex;align-items:center;gap:9px}
+.wb-status-top b{font-family:var(--font-display);font-size:15.5px}
+.wb-status-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:6px;background:var(--surface-3);color:var(--text-3)}
+.wb-status-label.green{background:color-mix(in srgb,#16a34a 14%,transparent);color:#16a34a}
+.wb-status-label.amber{background:color-mix(in srgb,#dd9b34 16%,transparent);color:#b97e1d}
+.wb-status-label.red{background:color-mix(in srgb,#ef4444 14%,transparent);color:#ef4444}
+.wb-status-sum{font-size:13px;color:var(--text-3);margin-top:3px;overflow:hidden;text-overflow:ellipsis}
+.wb-status-metrics{display:flex;gap:14px;flex:none;font-size:12.5px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.wb-status-metrics span{white-space:nowrap}
+.wb-status-chev{color:var(--text-3);flex:none}
+@media(max-width:680px){.wb-status-metrics{display:none}}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -2752,12 +2778,62 @@ function renderWorkbook(){
     root.innerHTML=wbWorkspace();
   }catch(e){ console.error("workbook render",e); root.innerHTML=`<div class="card" style="padding:24px;color:#ef4444">Something went wrong rendering this view — your data is safe. Try switching tabs or reloading.</div>`; }
 }
+/* Roll up one account into a single green/amber/red status with reasons. */
+function mwbAccountStatus(acc){
+  const st=mwb.data[acc];
+  if(!st) return {state:"loading"};
+  const ds=st.dataset, manual=st.manual||{};
+  const hasData=(mwb.reports[acc]||[]).length || Object.keys(ds.skus||{}).length || Object.keys(manual).some(k=>String(manual[k]).trim()!=="");
+  if(!hasData) return {state:"empty"};
+  let sales={},inv={},profit={},ppc={};
+  try{ sales=mwbAnalyzeSales(ds,manual); }catch(e){}
+  try{ inv=mwbAnalyzeInventory(ds,manual,0); }catch(e){}
+  try{ profit=mwbAnalyzeProfit(ds,manual); }catch(e){}
+  try{ ppc=mwbAnalyzePPC(ds,manual,sales.totalRevenue); }catch(e){}
+  const reds=[], ambers=[];
+  if(nz(inv.stockout)>0) reds.push(inv.stockout+" SKU"+(inv.stockout>1?"s":"")+" at stockout risk");
+  if(isN(profit.margin)&&profit.margin<0) reds.push("negative net margin ("+fPct(profit.margin)+")");
+  if(isN(ppc.tacos)&&ppc.tacos>=25) reds.push("TACOS very high ("+fPct(ppc.tacos)+")");
+  if(nz(inv.low)>0) ambers.push(inv.low+" low on stock");
+  if(isN(ppc.tacos)&&ppc.tacos>=20&&ppc.tacos<25) ambers.push("TACOS high ("+fPct(ppc.tacos)+")");
+  if(isN(profit.margin)&&profit.margin>=0&&profit.margin<10) ambers.push("thin margin ("+fPct(profit.margin)+")");
+  if(nz(inv.over)>0) ambers.push(inv.over+" overstocked");
+  if(nz(ppc.wasted)>0) ambers.push("wasted ad spend "+fMoney(ppc.wasted));
+  const color=reds.length?"red":ambers.length?"amber":"green";
+  const summary=reds.length?reds.join(" · "):ambers.length?ambers.join(" · "):"All healthy — no red flags";
+  return {state:"ok",color,summary,rev:sales.totalRevenue,margin:profit.margin,tacos:ppc.tacos,units:sales.totalUnits};
+}
+function wbPortfolioPanel(){
+  const rank={red:0,amber:1,green:2,mut:3};
+  let worst="green", anyData=false;
+  const rows=MWB_ACCOUNTS.map(a=>{
+    const s=mwbAccountStatus(a);
+    let dot="mut",label="",summary="",metrics="";
+    if(s.state==="loading"){ dot="mut"; label="Loading"; summary="Reading saved data…"; }
+    else if(s.state==="empty"){ dot="mut"; label="No data"; summary="Import a report or enter manual data to activate"; }
+    else { anyData=true; dot=s.color; label={green:"Green",amber:"Amber",red:"Red"}[s.color]; summary=s.summary;
+      if(rank[s.color]<rank[worst]) worst=s.color;
+      metrics=`<span>${fMoney(s.rev)}</span><span>${fPct(s.margin)} margin</span><span>TACOS ${fPct(s.tacos)}</span>`; }
+    return `<button class="wb-status-row" onclick="mwbSelectAccount('${a}')">
+      <span class="wb-dot ${dot}"></span>
+      <span class="wb-acct-badge sm">${a[0]}</span>
+      <div class="wb-status-body"><div class="wb-status-top"><b>${a}</b><span class="wb-status-label ${dot}">${label}</span></div><div class="wb-status-sum">${esc(summary)}</div></div>
+      <div class="wb-status-metrics">${metrics}</div>
+      <svg class="wb-status-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>`;
+  }).join("");
+  const overall=anyData?`<span class="wb-pf-overall"><span class="wb-dot ${worst}" style="box-shadow:none"></span>Portfolio: ${{green:"all green",amber:"needs attention",red:"action required"}[worst]}</span>`:"";
+  return `<div class="card wb-portfolio">
+    <div class="wb-portfolio-head"><b>Portfolio overview</b><span class="sub">All 3 accounts at a glance — open the reds first.</span>${overall}</div>
+    ${rows}
+  </div>`;
+}
 function wbPicker(){
   MWB_ACCOUNTS.forEach(a=>{ if(!mwb.loaded[a]) mwbEnsureLoaded(a).then(()=>{ if(!mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); });
   const cards=MWB_ACCOUNTS.map(a=>{ const st=mwb.data[a]; let stat="Tap to open";
     if(st){ const s=mwbAnalyzeSales(st.dataset,st.manual); const reps=(mwb.reports[a]||[]).length; stat=`${reps} report${reps===1?"":"s"} · ${fNum(Object.keys(st.dataset.skus).length)} SKUs · ${fMoney(s.totalRevenue)}`; }
     return `<button class="wb-acct" onclick="mwbSelectAccount('${a}')"><div class="wb-acct-badge">${a[0]}</div><div class="wb-acct-name">${a}</div><div class="wb-acct-sub">${esc(stat)}</div><div class="wb-acct-cta">Open workbook →</div></button>`; }).join("");
-  return `<div class="sub" style="margin-bottom:16px">Pick an account. Each Master Workbook keeps its own data, analysis, recommendations and history — nothing is shared between accounts.</div><div class="wb-accts">${cards}</div>`;
+  return `${wbPortfolioPanel()}<div class="sub" style="margin-bottom:14px">Open an account. Each Master Workbook keeps its own data, analysis, recommendations and history — nothing is shared between accounts.</div><div class="wb-accts">${cards}</div>`;
 }
 function mwbSelectAccount(a){ if(MWB_ACCOUNTS.indexOf(a)<0)return; mwb.account=a; mwb.tab="dashboard"; renderWorkbook(); }
 function mwbBackToPicker(){ mwb.account=null; renderWorkbook(); window.scrollTo({top:0,behavior:"smooth"}); }
