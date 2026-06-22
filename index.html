@@ -558,6 +558,85 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .bot-know-item .kb{flex:1;min-width:0}.bot-know-item .kb b{font-size:14px;word-break:break-word}.bot-know-item .kb p{margin:3px 0 0;color:var(--text-3);font-size:12.5px;word-break:break-word}
 .bot-know-item .kdel{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px;flex:none}
 .bot-know-item .kdel:hover{color:#ef4444;background:color-mix(in srgb,#ef4444 12%,transparent)}
+/* ===== Amazon Bot — premium redesign (overrides above) ===== */
+#view-bot .view-head{display:none}
+.bot-hero{background:linear-gradient(135deg,color-mix(in srgb,var(--brand-1) 9%,var(--surface)),var(--surface));border:1px solid var(--border);border-radius:18px;padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 2px rgba(20,20,40,.04)}
+.bot-hero-row{display:flex;align-items:center;gap:14px}
+.bot-hero-icon{width:46px;height:46px;border-radius:13px;flex:none;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));box-shadow:0 8px 18px -8px color-mix(in srgb,var(--brand-1) 70%,transparent)}
+.bot-hero-titles{flex:1;min-width:0}
+.bot-hero-titles h2{font-family:var(--font-display);font-size:22px;font-weight:700;margin:0;letter-spacing:-.02em}
+.bot-hero-sub{color:var(--text-2);font-size:13.5px;margin-top:1px}
+.bot-hero-desc{color:var(--text-3);font-size:13.5px;margin-top:12px;line-height:1.5}
+.bot-hero .bot-status{margin:0}
+.bot-status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);white-space:nowrap}
+.bot-status.live{color:#16a34a;border-color:color-mix(in srgb,#16a34a 35%,transparent);background:color-mix(in srgb,#16a34a 8%,transparent)}
+.bot-status.local{color:#b97e1d;border-color:color-mix(in srgb,#dd9b34 35%,transparent);background:color-mix(in srgb,#dd9b34 9%,transparent)}
+.bot-status .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px color-mix(in srgb,currentColor 22%,transparent)}
+@media(max-width:600px){.bot-hero-row{flex-wrap:wrap}.bot-hero .bot-status{order:3}}
+.bot-tabs{display:flex;gap:6px;flex-wrap:wrap;background:var(--surface-3);border:1px solid var(--border);border-radius:13px;padding:5px;margin-bottom:16px}
+.bot-tab{flex:1;min-width:120px;display:inline-flex;align-items:center;justify-content:center;gap:7px;background:transparent;border:none;color:var(--text-2);font:inherit;font-weight:600;font-size:13.5px;padding:9px 12px;border-radius:9px;cursor:pointer;transition:.15s}
+.bot-tab:hover{color:var(--text)}
+.bot-tab.active{background:var(--surface);color:var(--brand-1);box-shadow:0 1px 3px rgba(20,20,40,.08)}
+.bot-tab-badge{font-size:11px;font-weight:700;min-width:18px;height:18px;padding:0 5px;border-radius:99px;display:inline-grid;place-items:center;background:var(--surface);color:var(--text-3)}
+.bot-tab.active .bot-tab-badge{background:color-mix(in srgb,var(--brand-1) 16%,transparent);color:var(--brand-1)}
+@media(max-width:600px){.bot-tab{min-width:0;flex:1 1 40%;font-size:12.5px;padding:8px 6px}}
+.bot-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.bot-ctl{display:flex;flex-direction:column;gap:3px}
+.bot-ctl label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3)}
+.bot-ctl .select{height:38px;padding:0 30px 0 12px;border-radius:10px;min-width:150px}
+.bot-controls-actions{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.bot-act{height:38px;display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);color:var(--text-2);font:inherit;font-size:13px;font-weight:600;padding:0 13px;border-radius:10px;cursor:pointer;transition:.14s}
+.bot-act:hover{border-color:var(--brand-1);color:var(--brand-1)}
+.bot-act.danger:hover{border-color:#ef4444;color:#ef4444;background:color-mix(in srgb,#ef4444 7%,transparent)}
+.bot-chats-btn{display:none}
+@media(max-width:880px){.bot-chats-btn{display:inline-flex}.bot-controls-actions{margin-left:0;width:100%}.bot-ctl{flex:1}.bot-ctl .select{min-width:0;width:100%}}
+.bot-layout{display:grid;grid-template-columns:270px 1fr;gap:16px;align-items:stretch}
+@media(max-width:880px){.bot-layout{grid-template-columns:1fr}.bot-side{display:none}.bot-side.show{display:flex}}
+.bot-side{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;max-height:72vh;overflow:auto}
+.bot-newchat{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;border:none;border-radius:11px;padding:11px;font:inherit;font-weight:700;cursor:pointer;margin-bottom:10px;box-shadow:0 6px 14px -8px color-mix(in srgb,var(--brand-1) 70%,transparent)}
+.bot-newchat:hover{filter:brightness(1.05)}
+.bot-side-search{display:flex;align-items:center;gap:8px;background:var(--surface-3);border:1px solid var(--border);border-radius:10px;padding:0 11px;margin-bottom:10px}
+.bot-side-search svg{color:var(--text-3);flex:none}
+.bot-side-search input{flex:1;border:none;background:transparent;color:var(--text);font:inherit;font-size:13.5px;padding:9px 0;outline:none}
+.bot-side-empty{text-align:center;color:var(--text-3);padding:26px 12px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.bot-side-empty svg{color:var(--text-3);opacity:.5;margin-bottom:4px}
+.bot-side-empty b{color:var(--text-2);font-size:13.5px}
+.bot-side-empty span{font-size:12.5px}
+.bot-main{display:flex;flex-direction:column;min-height:64vh}
+.bot-thread{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;overflow:auto;max-height:62vh;min-height:320px}
+.bot-msg{margin-bottom:16px;display:flex;gap:11px}
+.bot-msg.user{justify-content:flex-end}
+.bot-msg.user .bubble{flex:0 1 auto;max-width:80%;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;border-radius:14px 14px 4px 14px;padding:11px 14px;font-size:14.5px;line-height:1.55;box-shadow:0 6px 14px -10px color-mix(in srgb,var(--brand-1) 80%,transparent);overflow-wrap:anywhere}
+.bot-msg.bot .av{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-weight:700;font-size:11px;color:#fff;background:linear-gradient(135deg,var(--brand-1),var(--brand-2))}
+.bot-msg.bot .bubble{flex:1;min-width:0;background:var(--surface-2);border:1px solid var(--border);border-radius:4px 14px 14px 14px;padding:13px 15px}
+.bot-msg .who{font-size:11px;color:var(--text-3);font-weight:600;margin-bottom:7px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.bot-chat-tag.ai{background:color-mix(in srgb,var(--brand-1) 15%,transparent);color:var(--brand-1)}
+.bot-compose-wrap{margin-top:14px;position:sticky;bottom:0}
+.bot-compose{display:flex;gap:8px;align-items:flex-end;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:8px 8px 8px 10px;box-shadow:0 6px 20px -14px rgba(20,20,40,.4);transition:.15s}
+.bot-compose:focus-within{border-color:var(--brand-1);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-1) 14%,transparent)}
+.bot-compose textarea{flex:1;resize:none;min-height:28px;max-height:160px;border:none;background:transparent;color:var(--text);font:inherit;font-size:14.5px;line-height:1.5;padding:7px 2px;outline:none}
+.bot-attach{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:10px;color:var(--text-3);cursor:pointer;transition:.14s}
+.bot-attach:hover{background:var(--surface-3);color:var(--brand-1)}
+.bot-send{flex:none;width:40px;height:40px;display:grid;place-items:center;border:none;border-radius:11px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;cursor:pointer;transition:.14s;box-shadow:0 6px 14px -8px color-mix(in srgb,var(--brand-1) 70%,transparent)}
+.bot-send:hover{filter:brightness(1.06)}
+.bot-send:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.bot-compose-hint{text-align:center;font-size:11.5px;color:var(--text-3);margin-top:7px}
+@media(max-width:600px){.bot-compose-hint{display:none}}
+.bot-welcome{max-width:680px;margin:0 auto;padding:16px 4px;text-align:center}
+.bot-welcome-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--brand-1);background:color-mix(in srgb,var(--brand-1) 10%,transparent);border:1px solid color-mix(in srgb,var(--brand-1) 25%,transparent);padding:5px 12px;border-radius:99px;margin-bottom:14px}
+.bot-welcome h2{font-family:var(--font-display);font-size:24px;font-weight:700;margin:0 0 6px;letter-spacing:-.02em}
+.bot-welcome>p{color:var(--text-3);font-size:14.5px;margin:0 auto 20px;max-width:48ch;line-height:1.55}
+.bot-qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:left;margin-bottom:22px}
+@media(max-width:560px){.bot-qa-grid{grid-template-columns:1fr}}
+.bot-qa{display:flex;align-items:center;gap:11px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:13px 15px;cursor:pointer;font:inherit;font-size:14px;font-weight:600;color:var(--text);text-align:left;transition:.15s}
+.bot-qa:hover{border-color:var(--brand-1);background:var(--surface);transform:translateY(-1px);box-shadow:0 8px 18px -14px color-mix(in srgb,var(--brand-1) 70%,transparent)}
+.bot-qa-ic{width:26px;height:26px;border-radius:8px;flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--brand-1) 12%,transparent);color:var(--brand-1)}
+.bot-help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left}
+@media(max-width:680px){.bot-help-grid{grid-template-columns:1fr}}
+.bot-help{background:var(--surface-2);border:1px solid var(--border);border-radius:13px;padding:15px}
+.bot-help-ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--brand-1) 11%,transparent);color:var(--brand-1);margin-bottom:10px}
+.bot-help b{font-family:var(--font-display);font-size:14.5px;display:block;margin-bottom:3px}
+.bot-help p{margin:0;font-size:12.5px;color:var(--text-3);line-height:1.5}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -3251,11 +3330,21 @@ function renderBot(){ const root=$("#botRoot"); if(!root)return;
   catch(e){ console.error("bot render",e); root.innerHTML='<div class="card" style="padding:24px;color:#ef4444">Something went wrong — your chats and knowledge are safe. Switch tabs or reload.</div>'; }
 }
 function botShell(){
-  const tabs=[["chat","Chat"],["knowledge","Knowledge Base"],["official","Official Library"],["data","Data Center"]];
-  const tb=tabs.map(([k,t])=>{ const n=k==="knowledge"?botKnow.filter(x=>x.scope!=="official").length:k==="official"?botKnow.filter(x=>x.scope==="official").length:0; return `<button class="op-tab ${botUI.tab===k?"active":""}" onclick="botGo('${k}')">${t}${(k==="knowledge"||k==="official")?` (${n})`:""}</button>`; }).join("");
+  const tabs=[["chat","Chat",null],["knowledge","Knowledge Base",botKnow.filter(x=>x.scope!=="official").length],["official","Official Library",botKnow.filter(x=>x.scope==="official").length],["data","Data Center",null]];
+  const tb=tabs.map(([k,t,n])=>`<button class="bot-tab ${botUI.tab===k?"active":""}" onclick="botGo('${k}')">${t}${n!=null?`<span class="bot-tab-badge">${n}</span>`:""}</button>`).join("");
+  const live=botAIStatus.configured;
+  const status=`<span class="bot-status ${live?"live":"local"}"><span class="dot"></span>${live?"AI Ready · "+esc(botAIStatus.provider||""):"Local Engine"}</span>`;
+  const hero=`<div class="bot-hero">
+    <div class="bot-hero-row">
+      <div class="bot-hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1.1" fill="currentColor"/><circle cx="15" cy="13" r="1.1" fill="currentColor"/><path d="M2 12v3M22 12v3"/></svg></div>
+      <div class="bot-hero-titles"><h2>Amazon Bot</h2><div class="bot-hero-sub">Private Amazon FBA USA strategist</div></div>
+      ${status}
+    </div>
+    <div class="bot-hero-desc">Ask anything about inventory, PPC, profit, listings, suppliers, compliance, and scaling.</div>
+  </div>`;
   let body; try{ body=({chat:botChatTab,knowledge:()=>botKnowTab("knowledge"),official:()=>botKnowTab("official"),data:botDataTab}[botUI.tab]||botChatTab)(); }
   catch(e){ console.error(e); body='<div class="card" style="padding:20px;color:#ef4444">Couldn\'t render this tab — your data is safe.</div>'; }
-  return `<div class="op-tabs">${tb}</div><div id="botBody">${body}</div>`;
+  return hero+`<div class="bot-tabs">${tb}</div><div id="botBody">${body}</div>`;
 }
 function botGo(t){ botUI.tab=t; renderBot(); }
 function botAfterRender(){ const th=$("#botThread"); if(th)th.scrollTop=th.scrollHeight; if(botUI.tab==="knowledge"||botUI.tab==="official")botRefreshKnowList(); }
@@ -3265,21 +3354,24 @@ function botChatTab(){
   const ai=botAIStatus.configured?`<span class="bot-status live"><span class="dot"></span>AI live · ${esc(botAIStatus.provider||"")}</span>`:`<span class="bot-status local"><span class="dot"></span>Local engine</span>`;
   const accOpts=BOT_ACCOUNTS.map(a=>`<option ${botUI.account===a?"selected":""}>${a}</option>`).join("");
   const modeOpts=BOT_MODES.map(([k,t])=>`<option value="${k}" ${botUI.mode===k?"selected":""}>${t}</option>`).join("");
-  const bar=`<div class="bot-bar">
-    <button class="btn btn-ghost btn-sm bot-chats-btn" onclick="botToggleSide()">Chats</button>
-    <div class="fld"><span class="field-label">Account</span><select class="select" onchange="botSetAccount(this.value)">${accOpts}</select></div>
-    <div class="fld"><span class="field-label">Mode</span><select class="select" onchange="botSetMode(this.value)">${modeOpts}</select></div>
-    <button class="btn btn-ghost btn-sm" onclick="botDownloadChat()">Download</button>
-    <button class="btn btn-ghost btn-sm" onclick="botPrintChat()">Print/PDF</button>
-    <button class="btn btn-ghost btn-sm" style="color:#ef4444" onclick="botClearChat()">Clear chat</button>
-    ${ai}
+  const bar=`<div class="bot-controls">
+    <button class="bot-act bot-chats-btn" onclick="botToggleSide()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>Chats</button>
+    <div class="bot-ctl"><label>Account</label><select class="select" onchange="botSetAccount(this.value)">${accOpts}</select></div>
+    <div class="bot-ctl"><label>Mode</label><select class="select" onchange="botSetMode(this.value)">${modeOpts}</select></div>
+    <div class="bot-controls-actions">
+      <button class="bot-act" onclick="botDownloadChat()" title="Download chat as TXT"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download</button>
+      <button class="bot-act" onclick="botPrintChat()" title="Print / Save as PDF"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>Print</button>
+      <button class="bot-act danger" onclick="botClearChat()" title="Delete this chat"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>Clear</button>
+    </div>
   </div>`;
   return bar+`<div class="bot-layout"><div class="bot-side ${botUI.sideOpen?"show":""}">${botSidebar()}</div><div class="bot-main">${botMain()}</div></div>`;
 }
-function botSidebar(){ return `<button class="btn btn-primary newbtn" onclick="botNewChat()">+ New chat</button><input class="input bot-search" id="botSearchInput" placeholder="Search chats…" value="${esc(botUI.histQuery)}" oninput="botSearch(this.value)"><div id="botChatList">${botChatListHtml()}</div>`; }
+function botSidebar(){ return `<button class="bot-newchat" onclick="botNewChat()"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New chat</button>
+  <div class="bot-side-search"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/></svg><input id="botSearchInput" placeholder="Search chats…" value="${esc(botUI.histQuery)}" oninput="botSearch(this.value)"></div>
+  <div id="botChatList">${botChatListHtml()}</div>`; }
 function botChatListHtml(){ const q=(botUI.histQuery||"").toLowerCase();
   let list=botChats.filter(c=>!q||(c.title||"").toLowerCase().includes(q)||(c.messages||[]).some(m=>(m.content||"").toLowerCase().includes(q)));
-  if(!list.length) return '<div class="sub" style="padding:8px">No chats yet.</div>';
+  if(!list.length) return q?'<div class="bot-side-empty"><span>No chats match “'+esc(botUI.histQuery)+'”.</span></div>':'<div class="bot-side-empty"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><b>No chats yet</b><span>Start your first Amazon strategy chat.</span></div>';
   return list.slice(0,50).map(c=>`<button class="bot-chat-item ${c.id===botUI.chatId?"active":""}" onclick="botOpenChat('${c.id}')"><div class="t">${esc(c.title||"New chat")}</div><div class="m"><span class="bot-chat-tag">${esc(c.account||"General")}</span><span class="bot-chat-tag">${esc(botModeLabel(c.mode))}</span><span>${botFmtDate(c.updatedAt)}</span></div></button>`).join("");
 }
 function botSearch(v){ botUI.histQuery=v; const el=$("#botChatList"); if(el)el.innerHTML=botChatListHtml(); }
@@ -3290,25 +3382,40 @@ function botMain(){
   return `<div class="bot-thread" id="botThread">${msgs}${botUI.busy?'<div class="bot-typing">Amazon Bot is thinking…</div>':""}</div>${botComposer()}`;
 }
 function botGreeting(){
-  const sug=["Should I reorder this product?","Why is my ACOS high?","How do I prepare for Q4?","Is this product good for Amazon FBA?","How many units should I order?","How do I improve my listing conversion?"];
-  return `<div class="bot-thread" id="botThread"><div class="bot-empty"><div class="big">Ask your Amazon Bot anything</div><div class="sub" style="max-width:46ch;margin:0 auto">It answers from an Amazon FBA USA perspective${botUI.account!=="General"?` using <b>${esc(botUI.account)}</b>'s Master Workbook data`:""}. Pick an account &amp; mode above for sharper, data-backed answers.</div><div class="bot-suggest" style="justify-content:center;margin-top:14px">${sug.map(s=>`<button onclick="botQuick(this)">${esc(s)}</button>`).join("")}</div></div></div>${botComposer()}`;
+  const quick=["Should I reorder this product?","Why is my ACOS high?","How many units should I order?","How do I prepare for Q4?","Is this product good for Amazon FBA?","How do I improve listing conversion?"];
+  const cards=quick.map(q=>`<button class="bot-qa" data-q="${esc(q)}" onclick="botQuickText(this)"><span class="bot-qa-ic"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span>${esc(q)}</span></button>`).join("");
+  const help=[
+    ["Inventory Help","Reorder quantity, stockout risk, safety stock, and lead time.",'<path d="M3 7l9-4 9 4-9 4-9-4zM3 7v10l9 4 9-4V7"/>'],
+    ["PPC Help","ACOS, TACOS, bids, keywords, and campaign scaling.",'<path d="M3 3v18h18M7 14l3-4 3 3 5-6"/>'],
+    ["Listing Help","Title, bullets, images, SEO, and conversion rate.",'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>']
+  ];
+  const helpCards=help.map(([t,d,p])=>`<div class="bot-help"><div class="bot-help-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${p}</svg></div><b>${t}</b><p>${d}</p></div>`).join("");
+  return `<div class="bot-thread" id="botThread"><div class="bot-welcome">
+    <div class="bot-welcome-badge"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg>Amazon FBA USA strategist</div>
+    <h2>Ask your Amazon Bot anything</h2>
+    <p>Get Amazon FBA answers using account data, official guidance, and expert frameworks.${botUI.account!=="General"?` Currently using <b>${esc(botUI.account)}</b>'s Master Workbook data.`:""}</p>
+    <div class="bot-qa-grid">${cards}</div>
+    <div class="bot-help-grid">${helpCards}</div>
+  </div></div>${botComposer()}`;
 }
 function botComposer(){
-  return `<div class="bot-compose">
-    <label class="bot-mini" style="cursor:pointer;padding:11px 12px" title="Attach a file to Knowledge Base"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.5l-8.5 8.5a5 5 0 0 1-7-7l9-9a3 3 0 0 1 4 4l-9 9a1 1 0 0 1-1.5-1.5l8.5-8.5"/></svg><input type="file" hidden accept=".txt,.md,.csv,.tsv,.json,.xlsx,.xls,.pdf,.docx" onchange="botHandleFiles(this.files,'knowledge')"></label>
-    <textarea class="textarea" id="botInput" placeholder="Ask about inventory, PPC, profit, listings, suppliers, compliance…" rows="1" onkeydown="botKey(event)" oninput="botGrow(this)"></textarea>
-    <button class="btn btn-primary" onclick="botSend()" ${botUI.busy?"disabled":""}>Send</button>
-  </div>`;
+  return `<div class="bot-compose-wrap"><div class="bot-compose">
+    <label class="bot-attach" title="Attach a file to Knowledge Base"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.5l-8.5 8.5a5 5 0 0 1-7-7l9-9a3 3 0 0 1 4 4l-9 9a1 1 0 0 1-1.5-1.5l8.5-8.5"/></svg><input type="file" hidden accept=".txt,.md,.csv,.tsv,.json,.xlsx,.xls,.pdf,.docx" onchange="botHandleFiles(this.files,'knowledge')"></label>
+    <textarea id="botInput" placeholder="Ask about inventory, PPC, profit, listings, suppliers, compliance…" rows="1" onkeydown="botKey(event)" oninput="botGrow(this)"></textarea>
+    <button class="bot-send" onclick="botSend()" ${botUI.busy?"disabled":""} title="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l16-8-6 16-3-6-7-2z"/></svg></button>
+  </div><div class="bot-compose-hint">Enter to send · Shift + Enter for a new line</div></div>`;
 }
 function botMsgHtml(m,i){
-  if(m.role==="user") return `<div class="bot-msg user"><div class="av">You</div><div class="bubble"><div class="who">You</div><div class="txt">${esc(m.content).replace(/\n/g,"<br>")}</div></div></div>`;
+  if(m.role==="user") return `<div class="bot-msg user"><div class="bubble">${esc(m.content).replace(/\n/g,"<br>")}</div></div>`;
   const meta=m.meta||{};
-  const actions=`<div class="bot-msg-actions"><button class="bot-mini" onclick="botCopy(${i})">Copy</button><button class="bot-mini ${meta.saved?"saved":""}" onclick="botToggleSave(${i})">${meta.saved?"★ Saved":"☆ Save"}</button><button class="bot-mini" onclick="botRegen(${i})">Regenerate</button></div>`;
-  return `<div class="bot-msg bot"><div class="av">AB</div><div class="bubble"><div class="who">Amazon Bot <span class="bot-chat-tag">${esc(meta.mode||"")}</span><span class="bot-chat-tag">${meta.engine==="ai"?"AI":"Local"}</span></div><div class="txt bot-ans">${m.html||("<p>"+esc(m.content).replace(/\n/g,"<br>")+"</p>")}</div>${actions}</div></div>`;
+  const tags=`<span class="bot-chat-tag">${esc(meta.mode||"General")}</span><span class="bot-chat-tag ${meta.engine==="ai"?"ai":""}">${meta.engine==="ai"?"AI":"Local"}</span>`;
+  const actions=`<div class="bot-msg-actions"><button class="bot-mini" onclick="botCopy(${i})"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy</button><button class="bot-mini ${meta.saved?"saved":""}" onclick="botToggleSave(${i})">${meta.saved?"★ Saved":"☆ Save"}</button><button class="bot-mini" onclick="botRegen(${i})"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>Regenerate</button></div>`;
+  return `<div class="bot-msg bot"><div class="av">AB</div><div class="bubble"><div class="who">Amazon Bot ${tags}</div><div class="txt bot-ans">${m.html||("<p>"+esc(m.content).replace(/\n/g,"<br>")+"</p>")}</div>${actions}</div></div>`;
 }
 function botKey(e){ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); botSend(); } }
 function botGrow(t){ t.style.height="auto"; t.style.height=Math.min(160,t.scrollHeight)+"px"; }
 function botQuick(btn){ const inp=$("#botInput"); if(inp)inp.value=btn.textContent; botSend(); }
+function botQuickText(btn){ const inp=$("#botInput"); if(inp)inp.value=btn.dataset.q||btn.textContent.trim(); botSend(); }
 function botToggleSide(){ botUI.sideOpen=!botUI.sideOpen; renderBot(); }
 function botSetAccount(a){ botUI.account=a; const c=botCurrentChat(); if(c){c.account=a;botPersistChat(c);} }
 function botSetMode(m){ botUI.mode=m; const c=botCurrentChat(); if(c){c.mode=m;botPersistChat(c);} }
