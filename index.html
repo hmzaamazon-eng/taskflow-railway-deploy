@@ -365,6 +365,65 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
 .fba-tbl .pname-input{font-weight:600}
 .fba-tbl .pasin-input{font-size:12px;color:var(--text-3);margin-top:3px}
 .fba-tbl .num-input{text-align:right;font-variant-numeric:tabular-nums}
+/* 30-Day Operator Program */
+.op-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--border);padding-bottom:2px}
+.op-tab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-3);font:inherit;font-weight:600;font-size:14px;padding:9px 12px;cursor:pointer;border-radius:8px 8px 0 0;transition:.15s}
+.op-tab:hover{color:var(--text);background:var(--surface-3)}
+.op-tab.active{color:var(--brand-1);border-bottom-color:var(--brand-1)}
+.op-phase{font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--brand-1);text-transform:uppercase;letter-spacing:.08em;margin:22px 0 10px}
+.op-phase:first-child{margin-top:0}
+.op-row{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--border);border-radius:13px;background:var(--surface);cursor:pointer;transition:.14s;margin-bottom:9px}
+.op-row:hover{border-color:var(--brand-1);transform:translateX(2px)}
+.op-row .dn{width:40px;height:40px;border-radius:11px;flex:none;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;background:var(--surface-3);color:var(--text-2);border:1px solid var(--border)}
+.op-row.done .dn{background:#16a34a;color:#fff;border-color:#16a34a}
+.op-row.partial .dn{background:color-mix(in srgb,#dd9b34 18%,transparent);color:#b97e1d;border-color:#e6c787}
+.op-row .ttl{font-weight:600;font-family:var(--font-display)}
+.op-row .gl{font-size:13px;color:var(--text-3);margin-top:2px}
+.op-back{background:none;border:none;color:var(--text-3);font:inherit;font-weight:600;cursor:pointer;padding:6px 0;margin-bottom:6px;display:inline-flex;align-items:center;gap:6px}
+.op-back:hover{color:var(--text)}
+.op-daytop{display:flex;align-items:center;gap:14px;margin:8px 0 6px}
+.op-daytop .num{width:50px;height:50px;border-radius:13px;flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--brand-1) 14%,transparent);color:var(--brand-1);font-family:var(--font-display);font-weight:700;font-size:20px}
+.op-sec{font-family:var(--font-display);font-weight:600;font-size:15px;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.op-prose{color:var(--text-2);font-size:14.5px;line-height:1.65}
+.op-prose ul{margin:8px 0;padding-left:20px}.op-prose li{margin:4px 0}
+.op-prose b,.op-prose strong{color:var(--text)}
+.op-task{display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:11px;margin-bottom:7px;background:var(--surface);cursor:pointer;transition:.12s}
+.op-task:hover{background:var(--surface-3)}
+.op-task .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--line2,#cbd2e0);flex:none;margin-top:1px;display:grid;place-items:center;color:#fff;transition:.12s}
+.op-task .box svg{width:13px;height:13px;opacity:0}
+.op-task[data-st="1"] .box{border-color:#dd9b34;background:color-mix(in srgb,#dd9b34 22%,transparent)}
+.op-task[data-st="2"] .box{border-color:#16a34a;background:#16a34a}
+.op-task[data-st="2"] .box svg{opacity:1}
+.op-task[data-st="2"] .tx{text-decoration:line-through;color:var(--text-3)}
+.op-task .tx{font-size:14px;line-height:1.5}
+.op-tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:6px;margin-right:8px;vertical-align:middle;background:var(--surface-3);color:var(--text-2);text-transform:uppercase}
+.op-tag.m{background:#eef2ff;color:#4f46e5}.op-tag.a{background:#ecfdf5;color:#047857}.op-tag.sc{background:#fef3c7;color:#b45309}
+.op-tag.ss{background:#f0f9ff;color:#0369a1}.op-tag.sop{background:#fdf4ff;color:#a21caf}.op-tag.k{background:#fff1f2;color:#be123c}.op-tag.ai{background:#f5f3ff;color:#7c3aed}
+html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-theme="dark"] .op-tag.sc,html[data-theme="dark"] .op-tag.ss,html[data-theme="dark"] .op-tag.sop,html[data-theme="dark"] .op-tag.k,html[data-theme="dark"] .op-tag.ai{background:var(--surface-3);color:var(--text-2)}
+.op-reflect{width:100%;box-sizing:border-box;margin-top:8px}
+.op-deliver{background:color-mix(in srgb,var(--brand-1) 8%,transparent);border:1px solid color-mix(in srgb,var(--brand-1) 30%,transparent);border-radius:12px;padding:14px 16px;margin-top:6px}
+.op-deliver .k{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--brand-1);margin-bottom:4px}
+.op-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.op-kpi{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.op-kpi .k{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.op-kpi .v{font-size:24px;font-weight:700;font-family:var(--font-display);margin-top:4px}
+.op-tbl{width:100%;border-collapse:collapse;font-size:14px}
+.op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.op-tbl tr.grp td{background:var(--surface-3);font-weight:700;font-family:var(--font-display);color:var(--text);text-transform:none;letter-spacing:0}
+.op-tbl input{width:100%;border:1px solid transparent;background:transparent;color:var(--text);font:inherit;padding:6px 8px;border-radius:8px}
+.op-tbl input:hover{border-color:var(--border)}.op-tbl input:focus{outline:none;border-color:var(--brand-1);background:var(--surface)}
+.op-tbl .mname small{display:block;color:var(--text-3);font-size:12px;font-weight:400}
+.op-vault-entry{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--surface)}
+.op-vcat{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:6px;background:color-mix(in srgb,var(--brand-1) 12%,transparent);color:var(--brand-1);flex:none;margin-top:2px}
+.op-vault-entry .vb{flex:1;min-width:0}.op-vault-entry .vb b{font-size:14.5px}.op-vault-entry .vb p{margin:3px 0 0;color:var(--text-3);font-size:13px}
+.op-vault-entry .del{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px}
+.op-vault-entry .del:hover{color:#ef4444;background:color-mix(in srgb,#ef4444 12%,transparent)}
+.op-rate{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.op-rate button{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);font:inherit;font-weight:600;cursor:pointer}
+.op-rate button.on{background:var(--brand-1);color:#fff;border-color:var(--brand-1)}
+.op-bigprog{height:10px;border-radius:99px;background:var(--surface-3);overflow:hidden;margin:6px 0}
+.op-bigprog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));border-radius:99px;transition:.4s}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -403,6 +462,8 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
       <button class="nav-item" data-view="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Analytics</button>
       <div class="nav-label">Research</div>
       <button class="nav-item" data-view="fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/><path d="M11 8.5v5M9.5 12.5h2a1 1 0 0 0 0-2h-1a1 1 0 0 1 0-2h2"/></svg>FBA Finder</button>
+      <div class="nav-label">Grow</div>
+      <button class="nav-item" data-view="operator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>Operator 30</button>
       <div class="nav-label">Manage</div>
       <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>Data &amp; Backup</button>
     </nav>
@@ -641,6 +702,15 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
         <div class="card" style="padding:0;overflow:auto">
           <table class="fba-tbl" id="fbaTable"></table>
         </div>
+      </section>
+
+      <!-- ===== 30-DAY OPERATOR PROGRAM ===== -->
+      <section class="view" id="view-operator">
+        <div class="view-head">
+          <div><h1>30-Day Amazon Operator</h1><div class="sub">Advanced operator program — systems, finance, inventory, PPC &amp; 8-figure scaling</div></div>
+        </div>
+        <div class="op-tabs" id="opTabs"></div>
+        <div id="opBody"></div>
       </section>
     </main>
 
@@ -1562,6 +1632,651 @@ function deleteProduct(id){
   });
 }
 
+/* ===================== 30-DAY AMAZON OPERATOR PROGRAM ===================== */
+const PHASES=[
+  {n:1,name:"Operator Mindset",range:[1,3]},
+  {n:2,name:"Financial Intelligence",range:[4,7]},
+  {n:3,name:"Inventory Mastery",range:[8,10]},
+  {n:4,name:"Advanced PPC",range:[11,14]},
+  {n:5,name:"Listing & CRO",range:[15,17]},
+  {n:6,name:"Data & Dashboards",range:[18,20]},
+  {n:7,name:"Brand Building",range:[21,22]},
+  {n:8,name:"Team & Delegation",range:[23,24]},
+  {n:9,name:"Risk Management",range:[25,27]},
+  {n:10,name:"8-Figure Scaling",range:[28,30]}
+];
+function D(phase,topic,goal,why,theory,tasks,reflect,deliverable,vault){return{phase,topic,goal,why,theory,tasks,reflect,deliverable,vault};}
+const PROGRAM={};
+PROGRAM[1]=D(1,"How 8-figure operators think","Shift from technician to operator",
+ "At 7–8 figures the constraint is no longer tactics — it's your operating system, your numbers, and your ability to delegate. The technician who does every task caps out; the operator who builds systems compounds. Aggregators value brands on owner-independence and SOP maturity, not just revenue.",
+ `<p><b>Operator vs technician.</b> A technician trades hours for output. An operator builds machines that produce output without them. Your only three real jobs as an operator: <b>capital allocation</b>, <b>system design</b>, and <b>talent</b>.</p><p><b>The 4 forms of leverage</b> (applied to Amazon): <b>labour</b> (VAs/agencies), <b>capital</b> (inventory + ad spend), <b>code/systems</b> (SOPs, automations, dashboards), and <b>media</b> (listings, content, brand). Money compounds where these stack.</p><p><b>Example:</b> two sellers both do $3M. Seller A answers every email and pulls reports by hand — worth ~2.5× SDE to a buyer. Seller B has SOPs, a trained team, and a dashboard — runs 5 hrs/week and sells for 4×+. Same revenue, very different enterprise value. You're building Seller B.</p>`,
+ ["[M] Write your week split: % of time IN the business (doing) vs ON it (deciding/building). Be brutally honest.",
+  "[A] List every recurring task you personally do across all 3 accounts; tag each Keep / Automate / Delegate / Delete.",
+  "[SS] Create your master workbook with tabs: Dashboard, P&L, Inventory, PPC, SOP Library, Hiring, Vault.",
+  "[SOP] Write your first SOP with the template: Trigger → Steps → Owner → KPI → Review cadence (pick a daily task).",
+  "[K] Define one North-Star KPI per account (e.g. monthly net profit $) and record today's baseline.",
+  "[SC] Open all 3 accounts and confirm you have admin + correct user-permission roles set on each.",
+  "[AI] Ask an AI to contrast a $1M vs $10M operator's weekly calendar; extract 5 habits to adopt this month."],
+ ["Which 3 tasks could a $250/mo VA do 90% as well?","Where am I personally the bottleneck right now?","What would I do differently if I could only work 5 hours a week?"],
+ "Master workbook created, full role audit (Keep/Automate/Delegate/Delete), and your first SOP written.",
+ ["[F] Technician→Operator: build machines, don't be one","[F] 4 forms of leverage applied to Amazon","[SOP] SOP template: Trigger→Steps→Owner→KPI→Review"]);
+
+PROGRAM[2]=D(1,"Your operating system & cadence","Install the meeting & review rhythm",
+ "Elite operators run on a fixed cadence: daily check, weekly business review, monthly strategic review, quarterly planning. The rhythm is what keeps three accounts from descending into chaos. Without cadence you react; with it you anticipate.",
+ `<p><b>The operating cadence:</b></p><ul><li><b>Daily (15 min):</b> account health, yesterday's sales/spend, stockout & buy-box alerts, anything on fire.</li><li><b>Weekly (60–90 min):</b> KPI review vs target, PPC harvest, restock decisions, 3 priorities for the week.</li><li><b>Monthly:</b> full P&L, contribution margin by SKU, profit-leak hunt, hiring/SOP gaps.</li><li><b>Quarterly:</b> capital allocation, product roadmap, brand strategy.</li></ul><p><b>Example:</b> a portfolio operator runs a Monday 30-min "all-accounts standup" off one dashboard — green/amber/red per account — and only drills into red. That's how one person stays on top of 3 P&Ls.</p>`,
+ ["[M] Block recurring calendar slots: daily 15-min, weekly review, monthly review. Treat them as immovable.",
+  "[SOP] Write the Daily Operator Checklist SOP (the 15-min routine) so a VA could eventually run it.",
+  "[SS] Build a 'Dashboard' tab that rolls up all 3 accounts to one green/amber/red status line each.",
+  "[SC] For each account, bookmark: Account Health, Voice of Customer, Business Reports, Inventory, Campaign Manager.",
+  "[A] Identify which review (daily/weekly/monthly) each of your current fire-drills should have caught earlier.",
+  "[K] Set the 6–8 KPIs your weekly review will track (you'll refine targets in Phase 2).",
+  "[AI] Have an AI draft a weekly-business-review agenda template; adapt it to your accounts."],
+ ["What breaks first if I disappear for 2 weeks — and which cadence would catch it?","Am I reacting to problems a weekly review would have surfaced?"],
+ "A live calendar cadence, a Daily Operator Checklist SOP, and a one-line all-accounts status on your Dashboard tab.",
+ ["[F] Daily/Weekly/Monthly/Quarterly operating cadence","[SOP] Daily Operator Checklist","[T] Weekly Business Review agenda"]);
+
+PROGRAM[3]=D(1,"Decision-making, delegation & leverage","Decide faster, delegate cleanly",
+ "Scaling is a series of decisions made with incomplete data. Operators use frameworks to decide fast and delegate everything that isn't a high-leverage decision. The skill is knowing which decisions are one-way doors (decide slowly) vs two-way doors (decide fast, reverse if wrong).",
+ `<p><b>One-way vs two-way doors (Bezos).</b> Two-way doors (bid changes, image swaps, coupon tests) are reversible — decide in minutes. One-way doors (new manufacturer, large PO, brand pivot) deserve real analysis. Most sellers agonize over two-way doors and rush one-way doors. Flip it.</p><p><b>Delegation levels:</b> 1) Do exactly as told → 2) Do and report → 3) Recommend, then act → 4) Act and report → 5) Full ownership. Move each task up the ladder over time. Delegation fails when you skip levels.</p><p><b>Example:</b> "should I raise this keyword's bid 15%?" is a two-way door — a trained VA at level 3 proposes it, you approve in one line. "Should I move 60% of cash into one PO?" is a one-way door — you model it first.</p>`,
+ ["[A] Take last week's decisions and label each one-way or two-way; note how long you spent vs how long you should have.",
+  "[SOP] Write a Delegation SOP that assigns each recurring task a delegation level (1–5) and an owner.",
+  "[M] Pick 2 two-way-door decisions you currently make and hand them to a VA at level 3 (recommend→approve).",
+  "[SS] Add an 'Owner' and 'Delegation level' column to your task audit from Day 1.",
+  "[K] Track 'decisions delegated this week' as a leverage KPI.",
+  "[AI] Use AI to build a decision log template (decision, type, options, choice, expected outcome, review date)."],
+ ["Which one-way-door decision am I about to make too fast?","What am I keeping out of ego rather than necessity?"],
+ "A decision log, a Delegation SOP with levels per task, and 2 decisions actually handed off.",
+ ["[F] One-way vs two-way door decisions","[F] 5 levels of delegation","[T] Decision log template"]);
+
+PROGRAM[4]=D(2,"True unit economics & contribution margin","Know the real profit per unit",
+ "Most sellers track 'profit' with a gut number. Operators know contribution margin to the cent per SKU, because every restock, ad, and pricing decision flows from it. If you don't know CM, you're flying blind into scaling.",
+ `<p><b>Contribution margin (CM)</b> = Sell price − (COGS + Amazon referral fee + FBA fee + freight/duty per unit + returns reserve + variable ad cost). It's the cash each unit throws off to cover overhead and profit. <b>CM% = CM ÷ sell price.</b></p><p>Net profit only exists after fixed costs (software, salaries, your pay). Two SKUs at the same price can have wildly different CM — and that determines which you scale.</p><p><b>Example:</b> $29.99 product. COGS $5.10, freight/duty $1.20, referral 15% = $4.50, FBA $5.45, returns reserve 2% = $0.60, ad cost/unit $4.20. CM = 29.99 − 21.05 = <b>$8.94 (29.8%)</b>. If a competitor forces price to $26.99, CM drops to ~$5.94 — a 34% profit cut from a 10% price move. That sensitivity is why operators model CM, not 'margin'.</p>`,
+ ["[SS] Build a CM calculator per SKU: every cost line above, output CM $ and CM%.",
+  "[A] Compute CM for your top 10 SKUs across accounts; rank them by CM$ and by CM%.",
+  "[SC] Pull exact fees from the FBA revenue calculator / fee preview report for each SKU to replace estimates.",
+  "[A] Flag any SKU with CM% under your threshold (e.g. <20%) as a fix-or-cut candidate.",
+  "[K] Add blended CM% as a tracked KPI per account.",
+  "[SOP] Write the SOP for recomputing CM whenever COGS, fees, or freight change.",
+  "[AI] Have AI stress-test your CM model: list cost lines sellers commonly forget (storage, removals, reimbursements, LTSF)."],
+ ["Which 'bestseller' is actually a low-CM treadmill?","If price dropped 10%, which SKUs go underwater?"],
+ "A per-SKU CM calculator populated for your top 10 SKUs, with fix-or-cut flags.",
+ ["[F] Contribution margin formula & why it beats 'margin'","[T] Per-SKU CM calculator","[C] Hidden cost lines checklist (storage, LTSF, removals, returns)"]);
+
+PROGRAM[5]=D(2,"Cash flow & the cash conversion cycle","Stop growth from starving cash",
+ "Amazon businesses die profitable. You can be net-profitable on paper and still run out of cash because inventory ties up money for months before it sells and Amazon pays you. The cash conversion cycle (CCC) is the operator's most important survival metric.",
+ `<p><b>Cash Conversion Cycle = Days Inventory Outstanding + Days Sales Outstanding − Days Payables Outstanding.</b> It's how many days your cash is trapped. On Amazon, DIO is huge (production + freight + warehouse + sell-through), payout is ~14 days, and your supplier terms (DPO) are your lever.</p><p><b>Example:</b> 30 days production + 35 days freight + 60 days to sell = 125 DIO. Amazon holds ~14 days. Supplier gives 0 terms → CCC ≈ 139 days. Your cash is locked for ~4.5 months per cycle. Negotiate 30/70 terms or LC and CCC drops fast — that freed cash funds the next PO without a loan.</p>`,
+ ["[SS] Build a 13-week rolling cash-flow forecast: starting cash, Amazon payouts, PO payments, ad spend, fixed costs.",
+  "[A] Calculate your current CCC per account using real production/freight/sell-through days.",
+  "[M] List your supplier payment terms; identify where you can negotiate deposits down or net terms up.",
+  "[A] Find your 'cash gap' weeks in the 13-week forecast where outflows exceed cash + payouts.",
+  "[K] Track CCC (days) and lowest projected cash balance as KPIs.",
+  "[SOP] Write the SOP for updating the 13-week forecast every Monday.",
+  "[AI] Ask AI to list levers to shorten CCC for an FBA brand and rank them by effort vs impact."],
+ ["How many days is my cash trapped, and what's the cheapest day to cut?","Which week am I closest to running dry?"],
+ "A 13-week cash-flow forecast and your CCC calculated per account with shortening levers identified.",
+ ["[F] Cash Conversion Cycle (DIO+DSO−DPO)","[T] 13-week rolling cash-flow forecast","[L] 'Amazon businesses die profitable' — cash beats profit"]);
+
+PROGRAM[6]=D(2,"Inventory financing & funding growth","Fund restocks without choking cash",
+ "Once CM and CCC are clear, the question becomes: how do you fund growth without giving away equity or running dry? Operators use a stack of financing matched to inventory's predictable cycle — debt is cheap when it funds a known-CM, fast-turning asset.",
+ `<p><b>The financing stack</b> (cheapest→costliest): supplier terms → revolving line of credit → inventory-based lenders (Wayflyer, 8fig, AccrueMe, Amazon Lending) → term loans → credit cards (bridge only). Match the tool to the cycle: short-cycle inventory = short-term revolving capital, not 5-year debt.</p><p><b>Rule:</b> only borrow against inventory whose CM% comfortably exceeds the cost of capital. If a lender charges ~1.5%/mo (~18%/yr) and your inventory turns 4×/yr at 28% CM, the math works. If CM is 12%, it doesn't.</p><p><b>Example:</b> $50k PO, 28% CM, turns in 90 days. Financing cost ~4.5% for the period = $2,250. Gross profit on the cycle ≈ $14k+. Leverage accelerates the compounding — as long as demand is proven.</p>`,
+ ["[SS] Build a 'cost of capital vs CM' checker: input financing rate + turn rate, output go/no-go.",
+  "[A] Map which SKUs are safe to finance (high CM, proven velocity) vs which are not.",
+  "[M] Shortlist 2–3 financing sources and note rates, limits, and repayment structure.",
+  "[A] Model one upcoming PO funded with cash vs financed — compare ending cash and ROI.",
+  "[K] Track debt-to-inventory ratio and weighted cost of capital as KPIs.",
+  "[SOP] Write a 'when to finance a PO' decision SOP with hard thresholds.",
+  "[AI] Have AI compare major FBA inventory-finance providers and the questions to ask before signing."],
+ ["Is my growth limited by demand or by cash? (be honest)","Which SKUs would I never finance, and why?"],
+ "A financing decision SOP with thresholds and one upcoming PO modeled cash-vs-financed.",
+ ["[F] The inventory financing stack","[F] Only finance when CM% >> cost of capital","[T] Cost-of-capital vs CM checker"]);
+
+PROGRAM[7]=D(2,"TACOS, net profit & profit-leak detection","Find and plug the leaks",
+ "Revenue hides sins. Operators audit for profit leaks — the silent drains (fees, returns, storage, wasted ad spend, dead SKUs) that quietly eat net profit. TACOS is the single best lens for whether ad spend is building or buying your business.",
+ `<p><b>TACOS = total ad spend ÷ total revenue</b> (not just ad-attributed sales). Falling TACOS at stable/growing revenue = organic rank is carrying you (healthy). Rising TACOS with flat revenue = you're renting sales (leak).</p><p><b>Common profit leaks:</b> long-term storage fees, aged inventory, high return-rate SKUs, ad spend on converting-poorly terms, FBA dimensional/weight misclassification, missed reimbursements, coupons/discounts left running, low-CM SKUs scaled by mistake.</p><p><b>Example:</b> a brand at 11% TACOS discovers 30% of spend is on 6 search terms with 1.8% CVR and ACOS over 90% — pausing them lifts net margin ~3 points overnight with no revenue loss. That's a pure leak plug.</p>`,
+ ["[SC] Pull the Search Term Report (60–90 days) and Returns report for each account.",
+  "[A] Find the bottom-decile search terms (high spend, high ACOS, low CVR) — quantify the monthly bleed.",
+  "[A] Build a P&L per account: revenue − COGS − Amazon fees − ad spend − returns − storage = net profit.",
+  "[SC] Check FBA Inventory > aged inventory & long-term storage fees; list SKUs incurring them.",
+  "[K] Add TACOS, net margin %, and 'leak $ found' to your KPI dashboard.",
+  "[SOP] Write the monthly Profit-Leak Audit SOP (the exact reports + thresholds to check).",
+  "[AI] Feed AI your search-term export and ask it to cluster wasted spend (it'll surface leaks fast)."],
+ ["Is my TACOS trend telling me I'm building or renting my rank?","What's the single biggest leak I can plug this week?"],
+ "A net-profit P&L per account and a ranked list of profit leaks with dollar amounts and fixes.",
+ ["[F] TACOS as build-vs-rent signal","[C] Profit-leak audit checklist","[SOP] Monthly Profit-Leak Audit"]);
+
+PROGRAM[8]=D(3,"Demand forecasting","Predict units, not vibes",
+ "Stockouts kill rank; overstock kills cash. Operators forecast demand per SKU with seasonality and growth baked in, then drive every reorder off the forecast — not gut feel. Forecasting is the spine of inventory mastery.",
+ `<p><b>Base method:</b> velocity (units/day) × lead-time days + safety stock, adjusted for trend and seasonality. Use a trailing 30/60/90-day velocity blend so a single spike doesn't distort it.</p><p><b>Safety stock</b> covers demand variability and lead-time variability — higher for erratic SKUs and unreliable suppliers. <b>Reorder point = (avg daily sales × lead time) + safety stock.</b></p><p><b>Example:</b> SKU sells 40/day, lead time 75 days (prod+freight+check-in), safety stock 14 days. ROP = 40×75 + 40×14 = 3,560 units. When on-hand+inbound hits 3,560, you reorder — automatically, before a human notices.</p>`,
+ ["[SS] Build a forecast tab: 30/60/90-day velocity, trend factor, seasonality index, and a 6-month unit projection per SKU.",
+  "[A] Pull 12 months of unit sales and identify each SKU's seasonality curve (Q4 multiplier, etc.).",
+  "[A] Compute reorder point and safety stock for your top 10 SKUs.",
+  "[SC] Cross-check with Amazon's restock/forecast suggestions — note where yours differs and why.",
+  "[K] Track forecast accuracy (forecast vs actual %) as a KPI you improve over time.",
+  "[SOP] Write the SOP for refreshing forecasts monthly and before peak season.",
+  "[AI] Have AI build a seasonality index from your monthly sales and flag SKUs with the strongest seasonal swing."],
+ ["Which SKU's seasonality am I underestimating going into Q4?","Where is my lead time longer than I assume?"],
+ "A per-SKU demand forecast with reorder points and safety stock for your top 10 SKUs.",
+ ["[F] Reorder point = (avg daily × lead time) + safety stock","[T] Demand forecast workbook","[C] Forecast inputs: velocity, trend, seasonality, lead-time variance"]);
+
+PROGRAM[9]=D(3,"Restock planning & reorder systems","Never guess a PO again",
+ "An operator's restock decisions are systematic: the forecast plus cash plus lead times produce a reorder calendar. The goal is a repeatable system a VA can run — POs placed on time, sized right, sequenced to protect cash.",
+ `<p><b>The restock engine</b> combines: forecasted demand, current on-hand + inbound, lead time, MOQ, supplier terms, and available cash. Output: what to order, how much, and when — laid out on a 6-month PO calendar.</p><p><b>Sequencing matters:</b> stagger POs so you're not paying three suppliers the same week (protects CCC). Split shipments (air a portion, sea the rest) to balance speed vs cost on fast movers.</p><p><b>Example:</b> instead of one 5,000-unit sea order, air 800 units (covers the rank-critical gap) + sea 4,200. You stay in stock, protect BSR, and don't overspend on air freight. That blend is an operator move.</p>`,
+ ["[SS] Build a 6-month rolling PO calendar: SKU, order-by date, qty, supplier, $ outlay, expected in-stock date.",
+  "[A] Run your top SKUs through the engine; identify any that need a PO in the next 30 days.",
+  "[M] Identify SKUs at stockout risk before their next PO lands; plan air/split shipments where needed.",
+  "[A] Sequence PO payments against your 13-week cash forecast to avoid a cash-gap week.",
+  "[SOP] Write the Reorder SOP a VA can execute (when ROP is hit → check cash → draft PO → you approve).",
+  "[K] Track stockout days and 'POs placed on time %' as KPIs.",
+  "[AI] Have AI sanity-check your PO calendar against your cash forecast and flag collisions."],
+ ["Which SKU will stock out before its PO arrives — and what's the fix?","Am I sequencing POs to protect cash, or paying everyone at once?"],
+ "A 6-month PO calendar sequenced against cash, plus a Reorder SOP a VA can run.",
+ ["[F] Restock engine inputs & staggered PO sequencing","[F] Air/sea split to protect rank without overspending","[SOP] Reorder SOP (ROP→cash→draft→approve)"]);
+
+PROGRAM[10]=D(3,"Inventory health audit","Kill aging & overstock",
+ "Healthy inventory is a balance: enough to never stock out, not so much that cash and storage bleed. Operators run a monthly inventory health audit on IPI, aging, sell-through, and excess — and act decisively on the dead weight.",
+ `<p><b>Key metrics:</b> IPI (Inventory Performance Index — keeps storage limits open), sell-through rate, days of supply, aged inventory (90/180/270/365), and excess units. Low IPI or aging inventory = capital and storage fees trapped.</p><p><b>Decisive actions on dead inventory:</b> price-down/clearance, ad push to liquidate, bundle, remove/return to 3PL, or last-resort liquidation. Holding hoping it sells is the expensive option (LTSF compounds).</p><p><b>Example:</b> 600 units aged 200+ days at $0.86/mo storage + looming LTSF. A 25% clearance + targeted SP campaign liquidates in 3 weeks, recovers cash, and protects IPI — beating paying storage for another quarter.</p>`,
+ ["[SC] Pull FBA Inventory Health + Inventory Performance Index for each account.",
+  "[A] List aged inventory by bucket (90/180/270/365) and total trapped cash + monthly storage cost.",
+  "[M] Decide and schedule an action for every aged/excess SKU (clear, bundle, ad-push, remove).",
+  "[A] Compute sell-through and days-of-supply per SKU; flag both overstock and thin SKUs.",
+  "[K] Track IPI, excess inventory $, and aged-units as KPIs.",
+  "[SOP] Write the monthly Inventory Health Audit SOP with action thresholds.",
+  "[AI] Ask AI to draft a liquidation decision tree (clear vs bundle vs remove) by age and CM."],
+ ["What's my dead inventory really costing me each month?","Am I confusing 'in stock' with 'healthy'?"],
+ "An inventory health audit with a scheduled action for every aged/excess SKU.",
+ ["[C] Inventory health audit checklist (IPI, aging, sell-through, excess)","[F] Dead-inventory action ladder","[SOP] Monthly Inventory Health Audit"]);
+
+PROGRAM[11]=D(4,"PPC campaign architecture","Build ads you can actually steer",
+ "Random campaigns can't be optimized. Operators run a deliberate architecture that separates research from performance, controls where budget flows, and makes every dollar's job obvious. Structure first, bids later.",
+ `<p><b>A clean architecture:</b> separate campaigns by intent — <b>Research/Discovery</b> (broad, auto, category targeting to find terms) → <b>Performance</b> (exact-match, tightly themed) → <b>Defense/Brand</b> (your brand terms) → <b>Competitor conquesting</b>. Single keyword per ad group (or tight clusters) so you can read and steer each.</p><p><b>Why isolate:</b> if research and performance share a campaign, you can't protect a proven term's budget from being eaten by experiments. Isolation = control.</p><p><b>Example:</b> Auto + broad campaigns mine search terms; winners graduate to an exact-match performance campaign with higher bids; the term is added as negative in the research campaigns so they keep discovering instead of re-buying what you already know.</p>`,
+ ["[SC] Map your current campaigns; label each Research / Performance / Brand / Competitor (or 'unclear' = fix).",
+  "[M] Restructure one product's ads into the clean architecture as a template for the rest.",
+  "[A] Identify overlap where research and performance compete for the same terms.",
+  "[SS] Build a campaign map tab: campaign → type → target ACOS/TACOS role → budget.",
+  "[SOP] Write the Campaign Build SOP (naming convention, structure, match types, negatives).",
+  "[K] Track ad-attributed % vs organic %, and TACOS, per product.",
+  "[AI] Have AI propose a naming convention so any VA can read campaign purpose at a glance."],
+ ["Can I tell each campaign's job in one glance? If not, why?","Where are my campaigns competing with each other?"],
+ "One product fully restructured into the clean architecture + a Campaign Build SOP and naming convention.",
+ ["[F] Research→Performance→Brand→Competitor architecture","[F] Single-keyword isolation for control","[SOP] Campaign Build SOP + naming convention"]);
+
+PROGRAM[12]=D(4,"Search-term isolation & harvesting","Mine winners, starve waste",
+ "The money in PPC is in the search-term report. Operators run a harvesting system: discovery campaigns find converting terms, winners are isolated into exact-match performance, and waste is negated — continuously. This is the engine that lowers ACOS while growing sales.",
+ `<p><b>Harvesting loop:</b> 1) discovery (auto/broad) surfaces customer search terms → 2) a converting term graduates to its own exact-match ad group/campaign with a deliberate bid → 3) the term is negated in discovery so spend keeps finding new terms → 4) non-converting terms get negated entirely.</p><p><b>Thresholds make it systematic:</b> e.g. graduate a term after ≥2 orders and ACOS ≤ target; negate after spend > 1.5× target CPA with 0 orders. Numbers, not feelings.</p><p><b>Example:</b> a discovery campaign spends $600/mo; harvesting moves 9 converting terms to exact match and negates 22 wasteful ones. Next month the same $600 finds new terms while the 9 winners scale in performance at half the ACOS.</p>`,
+ ["[SC] Export 60–90 day search-term reports for each account.",
+  "[A] Tag every term: Graduate (converting), Negate (wasteful), Watch (early). Use hard thresholds.",
+  "[M] Move graduates into exact-match performance ad groups; add them as negatives in discovery.",
+  "[M] Apply negative keywords/ASINs for the wasteful terms.",
+  "[SOP] Write the weekly Search-Term Harvesting SOP with exact graduate/negate thresholds.",
+  "[K] Track harvested terms/week, negated terms/week, and blended ACOS trend.",
+  "[AI] Use AI to cluster the search-term export and auto-suggest graduate/negate lists for your review."],
+ ["What % of my spend is on terms that have never converted?","Is my discovery still discovering, or re-buying known winners?"],
+ "A completed harvest (graduates isolated, waste negated) and a weekly Harvesting SOP with thresholds.",
+ ["[F] The harvesting loop (discover→graduate→negate)","[C] Graduate/negate threshold rules","[SOP] Weekly Search-Term Harvesting"]);
+
+PROGRAM[13]=D(4,"Ranking strategy & TACOS-driven scaling","Buy rank that pays you back",
+ "Ranking is bought with conversions, then defended with organic strength. Operators push aggressively to rank for priority keywords, then pull back ad spend as organic takes over — watching TACOS, not ACOS, to know when rank is self-sustaining.",
+ `<p><b>The rank-then-relax model:</b> for a priority keyword, bid up to win top placement and drive sales velocity → Amazon rewards velocity + CVR with organic rank → as organic rank rises, ease bids → TACOS falls while revenue holds. You've converted paid sales into owned rank.</p><p><b>Don't over-rank low-CM keywords.</b> Choose 3–5 priority keywords per product where ranking #1 organic actually pays, given CM. Vanity rank on a low-CM term is a loss.</p><p><b>Example:</b> push a hero keyword for 3 weeks at 35% ACOS to reach page-1 top; organic orders climb; you taper bids and TACOS settles at 9% with rank holding. The early 'overspend' was a rank investment with a measurable payback.</p>`,
+ ["[A] Pick 3–5 priority keywords per hero product where organic rank is worth buying (check CM + volume).",
+  "[SC] Record current organic rank for each priority keyword (baseline) per account.",
+  "[M] Set a rank-push plan (placement bids + budget) and a taper rule tied to organic-rank milestones.",
+  "[A] Model the payback: extra ad spend now vs organic sales gained, watched via TACOS.",
+  "[K] Track organic rank for priority keywords weekly + TACOS per product.",
+  "[SOP] Write the Rank-and-Relax SOP (push criteria, taper triggers, kill criteria).",
+  "[AI] Have AI build a keyword-priority score = volume × CM × relevance to choose rank targets."],
+ ["Which keyword would change my business if I owned page-1 organic?","Am I buying rank on a keyword my CM can't afford?"],
+ "A priority-keyword rank plan with baselines, taper rules, and TACOS payback modeled.",
+ ["[F] Rank-then-relax: convert paid sales into owned rank","[F] Keyword priority = volume × CM × relevance","[SOP] Rank-and-Relax SOP"]);
+
+PROGRAM[14]=D(4,"Bid, placement & budget management","Tune the machine",
+ "With architecture and harvesting in place, daily PPC becomes disciplined tuning: bids to target ACOS, placement multipliers where conversion is best, and budgets allocated to the campaigns that build the business. Operators do this by rule, not mood.",
+ `<p><b>Bids:</b> move toward target by CVR and ACOS, in small steps (±10–15%), giving each change time to gather data. <b>Placements:</b> use placement reports — if 'Top of Search' converts best, apply a placement multiplier there rather than blanket-raising bids. <b>Budgets:</b> uncap proven performers, cap experiments; never let a winner go budget-limited mid-day.</p><p><b>Dayparting/seasonality:</b> shift budget to high-conversion hours/days if your data supports it.</p><p><b>Example:</b> placement report shows Top-of-Search at 9% CVR vs Rest-of-Search at 3%. Instead of raising the keyword bid (which lifts all placements), you add a +50% Top-of-Search multiplier — capturing the best spot efficiently and leaving low-CVR placements cheap.</p>`,
+ ["[SC] Pull placement reports; identify the best-converting placement per key campaign.",
+  "[M] Apply placement multipliers where data justifies; adjust 5–10 bids toward target ACOS.",
+  "[A] Find budget-limited winners and proven campaigns that deserve more budget; reallocate from laggards.",
+  "[SS] Build a bid-change log (date, campaign, old→new, reason, result after 7 days).",
+  "[SOP] Write the weekly Bid & Budget SOP (rules for raise/lower/pause, step sizes, data windows).",
+  "[K] Track ACOS, TACOS, and % of spend on profitable campaigns.",
+  "[AI] Have AI turn your bid rules into a checklist a VA can execute weekly without judgment calls."],
+ ["Am I raising bids when I should be raising placement multipliers?","Which winner went budget-limited and cost me sales?"],
+ "Placement multipliers applied, a bid-change log started, and a weekly Bid & Budget SOP.",
+ ["[F] Bid vs placement-multiplier decision","[C] Raise/lower/pause bid rules","[SOP] Weekly Bid & Budget SOP"]);
+
+PROGRAM[15]=D(5,"Conversion-rate optimization","Lift CVR before lifting spend",
+ "Traffic is expensive; conversion is free leverage. A 1-point CVR lift drops ACOS, raises organic rank, and improves CM on every unit. Operators optimize the listing's conversion before pouring more money into ads.",
+ `<p><b>Unit Session Rate (CVR) = orders ÷ sessions</b> (Business Reports). It's the multiplier on everything. The conversion levers, in order of usual impact: <b>main image</b>, <b>price/offer</b>, <b>review count & rating</b>, <b>title clarity</b>, <b>image stack (benefits/usage/size)</b>, <b>A+ content</b>, <b>Q&A and review content</b>.</p><p><b>Diagnose with the funnel:</b> low sessions = traffic/rank problem; high sessions + low CVR = listing/offer problem; high CVR + low repeat = retention problem. Fix the right layer.</p><p><b>Example:</b> a listing at 9% CVR vs category 14%. Swapping the main image to a cleaner benefit-led shot and adding a size-comparison image lifts CVR to 13% — that alone cuts effective ACOS by ~30% and pulls organic rank up with no extra spend.</p>`,
+ ["[SC] Pull Business Reports: sessions, unit session rate (CVR), and page views per child ASIN.",
+  "[A] Rank your top SKUs by CVR vs category benchmark; flag the biggest gaps.",
+  "[A] Run the funnel diagnosis (traffic vs listing vs retention) for the 3 worst-converting SKUs.",
+  "[M] List the highest-impact listing fix per flagged SKU (image, offer, reviews, A+).",
+  "[K] Add CVR per hero SKU to your KPI dashboard with a target.",
+  "[SOP] Write the CVR Diagnosis SOP (which report, which benchmark, which lever).",
+  "[AI] Have AI critique your worst listing's copy/images against high-converting competitors."],
+ ["Where am I buying traffic to a listing that doesn't convert?","Which one fix would move CVR the most this week?"],
+ "A CVR audit of your hero SKUs with the single highest-impact fix identified for each.",
+ ["[F] Conversion lever order (image→offer→reviews→copy→A+)","[F] Funnel diagnosis: traffic vs listing vs retention","[SOP] CVR Diagnosis SOP"]);
+
+PROGRAM[16]=D(5,"Image, A+ & brand-story strategy","Make the listing sell for you",
+ "Images and A+ content do the selling on a screen the size of a hand. Operators treat the image stack as a structured argument and use A+/Brand Story to raise CVR, AOV, and brand recall — not as decoration.",
+ `<p><b>The image stack as an argument:</b> 1) hero (clean, instantly recognizable) → 2) #1 benefit → 3) features/specs → 4) usage/in-context → 5) size/scale → 6) what's-in-the-box/comparison → 7) social proof/guarantee. Each image answers an objection.</p><p><b>A+ / A+ Premium</b> lifts CVR (often 3–10%) and supports brand story; <b>Brand Story</b> module cross-sells your catalog and builds the brand. Mobile-first: 80%+ of buyers are on phones — design for the thumb.</p><p><b>Example:</b> adding a comparison module ("us vs the cheap alternative") and a size-in-hand image reduces returns (right expectations) and lifts CVR. The returns drop alone improves CM via the returns reserve.</p>`,
+ ["[SC] Audit each hero listing's image stack against the 7-image argument; note gaps.",
+  "[M] Write a creative brief per hero SKU: each image slot, the objection it answers, and the message.",
+  "[SC] Ensure A+ (and Premium A+ if eligible) and Brand Story are live on hero ASINs.",
+  "[A] Check return reasons (Voice of Customer / returns report) for expectation-gap issues images can fix.",
+  "[SOP] Write the Listing Creative SOP (image checklist + A+ requirements + mobile check).",
+  "[K] Track CVR and return rate before/after creative updates.",
+  "[AI] Have AI generate image-stack concepts and A+ copy from your features + top review themes."],
+ ["Which objection is my image stack failing to answer?","Are my listings designed for the thumb, or the desktop?"],
+ "A creative brief per hero SKU and A+/Brand Story confirmed live, with a Listing Creative SOP.",
+ ["[F] 7-image stack as an objection-by-objection argument","[C] Listing creative checklist (images + A+ + mobile)","[SOP] Listing Creative SOP"]);
+
+PROGRAM[17]=D(5,"A/B testing with Manage Your Experiments","Decide with data, not taste",
+ "Opinions about images and titles are cheap. Operators run controlled experiments (Manage Your Experiments for Brand Registered sellers) so every CVR change is proven, documented, and rolled into a playbook of what actually works for the brand.",
+ `<p><b>Manage Your Experiments (MYE)</b> A/B tests main image, title, A+, and bullets on eligible ASINs with enough traffic. Test <b>one variable at a time</b>, run to statistical significance, then keep the winner and log the learning.</p><p><b>What to test first:</b> main image (highest leverage), then title, then A+. Don't test trivial changes on low-traffic ASINs — you'll never reach significance.</p><p><b>Example:</b> testing two main images, Version B (product-in-use vs plain) wins +11% CVR at significance. You ship B, document "in-use beats studio for this category" in the Vault, and apply the lesson to sibling SKUs — compounding wins across the catalog.</p>`,
+ ["[SC] List ASINs eligible for Manage Your Experiments (sufficient traffic, Brand Registered).",
+  "[M] Launch one main-image A/B test on your highest-traffic hero ASIN.",
+  "[SS] Build an experiment log: hypothesis, variable, start/end, result, % lift, decision, lesson.",
+  "[A] Review any past experiments; capture the wins as reusable brand principles.",
+  "[SOP] Write the A/B Testing SOP (what to test, one-variable rule, significance, logging).",
+  "[K] Track 'experiments run/quarter' and cumulative CVR lift.",
+  "[AI] Have AI help form sharp, single-variable hypotheses from your CVR audit."],
+ ["What have I been changing on taste that I should be testing?","Which winning test could I copy across sibling SKUs?"],
+ "One live A/B test, an experiment log started, and an A/B Testing SOP.",
+ ["[F] One-variable A/B testing to significance","[T] Experiment log template","[SOP] A/B Testing SOP"]);
+
+PROGRAM[18]=D(6,"Build your business dashboard","One screen to run everything",
+ "You can't run three accounts from a dozen reports. Operators build a single dashboard that turns raw Amazon data into the 8–12 numbers that actually drive decisions — updated on a cadence, readable in 60 seconds.",
+ `<p><b>A good dashboard answers four questions instantly:</b> Am I profitable? (net profit, CM%, TACOS) · Am I growing? (revenue, units, organic %) · Am I safe? (account health, cash, stockout risk) · Where's the problem? (worst SKU/campaign/account).</p><p><b>Sources:</b> Business Reports (sessions/CVR), Payments (fees), Search-Term/Campaign reports (ad), Inventory (health), your P&L. Roll them to per-account and portfolio level with green/amber/red.</p><p><b>Example:</b> a portfolio dashboard shows Account A green, B amber (TACOS creeping), C red (stockout risk). The operator spends the week only on B and C. The dashboard is what makes "manage by exception" possible.</p>`,
+ ["[SS] Build the Dashboard tab: net profit, CM%, TACOS, revenue, units, organic %, cash, IPI, account health — per account + portfolio.",
+  "[A] Define green/amber/red thresholds for each KPI so status is automatic.",
+  "[SC] Confirm the exact reports/exports that feed each cell so it's repeatable.",
+  "[M] Do one full manual update of the dashboard end-to-end and time it.",
+  "[SOP] Write the Dashboard Update SOP (sources, steps, cadence) so a VA can run it.",
+  "[K] This dashboard IS your KPI system — lock the metric list today.",
+  "[AI] Have AI suggest formulas/structure to auto-calc status colors from your inputs."],
+ ["What are the 10 numbers I'd want if I could only see 10?","What decision does each dashboard number actually drive?"],
+ "A working portfolio dashboard with green/amber/red thresholds and a Dashboard Update SOP.",
+ ["[F] Dashboard answers: profitable? growing? safe? where's the problem?","[T] Operator dashboard layout","[SOP] Dashboard Update SOP"]);
+
+PROGRAM[19]=D(6,"Weekly audit system & KPI cadence","Turn data into weekly decisions",
+ "A dashboard without a ritual is wallpaper. Operators run a fixed weekly audit that reads the dashboard, compares to target, and produces decisions and 3 priorities. This is where data becomes action — every single week.",
+ `<p><b>The weekly business review (60–90 min):</b> 1) KPI vs target (what moved, why) → 2) PPC harvest + bid/budget tune → 3) inventory/restock check → 4) profit-leak scan → 5) account health → 6) decide the 3 priorities for next week. Document it.</p><p><b>KPI cadence:</b> some metrics are weekly (TACOS, CVR, sessions, stockout risk), some monthly (net profit, CM by SKU, IPI). Match the review to the metric's signal speed.</p><p><b>Example:</b> the weekly review catches TACOS rising from 9%→12% on Account B, traces it to a budget-uncapped experiment, and the decision is a one-line fix — before it becomes a $4k/mo leak. Cadence turns a future disaster into a footnote.</p>`,
+ ["[SOP] Write the Weekly Business Review SOP (the 6-step agenda above) with a filled template.",
+  "[M] Run your first full weekly review off the dashboard and write the output (decisions + 3 priorities).",
+  "[A] For each KPI off-target, write the root cause and the corrective action.",
+  "[SS] Create a Weekly Review log tab to store each week's wins/misses/decisions/priorities.",
+  "[K] Set explicit weekly targets for your weekly-cadence KPIs.",
+  "[AI] Have AI convert your dashboard snapshot into a draft weekly review you then refine.",
+  "[M] Schedule the recurring weekly review as a non-negotiable calendar block."],
+ ["Did this week's review actually produce decisions, or just observations?","Which KPI keeps drifting because I review it too slowly?"],
+ "Your first documented weekly review (decisions + 3 priorities) and a Weekly Business Review SOP.",
+ ["[F] 6-step weekly business review","[T] Weekly review log (wins/misses/decisions/priorities)","[SOP] Weekly Business Review SOP"]);
+
+PROGRAM[20]=D(6,"Competitor & category monitoring","See the board, not just your pieces",
+ "Your rank, price, and margin live inside a moving category. Operators monitor competitors and category trends systematically so they react early to price moves, new entrants, stockouts (opportunities), and demand shifts — instead of being surprised.",
+ `<p><b>Track per key competitor:</b> price, BSR/rank trend, review velocity, offer changes (coupons/variations), inventory signals (when they stock out you can take rank), and new entrants. Tools (Helium 10/Jungle Scout/Keepa) automate the history.</p><p><b>Category lens:</b> total category demand trend, seasonality shifts, and where the price/quality gaps are. A competitor stockout is a ranking opportunity; a flood of new entrants is a margin warning.</p><p><b>Example:</b> Keepa shows your main competitor's BSR spiking (likely stockout). You temporarily increase bids and budget on shared keywords to capture their traffic and take organic rank while they're down — a planned, monitored move, not luck.</p>`,
+ ["[M] Build a watchlist of 3–5 key competitors per hero product.",
+  "[A] Record baseline price, BSR, review count/velocity, and offer for each competitor.",
+  "[SS] Create a competitor-tracker tab updated weekly (or via tool export) with trend columns.",
+  "[A] Identify one current opportunity (competitor stockout / weak listing) and one threat (new entrant / price war).",
+  "[SOP] Write the Competitor Monitoring SOP (what to check, where, how often, when to act).",
+  "[K] Track your price/rank position vs the set, and review-velocity gap.",
+  "[AI] Have AI summarize a competitor's reviews to find their weaknesses you can exploit in your listing."],
+ ["What is my main competitor about to do that I'm not watching for?","Where is a competitor weak enough for me to take rank?"],
+ "A competitor watchlist with baselines, one opportunity + one threat identified, and a Monitoring SOP.",
+ ["[F] Competitor signals: price, BSR, reviews, inventory, entrants","[C] Competitor monitoring checklist","[SOP] Competitor Monitoring SOP"]);
+
+PROGRAM[21]=D(7,"Brand positioning & product ecosystem","Build a brand, not a SKU pile",
+ "Single SKUs get commoditized; brands compound. Operators position the brand around a customer and build an ecosystem of products that cross-sell, raise LTV, and create defensibility aggregators pay premiums for.",
+ `<p><b>Positioning:</b> who exactly is the customer, what job does the brand do, and why you vs the cheap alternative. A sharp position drives every listing, image, and product decision.</p><p><b>Product ecosystem:</b> hero product → complements (accessories, consumables, refills) → bundles → next-tier products for the same customer. Each new SKU should ride the brand's existing traffic and audience, lowering launch cost.</p><p><b>Example:</b> a party-decorations brand isn't "a banner" — it's "everything for a themed kids' party in one click." That position spawns matching tableware, balloons, games, and themed bundles — each launch cheaper because the audience and brand already exist. Ecosystem = lower CAC + higher LTV + a real moat.</p>`,
+ ["[M] Write a one-paragraph positioning statement per brand: customer, job, differentiation.",
+  "[A] Map your current catalog as an ecosystem; find the gaps (complements, bundles, next-tier).",
+  "[A] Identify the 2–3 highest-leverage new SKUs that ride existing brand traffic.",
+  "[SC] Check Brand Story + Store to ensure cross-sell of the ecosystem is actually wired up.",
+  "[SS] Build a product roadmap tab (SKU, role in ecosystem, audience overlap, launch priority).",
+  "[K] Track catalog depth, cross-sell %, and revenue per customer.",
+  "[AI] Have AI cluster your reviews + category to propose complementary products for the same buyer."],
+ ["Is my brand a position or just a logo on SKUs?","Which new product would my existing customers buy tomorrow?"],
+ "A positioning statement per brand and an ecosystem-based product roadmap with priorities.",
+ ["[F] Brand position = customer × job × differentiation","[F] Ecosystem: hero→complements→bundles→next tier","[T] Product roadmap by ecosystem role"]);
+
+PROGRAM[22]=D(7,"Retention, repeat purchase & LTV","Own the customer, not just the sale",
+ "Amazon hides the customer, but operators still engineer repeat purchase and LTV — because a brand that customers return to is worth multiples of one that buys every sale through ads. LTV is the ceiling on what you can spend to acquire.",
+ `<p><b>Levers Amazon allows:</b> Subscribe & Save (consumables), Brand Story cross-sell, Manage Your Customer Engagement (email to followers/repeat buyers), Brand follow, virtual bundles, inserts that drive to registration/warranty (compliant — no review solicitation), and Amazon Posts/Store for repeat discovery.</p><p><b>LTV math:</b> LTV = avg order value × purchase frequency × gross margin × retention lifespan. Higher LTV lets you outbid competitors on acquisition and still profit.</p><p><b>Example:</b> a consumables brand pushes Subscribe & Save + a refill SKU; repeat rate climbs, LTV doubles, and suddenly a 40% ACOS launch is rational because the second and third orders are nearly free. Retention rewrites the acquisition math.</p>`,
+ ["[A] Estimate repeat-purchase rate and LTV per brand (use S&S %, reorder SKUs, brand analytics where available).",
+  "[SC] Enable/optimize Subscribe & Save on consumables and set up Manage Your Customer Engagement campaigns.",
+  "[M] Design a compliant insert/strategy that drives brand follow + registration (no review incentives).",
+  "[A] Identify the highest-LTV customer segment and what they buy next.",
+  "[SS] Add LTV and repeat-rate to the dashboard per brand.",
+  "[SOP] Write the Retention SOP (S&S, MYCE cadence, follow/Posts, virtual bundles).",
+  "[AI] Have AI draft a compliant post-purchase email sequence for repeat buyers."],
+ ["What's my LTV, and how much could I afford to spend to acquire if it doubled?","What do my best customers buy second — and am I offering it?"],
+ "LTV + repeat rate estimated per brand and a Retention SOP with at least one lever live (S&S or MYCE).",
+ ["[F] LTV = AOV × frequency × margin × lifespan","[C] Compliant Amazon retention levers","[SOP] Retention SOP"]);
+
+PROGRAM[23]=D(8,"Hiring, VAs & agencies","Buy back your time",
+ "You cannot run three accounts at an 8-figure level alone. Operators hire deliberately — the right role, the right level, with SOPs and KPIs — so delegation increases output instead of creating mess. Hire to your bottleneck.",
+ `<p><b>Hire to the bottleneck:</b> usually first a generalist VA (reports, listings admin, customer messages), then specialists (PPC, design, supply chain), then a manager. <b>Build the SOP before you hire</b> — you can only delegate what's documented.</p><p><b>Agency vs in-house:</b> agencies buy expertise fast (PPC, design) but you must still own the strategy and watch the numbers; in-house VAs are cheaper long-term for repeatable work. Never outsource the dashboard — outsource the tasks under it.</p><p><b>Example:</b> a $4M operator hires a $1,200/mo PPC VA trained on the Harvesting + Bid SOPs, freeing 8 hrs/week. The VA executes; the operator reviews exceptions in the weekly review. Output up, hours down — the definition of leverage.</p>`,
+ ["[A] Identify your #1 bottleneck role from the Day-1 task audit (what, if delegated, frees the most leverage).",
+  "[M] Write the job description + scorecard (outcomes, KPIs) for that role.",
+  "[SOP] Ensure the SOPs that role needs exist; write any missing one before hiring.",
+  "[M] Draft a paid test task to evaluate candidates on real work.",
+  "[SS] Build a hiring tracker (role, source, candidates, test score, decision).",
+  "[K] Define the new hire's KPIs and a 30/60/90-day ramp.",
+  "[AI] Have AI write the job post, screening questions, and a scored test task for the role."],
+ ["What role would free the most of my time if filled well?","Have I documented the work enough to hand it over cleanly?"],
+ "A job description + scorecard + paid test task for your #1 bottleneck role, with required SOPs ready.",
+ ["[F] Hire to the bottleneck; document before delegating","[T] Role scorecard (outcomes + KPIs)","[C] Hiring process checklist (JD→test→30/60/90)"]);
+
+PROGRAM[24]=D(8,"SOPs, team KPIs & accountability","Make the team self-running",
+ "A team without SOPs and KPIs is just expensive chaos. Operators build an SOP library and a KPI per role so the business runs on systems and standards, not on the founder's attention. This is what makes you replaceable — and the business valuable.",
+ `<p><b>SOP library:</b> every recurring task has a written SOP (Trigger→Steps→Owner→KPI→Review), stored in one place, versioned, and linked from the role scorecards. <b>Team KPIs:</b> each role owns 1–3 outcome metrics reviewed on cadence (PPC VA owns TACOS/ACOS; supply VA owns stockout days & on-time POs).</p><p><b>Accountability rhythm:</b> a short weekly team check — each owner reports their KPI vs target and blockers. Manage by exception; coach the reds.</p><p><b>Example:</b> the SOP library hits ~25 documents covering 80% of operations. A new VA onboards in days by reading the library, and the business keeps running while the operator is offline for a week — the real test of an operator-grade business.</p>`,
+ ["[SOP] Inventory all recurring tasks; confirm each has an SOP — write the top 5 missing ones.",
+  "[M] Create a single SOP Library index (the workbook tab) linking every SOP and its owner.",
+  "[K] Assign 1–3 KPIs to each role and set targets.",
+  "[M] Set up a weekly team accountability check (agenda: KPI vs target + blockers).",
+  "[A] Identify which tasks are still founder-dependent and plan to document/delegate them.",
+  "[SS] Build a team-KPI tab tracking each owner's metric weekly.",
+  "[AI] Have AI convert your rough notes for the 5 missing tasks into clean SOPs in your template."],
+ ["Could the business run for 2 weeks without me right now? What's missing?","Which task is still in my head instead of in an SOP?"],
+ "An SOP Library index covering most operations + a KPI assigned to every role.",
+ ["[F] SOP library + KPI-per-role = self-running team","[T] SOP Library index","[C] Team accountability weekly check"]);
+
+PROGRAM[25]=D(9,"Account health & compliance","Protect the golden goose",
+ "One suspended account can erase everything overnight. Operators treat account health and compliance as a monitored system — because at 8 figures across multiple accounts, the downside of a takedown dwarfs almost any growth tactic. Defense first.",
+ `<p><b>Watch:</b> Account Health Rating, Order Defect Rate, policy/IP complaints, listing suppressions, restricted-product flags, and (for multi-account) strict separation to avoid linked-account suspensions. Keep documentation (invoices, authorizations, compliance certs) ready before you ever need it.</p><p><b>Multi-account hygiene:</b> proper authorization, separate everything Amazon checks, never cross-contaminate — a linked-account flag can take down all of them at once.</p><p><b>Example:</b> a brand keeps a "compliance binder" (supplier invoices, brand authorization, safety docs, insurance) per account. When a random authenticity complaint hits, they resolve it in hours with documents already in hand — while unprepared sellers sit suspended for weeks.</p>`,
+ ["[SC] Record Account Health Rating, ODR, and any policy/IP notices for each account.",
+  "[M] Build a compliance binder per account (invoices, brand authorization, safety/compliance docs, insurance).",
+  "[A] Identify your top 3 account-health risks and a mitigation for each.",
+  "[SC] Verify multi-account separation/authorization is clean (no linkage risk).",
+  "[SOP] Write the Account Health Monitoring SOP (what to check, how often, escalation).",
+  "[K] Track Account Health Rating + ODR per account as guardrail KPIs.",
+  "[AI] Have AI build a suspension-prevention checklist and a generic Plan-of-Action template."],
+ ["If an account got suspended tomorrow, do I have the documents to fight it today?","Where is my multi-account setup exposed?"],
+ "A compliance binder per account + an Account Health Monitoring SOP with guardrail KPIs.",
+ ["[C] Account health & compliance monitoring checklist","[T] Compliance binder contents","[SOP] Account Health Monitoring SOP"]);
+
+PROGRAM[26]=D(9,"IP, trademark & Brand Registry defense","Build the legal moat",
+ "Brand Registry and IP are both a moat and a weapon. Operators lock down trademarks, enroll in Brand Registry, and use the tools (Transparency, Project Zero, brand gating) to keep hijackers and counterfeiters off their listings — protecting margin and rank.",
+ `<p><b>Foundations:</b> registered trademark → Amazon Brand Registry → A+ , Brand Story, Sponsored Brands, MYE, and the Brand Dashboard. <b>Defense tools:</b> Transparency (per-unit codes), Project Zero (self-remove counterfeits), and report-a-violation for hijackers.</p><p><b>Why it's offense too:</b> Brand Registry unlocks higher-converting content and brand analytics competitors without it can't use. IP lets you remove unauthorized sellers from your listing — protecting buy box and price.</p><p><b>Example:</b> an unauthorized seller undercuts your buy box. With a trademark + Brand Registry + Transparency, you document and remove them within days, restoring buy-box control and price integrity — a defense that directly protects CM.</p>`,
+ ["[M] Confirm trademark status per brand (registered / pending / none) and plan filings where missing.",
+  "[SC] Verify Brand Registry enrollment and that all brand tools are active per account.",
+  "[A] Assess hijacker/counterfeit exposure; decide if Transparency/Project Zero are warranted.",
+  "[SOP] Write the IP Enforcement SOP (detect hijacker → document → report → escalate).",
+  "[M] Set up listing-change and buy-box alerts to detect hijacks early.",
+  "[K] Track unauthorized-seller incidents and time-to-resolution.",
+  "[AI] Have AI draft a cease-and-desist + an Amazon violation report template you can reuse."],
+ ["Which brand is most exposed without a registered trademark?","How fast could I remove a hijacker today — and how fast should I be able to?"],
+ "Trademark/Brand Registry status confirmed per brand and an IP Enforcement SOP.",
+ ["[F] Brand Registry as moat + weapon","[C] IP defense toolset (Transparency, Project Zero, reporting)","[SOP] IP Enforcement SOP"]);
+
+PROGRAM[27]=D(9,"Listing-attack defense & emergency response","Have the fire plan ready",
+ "Black-hat attacks (hijacked listings, fake reviews, malicious variations, image/title changes, bogus complaints) are a fact of life at scale. Operators don't panic — they execute a pre-written emergency playbook that resolves incidents in hours, not weeks.",
+ `<p><b>Common attacks:</b> listing hijack/buy-box theft, unauthorized variation merges, malicious main-image/title edits, fake negative reviews, false IP/safety complaints, and review-bombing. Each has a known counter.</p><p><b>Emergency response system:</b> detection (alerts) → triage (severity) → documented response per attack type → escalation path (Seller Support, Brand Registry, account manager) → post-incident note in the Vault. Speed comes from having the playbook before the attack.</p><p><b>Example:</b> main image gets swapped to a wrong product (classic sabotage). With Brand Registry, the operator reverts via the brand tools and reports it the same day — vs an unprotected seller waiting on Seller Support for a week while sales crater.</p>`,
+ ["[SOP] Write the Emergency Response playbook: one documented counter per attack type + escalation contacts.",
+  "[M] Set up alerts for listing changes, buy-box loss, review drops, and rating changes.",
+  "[A] Run a tabletop drill: pick one attack scenario and walk through your response end-to-end.",
+  "[SC] Locate and bookmark every escalation path (Brand Registry support, report violation, account manager).",
+  "[K] Track incidents and mean-time-to-resolution as a resilience KPI.",
+  "[M] Maintain an off-Amazon backup of listing content (copy + images) for fast restoration.",
+  "[AI] Have AI generate response templates for each attack type you can fire off immediately."],
+ ["Which attack would hurt most, and is my response to it written down?","Do I have alerts that would catch sabotage within hours?"],
+ "An Emergency Response playbook with a counter per attack type, alerts live, and one drill completed.",
+ ["[C] Black-hat attack types & counters","[SOP] Emergency Response playbook","[T] Attack-response message templates"]);
+
+PROGRAM[28]=D(10,"Portfolio & multi-account management","Run accounts like a fund",
+ "Three accounts isn't three to-do lists — it's a portfolio. Operators manage by exception across accounts from one dashboard, standardize playbooks so each account runs the same proven system, and allocate their attention like a fund manager allocates capital: to the highest return.",
+ `<p><b>Portfolio operating model:</b> one rolled-up dashboard (green/amber/red per account) → manage by exception (work only the reds/ambers) → standardized SOPs so every account runs identical playbooks → a portfolio review that compares accounts and reallocates time/capital.</p><p><b>Standardization is the unlock:</b> when all three accounts use the same campaign architecture, restock engine, and dashboards, your attention scales because the patterns are identical. Bespoke accounts don't scale.</p><p><b>Example:</b> the 6-fig account is mature (green, mostly VA-run), the 7-fig needs margin work (amber), the new account needs launches (red). The operator spends 70% of the week on the new account this month, confident the others run on SOPs — pure exception management.</p>`,
+ ["[SS] Build the portfolio view: all 3 accounts side-by-side on the same KPIs with status colors.",
+  "[A] Score each account green/amber/red and decide this month's attention allocation %.",
+  "[M] Standardize one playbook (e.g. campaign architecture) across all 3 accounts.",
+  "[A] Find a winning tactic in one account and port it to the others (cross-pollination).",
+  "[SOP] Write the Portfolio Review SOP (cadence, compare, reallocate attention/capital).",
+  "[K] Track per-account and blended portfolio KPIs (net profit, TACOS, CM%).",
+  "[AI] Have AI compare your three accounts' metrics and recommend where attention earns the most."],
+ ["Am I managing three businesses or one portfolio?","Which account deserves 70% of my time this month, and why?"],
+ "A side-by-side portfolio dashboard with attention allocation set and one playbook standardized across accounts.",
+ ["[F] Manage by exception across a portfolio","[F] Standardize playbooks so attention scales","[SOP] Portfolio Review SOP"]);
+
+PROGRAM[29]=D(10,"Capital allocation & scaling frameworks","Put every dollar to work",
+ "At 8 figures, your job is mostly capital allocation: every dollar can go to inventory, ads, new products, team, acquisition, or your pocket. Operators allocate by expected return and risk, using frameworks instead of instinct — that discipline is what compounds.",
+ `<p><b>The allocation menu</b> (rank by risk-adjusted ROIC): restock proven winners (lowest risk) → scale profitable ads → launch ecosystem SKUs → hire leverage → new brand/acquisition (highest risk) → distributions. Fund the highest-certainty returns first; only stretch to risky bets with surplus.</p><p><b>Frameworks:</b> ROIC per option, payback period, and a risk tier. Cap how much goes to any single bet (position sizing) so one bad PO can't sink you.</p><p><b>Example:</b> $200k surplus. Proven restock returns ~4×/yr at 28% CM (certain) → fund first. New product launch is higher upside but uncertain → cap at, say, 20% of surplus. Distributions take a fixed slice. The framework removes emotion and prevents the classic "bet it all on one launch" blow-up.</p>`,
+ ["[SS] Build a capital allocation model: list every use of cash, its expected ROIC, payback, and risk tier.",
+  "[A] Allocate your current/next surplus across the menu using the framework (with position caps).",
+  "[A] Compute ROIC for restock vs ads vs a new launch to compare apples to apples.",
+  "[M] Set a fixed owner-distribution rule so the business actually pays you.",
+  "[K] Track ROIC, cash deployed vs idle, and concentration (max % in one bet).",
+  "[SOP] Write the Capital Allocation SOP (quarterly cadence, the menu, the caps).",
+  "[AI] Have AI pressure-test your allocation for concentration risk and missed higher-ROIC options."],
+ ["Is my next dollar going to its highest risk-adjusted return?","Am I over-betting one launch instead of funding certainties first?"],
+ "A capital allocation model with your next surplus allocated by ROIC and risk, plus a distribution rule.",
+ ["[F] Allocate by risk-adjusted ROIC; fund certainties first","[F] Position caps prevent blow-ups","[SOP] Capital Allocation SOP"]);
+
+PROGRAM[30]=D(10,"Executive dashboard & 90-day operating plan","Lock in the operating system",
+ "The final step is making it permanent: an executive dashboard you run the whole portfolio from, and a 90-day operating plan that turns this 30 days of systems into ongoing execution. You finish as an operator with a machine — not a seller with a to-do list.",
+ `<p><b>Executive dashboard:</b> the top layer — portfolio net profit, blended CM% & TACOS, cash position & runway, account-health status, and your top 3 risks and 3 opportunities. One screen, weekly, for decisions only.</p><p><b>90-day operating plan:</b> 3–5 priorities per account, the cadence locked, owners + KPIs assigned, and a capital plan. Quarter it, then run the weekly/monthly reviews against it.</p><p><b>Example:</b> the operator ends with: a dashboard, ~30 SLAs/SOPs, a trained VA, a funded restock + launch plan, and a calendar of reviews. The next 90 days are execution against a written plan — the difference between an operator and a busy seller. This is the 8-figure foundation.</p>`,
+ ["[SS] Build the Executive Dashboard tab (portfolio P&L, CM%, TACOS, cash/runway, health, top risks/opps).",
+  "[M] Write the 90-Day Operating Plan: 3–5 priorities per account + capital plan + owners/KPIs.",
+  "[A] Review all 30 days; list which SOPs/dashboards are done vs still to build.",
+  "[SOP] Compile the master SOP index and confirm the review cadence is on the calendar.",
+  "[K] Lock your executive KPI set and quarterly targets.",
+  "[M] Schedule the next quarterly review and a weekly review series.",
+  "[AI] Have AI audit your 90-day plan for gaps and turn it into a one-page operating brief."],
+ ["What are the 3 things in the next 90 days that move the business most?","What system still doesn't exist that should before I scale further?"],
+ "An Executive Dashboard + a written 90-Day Operating Plan with priorities, owners, KPIs, and capital plan.",
+ ["[F] Executive dashboard = decisions-only top layer","[T] 90-Day Operating Plan template","[L] Finish as an operator with a machine, not a seller with a list"]);
+
+/* ---- operator program: KPI dashboard rows, persistence, rendering ---- */
+const OPKPIS=[
+  {grp:"Financial"},
+  {k:"rev",n:"Monthly revenue",s:"net sales",t:"per account"},
+  {k:"np",n:"Net profit ($)",s:"after all costs",t:"the real number"},
+  {k:"nm",n:"Net margin %",s:"net profit ÷ revenue",t:"target 15–25%+"},
+  {k:"cm",n:"Contribution margin %",s:"per-unit cash after variable costs",t:"target 25–40%+"},
+  {k:"cash",n:"Cash on hand ($)",s:"available now",t:"survival"},
+  {k:"ccc",n:"Cash conversion cycle (days)",s:"DIO+DSO−DPO",t:"lower is better"},
+  {grp:"Ads & Growth"},
+  {k:"tacos",n:"TACOS %",s:"total ad spend ÷ revenue",t:"build vs rent"},
+  {k:"acos",n:"ACOS %",s:"ad spend ÷ ad sales",t:"vs target"},
+  {k:"org",n:"Organic %",s:"non-ad share of sales",t:"higher = healthier"},
+  {k:"cvr",n:"Unit session rate (CVR) %",s:"orders ÷ sessions",t:"vs category"},
+  {grp:"Inventory"},
+  {k:"ipi",n:"IPI score",s:"inventory performance index",t:"keep limits open"},
+  {k:"dos",n:"Days of supply",s:"on-hand ÷ daily sales",t:"no stockout / no overstock"},
+  {k:"sod",n:"Stockout days (mo)",s:"days any hero SKU OOS",t:"target 0"},
+  {k:"excess",n:"Excess inventory ($)",s:"aged + overstock capital",t:"lower is better"},
+  {grp:"Brand"},
+  {k:"repeat",n:"Repeat purchase %",s:"returning customers",t:"LTV driver"},
+  {k:"skus",n:"# active SKUs",s:"catalog depth",t:"ecosystem"},
+  {k:"health",n:"Account health rating",s:"per account",t:"keep healthy"}
+];
+const OPVCATS=["Framework","Checklist","SOP","Template","Lesson"];
+const VTAG={F:"Framework",C:"Checklist",SOP:"SOP",T:"Template",L:"Lesson"};
+const TAGLABEL={M:["m","Manual"],A:["a","Analysis"],SC:["sc","Seller Central"],SS:["ss","Spreadsheet"],SOP:["sop","SOP"],K:["k","KPI"],AI:["ai","AI"]};
+
+const API_PROGRAM="/api/program";
+const OPROG_KEY="taskflow.program.v1";
+let opData={tasks:{},reflect:{},rate:{},kpi:{},weekly:{},vault:[]};
+let opNav={tab:"overview",openDay:null};
+let _opTimer=null,_opPending=false,_opSyncing=false;
+
+function opDefaults(){ return {tasks:{},reflect:{},rate:{},kpi:{},weekly:{},vault:[]}; }
+function cacheProgram(){ try{ localStorage.setItem(OPROG_KEY,JSON.stringify(opData)); }catch(e){} }
+function readProgCache(){ try{ const o=JSON.parse(localStorage.getItem(OPROG_KEY)); return o&&typeof o==="object"?o:null; }catch(e){ return null; } }
+function applyProg(o){ const d=opDefaults(); opData={...d,...(o||{})}; ["tasks","reflect","rate","kpi","weekly"].forEach(k=>{ if(!opData[k]||typeof opData[k]!=="object")opData[k]={}; }); if(!Array.isArray(opData.vault))opData.vault=[]; }
+async function loadProgram(){
+  try{
+    const res=await fetch(API_PROGRAM,{cache:"no-store"});
+    if(res.ok){ const d=await res.json(); const row=Array.isArray(d.program)?d.program[0]:null; applyProg(row); cacheProgram(); return; }
+    if(res.status===503){ applyProg(readProgCache()); return; }
+  }catch(e){}
+  applyProg(readProgCache());
+}
+function saveProgram(){ cacheProgram(); _opPending=true; if(_opTimer)clearTimeout(_opTimer); _opTimer=setTimeout(opSyncNow,500); }
+async function opSyncNow(){
+  if(_opSyncing||!_opPending) return;
+  _opSyncing=true; _opPending=false;
+  const body=JSON.stringify({program:[{id:"state",...opData}]});
+  try{ const res=await fetch(API_PROGRAM,{method:"PUT",headers:{"Content-Type":"application/json"},body}); if(!res.ok&&res.status!==503){ _opPending=true; } }
+  catch(e){ _opPending=true; }
+  finally{ _opSyncing=false; if(_opPending){ if(_opTimer)clearTimeout(_opTimer); _opTimer=setTimeout(opSyncNow,2500); } }
+}
+
+function dayTasksState(d){ const n=PROGRAM[d].tasks.length; const arr=opData.tasks["d"+d]||[]; const out=[]; for(let i=0;i<n;i++)out.push(arr[i]||0); return out; }
+function dayStatus(d){ const st=dayTasksState(d); const done=st.filter(x=>x===2).length; const any=st.some(x=>x>0); if(done===st.length&&st.length)return"done"; if(any)return"partial"; return"none"; }
+function overallProgress(){ let done=0,total=0; for(let d=1;d<=30;d++){ const st=dayTasksState(d); total+=st.length; done+=st.filter(x=>x===2).length; } return {done,total,pct:total?Math.round(done/total*100):0}; }
+function daysComplete(){ let c=0; for(let d=1;d<=30;d++)if(dayStatus(d)==="done")c++; return c; }
+
+function renderOperator(){
+  const tabs=[["overview","Overview"],["schedule","Schedule"],["kpi","KPI Dashboard"],["weekly","Weekly Review"],["progress","Progress"],["vault","Mastery Vault"]];
+  const tb=$("#opTabs"); if(tb) tb.innerHTML=tabs.map(([k,t])=>`<button class="op-tab ${opNav.tab===k&&!opNav.openDay?"active":""}" onclick="opGo('${k}')">${t}</button>`).join("");
+  const body=$("#opBody"); if(!body)return;
+  if(opNav.openDay){ body.innerHTML=opViewDay(opNav.openDay); return; }
+  body.innerHTML=({overview:opOverview,schedule:opSchedule,kpi:opKPI,weekly:opWeekly,progress:opProgress,vault:opVault}[opNav.tab]||opOverview)();
+}
+function opGo(tab){ opNav.openDay=null; opNav.tab=tab; renderOperator(); window.scrollTo({top:0,behavior:"smooth"}); }
+function opOpenDay(d){ opNav.openDay=d; renderOperator(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+function opOverview(){
+  const p=overallProgress(); const dc=daysComplete();
+  let next=1; for(let d=1;d<=30;d++){ if(dayStatus(d)!=="done"){ next=d; break; } if(d===30)next=30; }
+  const phases=PHASES.map(ph=>{ let done=0,tot=0; for(let d=ph.range[0];d<=ph.range[1];d++){ tot++; if(dayStatus(d)==="done")done++; } return `<div class="op-row" onclick="opGo('schedule')"><div class="dn">P${ph.n}</div><div style="flex:1"><div class="ttl">${ph.name}</div><div class="gl">Days ${ph.range[0]}–${ph.range[1]} · ${done}/${tot} complete</div></div></div>`; }).join("");
+  return `<div class="op-kpis">
+      <div class="op-kpi"><div class="k">Overall progress</div><div class="v">${p.pct}%</div></div>
+      <div class="op-kpi"><div class="k">Days complete</div><div class="v">${dc}/30</div></div>
+      <div class="op-kpi"><div class="k">Tasks done</div><div class="v">${p.done}/${p.total}</div></div>
+      <div class="op-kpi"><div class="k">Vault items</div><div class="v">${opData.vault.length}</div></div>
+    </div>
+    <div class="card" style="padding:20px;margin-bottom:16px">
+      <div class="op-bigprog"><i style="width:${p.pct}%"></i></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:12px">
+        <div><div class="field-label">Continue where you left off</div><div style="font-family:var(--font-display);font-weight:700;font-size:19px;margin-top:3px">Day ${next} — ${esc(PROGRAM[next].topic)}</div></div>
+        <button class="btn btn-primary" onclick="opOpenDay(${next})">Open Day ${next}</button>
+      </div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">The 10 phases</div>
+      <div class="sub" style="margin-bottom:12px">An advanced operator program for running multiple brands at an 8-figure level. Real work every day — analysis, Seller Central, spreadsheets, SOPs, KPIs and AI tasks — building toward a self-running machine.</div>
+      ${phases}
+    </div>`;
+}
+function opSchedule(){
+  let html="";
+  PHASES.forEach(ph=>{
+    html+=`<div class="op-phase">Phase ${ph.n} — ${ph.name}</div>`;
+    for(let d=ph.range[0];d<=ph.range[1];d++){
+      const stt=dayStatus(d);
+      html+=`<div class="op-row ${stt}" onclick="opOpenDay(${d})"><div class="dn">${d}</div><div style="flex:1"><div class="ttl">${esc(PROGRAM[d].topic)}</div><div class="gl">${esc(PROGRAM[d].goal)}</div></div><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-3);flex:none"><path d="M9 6l6 6-6 6"/></svg></div>`;
+    }
+  });
+  return html;
+}
+function tagChip(task){ const m=task.match(/^\[([A-Z]+)\]\s*/); if(!m)return{cls:"",label:"",text:task}; const info=TAGLABEL[m[1]]; if(!info)return{cls:"",label:m[1],text:task.replace(m[0],"")}; return{cls:info[0],label:info[1],text:task.replace(m[0],"")}; }
+function opViewDay(d){
+  const day=PROGRAM[d]; const ph=PHASES.find(p=>p.n===day.phase);
+  const st=dayTasksState(d);
+  const tasks=day.tasks.map((t,i)=>{ const c=tagChip(t); return `<div class="op-task" data-st="${st[i]}" onclick="opToggleTask(${d},${i})"><div class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"><path d="M5 13l4 4L19 7"/></svg></div><div class="tx">${c.label?`<span class="op-tag ${c.cls}">${c.label}</span>`:""}${esc(c.text)}</div></div>`; }).join("");
+  const reflectVals=opData.reflect["d"+d]||[];
+  const reflects=day.reflect.map((q,i)=>`<div style="margin-bottom:10px"><div style="font-size:14px;margin-bottom:4px">${esc(q)}</div><textarea class="textarea op-reflect" rows="2" placeholder="Your answer…" oninput="opSetReflect(${d},${i},this.value)">${esc(reflectVals[i]||"")}</textarea></div>`).join("");
+  const rate=opData.rate["d"+d]||0;
+  const rateBtns=[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="${rate===n?"on":""}" onclick="opSetRate(${d},${n})">${n}</button>`).join("");
+  const doneCount=st.filter(x=>x===2).length;
+  return `<button class="op-back" onclick="opGo('schedule')"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>All days</button>
+    <div class="op-daytop"><div class="num">${d}</div><div><div class="field-label">Phase ${day.phase} · ${esc(ph?ph.name:"")}</div><h1 style="font-size:23px;margin:2px 0 0">${esc(day.topic)}</h1></div></div>
+    <div class="card" style="padding:20px">
+      <div class="op-sec">Why it matters</div>
+      <div class="op-prose">${esc(day.why)}</div>
+      <div class="op-sec">Advanced theory &amp; real examples</div>
+      <div class="op-prose">${day.theory}</div>
+    </div>
+    <div class="card" style="padding:20px;margin-top:16px">
+      <div class="op-sec">Tasks &amp; execution <span style="font-weight:400;color:var(--text-3);font-size:13px">(tap to cycle: ○ → in progress → ✓)</span></div>
+      <div class="sub" style="margin-bottom:10px">${doneCount}/${st.length} done · tags show the task type (Manual, Analysis, Seller Central, Spreadsheet, SOP, KPI, AI)</div>
+      ${tasks}
+      <div class="op-sec">Deliverable</div>
+      <div class="op-deliver"><div class="k">Finish today with</div>${esc(day.deliverable)}</div>
+      <div class="op-sec">End-of-day reflection</div>
+      ${reflects}
+      <div class="op-sec">Rate today's execution (1–10)</div>
+      <div class="op-rate">${rateBtns}</div>
+      <div class="op-sec">Add to Mastery Vault</div>
+      <div class="sub" style="margin-bottom:10px">Today's frameworks, checklists, SOPs &amp; templates — save them to your growing vault.</div>
+      <button class="btn btn-primary" onclick="opSaveDayVault(${d})">Save Day ${d} items to Vault</button>
+    </div>`;
+}
+function opToggleTask(d,i){ const key="d"+d; const arr=(opData.tasks[key]||[]).slice(); while(arr.length<PROGRAM[d].tasks.length)arr.push(0); arr[i]=(arr[i]+1)%3; opData.tasks[key]=arr; saveProgram(); renderOperator(); }
+function opSetReflect(d,i,v){ const key="d"+d; const arr=(opData.reflect[key]||[]).slice(); while(arr.length<PROGRAM[d].reflect.length)arr.push(""); arr[i]=v; opData.reflect[key]=arr; saveProgram(); }
+function opSetRate(d,n){ opData.rate["d"+d]=n; saveProgram(); renderOperator(); }
+function opSaveDayVault(d){
+  let added=0;
+  PROGRAM[d].vault.forEach(item=>{ const m=item.match(/^\[([A-Z]+)\]\s*/); const cat=m&&VTAG[m[1]]?VTAG[m[1]]:"Lesson"; const title=item.replace(/^\[[A-Z]+\]\s*/,""); if(!opData.vault.some(v=>v.title===title)){ opData.vault.push({cat,title,note:"From Day "+d+" — "+PROGRAM[d].topic}); added++; } });
+  saveProgram(); toast(added?`Added ${added} to your Vault`:"Already in your Vault",added?"ok":"warn");
+}
+function opKPI(){
+  const rows=OPKPIS.map(r=>r.grp?`<tr class="grp"><td colspan="3">${r.grp}</td></tr>`:
+    `<tr><td class="mname">${esc(r.n)}<small>${esc(r.s)}</small></td><td><input type="text" value="${esc((opData.kpi[r.k]||""))}" placeholder="—" oninput="opSetKpi('${r.k}',this.value)"></td><td style="color:var(--text-3);font-size:12.5px">${esc(r.t)}</td></tr>`).join("");
+  return `<div class="card" style="padding:20px">
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">KPI Dashboard</div>
+    <div class="sub" style="margin-bottom:14px">Your operator scoreboard. Fill these from your reports during the weekly review. Track the trend — direction matters more than any single number.</div>
+    <div style="overflow:auto"><table class="op-tbl"><thead><tr><th>Metric</th><th>Current</th><th>Target / note</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+function opSetKpi(k,v){ opData.kpi[k]=v; saveProgram(); }
+const OPWEEKS=[{k:"w1",n:"Week 1 — Mindset & Finance (Days 1–7)"},{k:"w2",n:"Week 2 — Inventory & PPC (Days 8–14)"},{k:"w3",n:"Week 3 — Listings, Data & Brand (Days 15–22)"},{k:"w4",n:"Week 4 — Team, Risk & Scaling (Days 23–30)"}];
+const OPWFIELDS=[["wins","Biggest wins"],["misses","Misses / what slipped"],["kpimove","KPI movement (what moved & why)"],["leak","Biggest profit leak found"],["decisions","Key decisions made"],["next","Next week's 3 priorities"]];
+function opWeekly(){
+  return `<div class="sub" style="margin-bottom:14px">A weekly scorecard for each week of the program. Run it at the end of every week — this is where data becomes decisions.</div>`+
+    OPWEEKS.map(w=>{ const vals=opData.weekly[w.k]||{}; const fields=OPWFIELDS.map(([fk,fl])=>`<div style="margin-bottom:10px"><div class="field-label" style="margin-bottom:4px">${fl}</div><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="2" placeholder="…" oninput="opSetWeekly('${w.k}','${fk}',this.value)">${esc(vals[fk]||"")}</textarea></div>`).join("");
+      return `<div class="card" style="padding:20px;margin-bottom:14px"><div style="font-family:var(--font-display);font-weight:600;margin-bottom:12px">${esc(w.n)}</div>${fields}</div>`; }).join("");
+}
+function opSetWeekly(w,f,v){ if(!opData.weekly[w])opData.weekly[w]={}; opData.weekly[w][f]=v; saveProgram(); }
+function opProgress(){
+  const p=overallProgress();
+  let rows="";
+  PHASES.forEach(ph=>{
+    rows+=`<tr class="grp"><td colspan="4">Phase ${ph.n} — ${ph.name}</td></tr>`;
+    for(let d=ph.range[0];d<=ph.range[1];d++){
+      const stt=dayStatus(d); const st=dayTasksState(d); const done=st.filter(x=>x===2).length;
+      const label=stt==="done"?'<span class="fba-pos">✓ Completed</span>':stt==="partial"?'<span style="color:#b97e1d">In progress</span>':'<span style="color:var(--text-3)">Not started</span>';
+      rows+=`<tr><td style="color:var(--text-3);font-weight:600">D${d}</td><td>${esc(PROGRAM[d].topic)}</td><td>${label} <small style="color:var(--text-3)">${done}/${st.length}</small></td><td>${opData.rate["d"+d]?opData.rate["d"+d]+"/10":"—"}</td></tr>`;
+    }
+  });
+  return `<div class="op-kpis">
+      <div class="op-kpi"><div class="k">Overall</div><div class="v">${p.pct}%</div></div>
+      <div class="op-kpi"><div class="k">Days complete</div><div class="v">${daysComplete()}/30</div></div>
+      <div class="op-kpi"><div class="k">Tasks done</div><div class="v">${p.done}/${p.total}</div></div>
+    </div>
+    <div class="card" style="padding:20px"><div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Progress &amp; daily scorecard</div>
+    <div class="sub" style="margin-bottom:12px">Every day's status and your execution rating — your accountability tracker.</div>
+    <div style="overflow:auto"><table class="op-tbl"><thead><tr><th>Day</th><th>Topic</th><th>Status</th><th>Rating</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+let opVFilter="All";
+function opVault(){
+  const counts={}; OPVCATS.forEach(c=>counts[c]=opData.vault.filter(v=>v.cat===c).length);
+  const list=opData.vault.filter(v=>opVFilter==="All"||v.cat===opVFilter);
+  const filters=["All",...OPVCATS].map(c=>`<button class="op-tab ${opVFilter===c?"active":""}" onclick="opSetVFilter('${c}')">${c}${c!=="All"?` (${counts[c]||0})`:` (${opData.vault.length})`}</button>`).join("");
+  const items=list.length?list.map(v=>{ const i=opData.vault.indexOf(v); return `<div class="op-vault-entry"><span class="op-vcat">${esc(v.cat)}</span><div class="vb"><b>${esc(v.title)}</b><p>${esc(v.note||"")}</p></div><button class="del" title="Remove" onclick="opDelVault(${i})">×</button></div>`; }).join("")
+    :`<div class="fba-empty">Nothing here yet. Open a day and tap “Save items to Vault”, or add your own below.</div>`;
+  return `<div class="card" style="padding:20px;margin-bottom:14px">
+      <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Amazon Mastery Vault</div>
+      <div class="sub" style="margin-bottom:12px">Your growing knowledge base — frameworks, checklists, SOPs, templates and lessons. ${opData.vault.length} saved.</div>
+      <div class="op-tabs" style="margin-bottom:14px">${filters}</div>
+      ${items}
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-family:var(--font-display);font-weight:600;margin-bottom:12px">Add your own</div>
+      <div class="filters">
+        <div class="fld"><span class="field-label">Type</span><select class="select" id="opVCat">${OPVCATS.map(c=>`<option>${c}</option>`).join("")}</select></div>
+        <div class="fld grow"><span class="field-label">Title</span><input class="input" id="opVTitle" placeholder="e.g. My restock decision rule"></div>
+        <div class="fld grow"><span class="field-label">Note</span><input class="input" id="opVNote" placeholder="The detail / how-to"></div>
+        <div class="fld"><span class="field-label">&nbsp;</span><button class="btn btn-primary" onclick="opAddVault()">Add</button></div>
+      </div>
+    </div>`;
+}
+function opSetVFilter(c){ opVFilter=c; renderOperator(); }
+function opAddVault(){ const t=($("#opVTitle")||{}).value?.trim(); if(!t){ toast("Add a title","warn"); return; } opData.vault.push({cat:($("#opVCat")||{}).value||"Lesson",title:t,note:(($("#opVNote")||{}).value||"").trim()}); saveProgram(); renderOperator(); toast("Saved to Vault","ok"); }
+function opDelVault(i){ opData.vault.splice(i,1); saveProgram(); renderOperator(); }
+
 /* ---- flexible export scope ---- */
 function getExportScope(){
   const v=($("#exportScope")||{}).value||"all";
@@ -1680,7 +2395,7 @@ function switchView(v){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,data:renderDataPanel};
+  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
@@ -1796,7 +2511,7 @@ async function init(){
   const personMap={hamza:"Hamza",abdallah:"Abdallah",shared:"Shared"};
   state.filters.person=personMap[state.workspace]; $("#fPerson").value=personMap[state.workspace];
   state.monthSel=thisMonth();
-  await Promise.all([load(), loadProducts()]);  // fetch shared tasks + FBA products
+  await Promise.all([load(), loadProducts(), loadProgram()]);  // tasks + FBA products + operator program
   renderAll();
 }
 // redraw current view after full load (fonts/layout settle) and on resize
@@ -1810,6 +2525,9 @@ document.addEventListener("visibilitychange",()=>{
   }
   if(document.visibilityState==="visible" && !_pPending && !_pSyncing){
     loadProducts().then(()=>{ if(state.view==="fba") renderFba(); }).catch(()=>{});
+  }
+  if(document.visibilityState==="visible" && !_opPending && !_opSyncing){
+    loadProgram().then(()=>{ if(state.view==="operator") renderOperator(); }).catch(()=>{});
   }
 });
 init();
