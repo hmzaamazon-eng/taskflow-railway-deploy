@@ -32,9 +32,9 @@ let dbReady = false;
 
 // Each collection is a {id, data, updated_at} table. Names are a fixed
 // allowlist (used directly in SQL), never user input — no injection risk.
-const COLLECTIONS = ["tasks", "products"];
-const ROUTES = { "/api/tasks": "tasks", "/api/products": "products" };
-const PAYLOAD_KEY = { tasks: "tasks", products: "products" };
+const COLLECTIONS = ["tasks", "products", "program"];
+const ROUTES = { "/api/tasks": "tasks", "/api/products": "products", "/api/program": "program" };
+const PAYLOAD_KEY = { tasks: "tasks", products: "products", program: "program" };
 
 function needsSSL(url) {
   // Railway's internal network and local Postgres don't use SSL; public

@@ -8,7 +8,7 @@ const { Pool } = require("pg");
 const { seedProducts } = require("./_seed");
 
 const DATABASE_URL = process.env.DATABASE_URL || "";
-const ALLOWED = new Set(["tasks", "products"]);
+const ALLOWED = new Set(["tasks", "products", "program"]);
 
 function needsSSL(url) {
   if (/sslmode=require/i.test(url)) return true;
