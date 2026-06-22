@@ -1,2 +1,8 @@
 node_modules/
 *.log
+# Playwright E2E artifacts
+playwright-report/
+test-results/
+e2e/screenshots/
+blob-report/
+.playwright/
