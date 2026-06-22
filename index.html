@@ -962,7 +962,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
     <div class="modal-head"><h2 id="taskModalTitle">New task</h2>
       <button class="icon-btn" id="closeTaskModal" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
     <div class="modal-body">
-      <div class="form-row"><span class="field-label">Task title</span><input class="input" id="tTitle" placeholder="e.g. Research wireless earbuds suppliers" /></div>
+      <div class="form-row"><span class="field-label">Task title</span><input class="input" id="tTitle" maxlength="200" placeholder="e.g. Research wireless earbuds suppliers" /></div>
       <div class="form-2">
         <div class="form-row"><span class="field-label">Owner</span>
           <select class="select" id="tOwner"><option>Hamza</option><option>Abdallah</option><option>Shared</option></select></div>
@@ -981,7 +981,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
           <input class="input" id="tMinutes" type="number" min="0" max="59" step="5" placeholder="Minutes" />
         </div>
       </div>
-      <div class="form-row"><span class="field-label">Notes &amp; comments</span><textarea class="textarea" id="tNotes" placeholder="Add any context, links, or comments…"></textarea></div>
+      <div class="form-row"><span class="field-label">Notes &amp; comments</span><textarea class="textarea" id="tNotes" maxlength="4000" placeholder="Add any context, links, or comments…"></textarea></div>
       <div class="form-row"><span class="field-label">Attachments</span>
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <input type="file" id="tFiles" multiple hidden />
@@ -1068,7 +1068,8 @@ function loadPrefs(){
   }catch(e){}
 }
 // Local cache of tasks so the UI loads instantly and tolerates being offline.
-function cacheTasks(){ try{ localStorage.setItem(STORE_KEY,JSON.stringify(state.tasks)); }catch(e){} }
+let _cacheWarned=false;
+function cacheTasks(){ try{ localStorage.setItem(STORE_KEY,JSON.stringify(state.tasks)); _cacheWarned=false; }catch(e){ if(!_cacheWarned){ _cacheWarned=true; try{ toast("This device's offline cache is full (large attachments). Your tasks still save to the server — remove big files to re-enable offline cache.","warn"); }catch(_){} } } }
 function readCache(){ try{ const a=JSON.parse(localStorage.getItem(STORE_KEY)); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
 
 // Pull the shared task list from the server. The server (Postgres) is the
@@ -1382,7 +1383,7 @@ function renderAnalytics(){
   let bestDay="—",bv=-1; dow.forEach((v,i)=>{ if(v>bv){bv=v;bestDay=dowNames[i];} }); if(all.length===0)bestDay="—";
   // category hours
   const catMins={}; CATEGORIES.forEach(c=>catMins[c]=0);
-  all.forEach(t=>catMins[t.category]+=taskMins(t));
+  all.forEach(t=>catMins[t.category]=(catMins[t.category]||0)+taskMins(t));
   let bestCat="—",bcv=-1; for(const c in catMins){ if(catMins[c]>bcv){bcv=catMins[c];bestCat=c;} } if(bcv<=0)bestCat="—";
   const totalMins=all.reduce((s,t)=>s+taskMins(t),0);
   const done=all.filter(t=>t.status==="Completed").length;
@@ -1712,16 +1713,18 @@ function tasksToRows(list){
 }
 function exportCSV(list,name){
   const {head,rows}=tasksToRows(list);
-  const csvEsc=v=>{ v=String(v??""); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
+  // Quote commas/quotes/newlines; also neutralize spreadsheet formula injection
+  // (leading = + - @ tab CR) so a malicious title/note can't run as a formula.
+  const csvEsc=v=>{ v=String(v??""); if(/^[=+\-@\t\r]/.test(v)) v="'"+v; return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; };
   const csv=[head.join(","),...rows.map(r=>r.map(csvEsc).join(","))].join("\n");
   downloadBlob(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}),(name||"taskflow-tasks")+".csv");
   toast("CSV exported","ok");
 }
-function exportExcel(list){
+function exportExcel(list,name){
   const {head,rows}=tasksToRows(list);
   const cell=v=>`<td>${esc(v)}</td>`;
   const html=`<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"><style>td{border:1px solid #ccc;padding:4px;font-family:Calibri,Arial} th{background:#4f46e5;color:#fff;padding:6px;border:1px solid #4f46e5}</style></head><body><table><thead><tr>${head.map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(cell).join("")}</tr>`).join("")}</tbody></table></body></html>`;
-  downloadBlob(new Blob([html],{type:"application/vnd.ms-excel"}),"taskflow-tasks.xls");
+  downloadBlob(new Blob([html],{type:"application/vnd.ms-excel"}),(name||"taskflow-tasks")+".xls");
   toast("Excel file exported","ok");
 }
 function downloadBlob(blob,filename){
@@ -1738,6 +1741,7 @@ function restore(file){
   r.onload=()=>{ try{
       const d=JSON.parse(r.result); const arr=Array.isArray(d)?d:d.tasks;
       if(!Array.isArray(arr)) throw new Error("bad");
+      const seen=new Set();
       const clean=arr.filter(t=>t&&t.title).map(t=>({
         id:t.id||uid(),title:String(t.title),owner:MEMBERS.includes(t.owner)?t.owner:"Hamza",
         category:CATEGORIES.includes(t.category)?t.category:"Other",
@@ -1746,9 +1750,14 @@ function restore(file){
         notes:t.notes||"",createdAt:t.createdAt||Date.now(),
         files:Array.isArray(t.files)?t.files.filter(f=>f&&f.name&&f.data):[],
         links:Array.isArray(t.links)?t.links.map(l=>({label:String((l&&l.label)||""),url:normLink(l&&l.url)})).filter(l=>l.url):[]
-      }));
-      state.tasks=clean; save(); renderAll(); toast(`Restored ${clean.length} tasks`,"ok");
+      })).filter(t=>{ if(seen.has(t.id))return false; seen.add(t.id); return true; }); // drop duplicate ids within the file
+      if(!clean.length){ toast("No valid tasks found in that file","warn"); return; }
+      // Explicit confirmation before replacing — restore overwrites the current list (and syncs to the server).
+      confirmAction("Replace all tasks?",`This replaces your current ${state.tasks.length} task${state.tasks.length===1?"":"s"} with ${clean.length} from the backup, and can't be undone. Download a backup first if unsure.`,"Replace all",()=>{
+        state.tasks=clean; save(); renderAll(); toast(`Restored ${clean.length} tasks`,"ok");
+      });
     }catch(e){ toast("Invalid backup file","err"); } };
+  r.onerror=()=>toast("Couldn't read that file","err");
   r.readAsText(file);
 }
 function clearAll(){
@@ -1774,7 +1783,7 @@ function loadDemo(){
     const tl=titles[cat]; const title=tl[Math.floor(Math.random()*tl.length)];
     const back=Math.floor(Math.random()*14);
     const d=new Date(now); d.setDate(now.getDate()-back);
-    out.push({id:uid(),title,owner,category:cat,status:back===0?statuses[Math.floor(Math.random()*5)]:statuses[Math.floor(Math.random()*5)],
+    out.push({id:uid(),title,owner,category:cat,status:statuses[Math.floor(Math.random()*5)],
       date:ymd(d),hours:Math.floor(Math.random()*4),minutes:[0,15,30,45][Math.floor(Math.random()*4)],
       notes:Math.random()<.4?"Auto-generated sample task for demo purposes.":"",createdAt:Date.now()-back*86400000-Math.floor(Math.random()*1e6)});
   }
@@ -3197,7 +3206,7 @@ function getExportScope(){
   else if(MEMBERS.includes(v))list=list.filter(t=>t.owner===v);
   return list;
 }
-function scopeName(){ const v=($("#exportScope")||{}).value||"all"; return "taskflow-"+v; }
+function scopeName(){ const v=($("#exportScope")||{}).value||"all"; return "taskflow-"+v+"-"+todayStr(); }
 function updateScopeCount(){ const el=$("#exportScopeCount"); if(el) el.textContent=getExportScope().length+" tasks selected"; }
 
 /* ---- download a chart as a PNG image ---- */
@@ -3275,7 +3284,7 @@ function buildMonthlyReportHTML(){
   const tasks=state.tasks.filter(t=>monthOf(t.date)===m);
   const done=tasks.filter(t=>t.status==="Completed");
   const mins=tasks.reduce((s,t)=>s+taskMins(t),0);
-  const catMins={}; CATEGORIES.forEach(c=>catMins[c]=0); tasks.forEach(t=>catMins[t.category]+=taskMins(t));
+  const catMins={}; CATEGORIES.forEach(c=>catMins[c]=0); tasks.forEach(t=>catMins[t.category]=(catMins[t.category]||0)+taskMins(t));
   const label=new Date(m+"-01T00:00:00").toLocaleDateString(undefined,{month:"long",year:"numeric"});
   const catRows=CATEGORIES.filter(c=>tasks.some(t=>t.category===c)).map(c=>[c,fmtMins(catMins[c]),tasks.filter(t=>t.category===c).length]);
   return rHead("Monthly Work Report",label)
@@ -3863,7 +3872,7 @@ function bind(){
   $("#monthPicker").addEventListener("change",e=>{ state.monthSel=e.target.value||thisMonth(); renderMonthly(); });
   // data
   $("#exportCsv").addEventListener("click",()=>exportCSV(getExportScope(),scopeName()));
-  $("#exportXls").addEventListener("click",()=>exportExcel(getExportScope()));
+  $("#exportXls").addEventListener("click",()=>exportExcel(getExportScope(),scopeName()));
   $("#exportScope").addEventListener("change",updateScopeCount);
   $("#exportDailyCsv").addEventListener("click",()=>exportCSV(state.tasks.filter(t=>t.date===todayStr()),"taskflow-"+todayStr()));
   $("#exportMonthCsv").addEventListener("click",()=>{ const m=state.monthSel||thisMonth(); exportCSV(state.tasks.filter(t=>monthOf(t.date)===m),"taskflow-"+m); });
