@@ -4,6 +4,23 @@ A team productivity tracker (HTML + CSS + vanilla JS) with a small Node + Postgr
 backend, so tasks are **saved on the server and shared across every device and
 browser** — not trapped in one browser's local storage.
 
+## Testing (browser E2E)
+
+Automated Playwright tests run on **iPhone, iPad, laptop and desktop** viewports
+(load/console-errors, layout overflow, navigation, add/save/refresh, restore +
+de-dup, reports, CSV export, clear-all). They run automatically in CI on every
+push (`.github/workflows/e2e.yml`).
+
+Run them locally:
+
+```bash
+npm install && npx playwright install chromium && npm run test:e2e
+```
+
+- `npm run test:e2e:report` — open the HTML report from the last run
+- `npm run test:e2e:ui` — interactive runner
+- Screenshots are saved to `e2e/screenshots/<viewport>.png`. Full details: [`e2e/README.md`](e2e/README.md).
+
 ## Files
 - `index.html` — the whole front-end app.
 - `server.js` — Node server (Railway): serves `index.html` **and** a tiny REST
