@@ -12,6 +12,7 @@ const fs = require("fs");
 const path = require("path");
 const { Pool } = require("pg");
 const { seedProducts } = require("./api/_seed");
+const { botStatus, botComplete } = require("./api/_bot");
 
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, "index.html");
@@ -152,6 +153,26 @@ const server = http.createServer(async (req, res) => {
   if (url === "/healthz") {
     res.writeHead(200, { "Content-Type": "text/plain" });
     return res.end("ok");
+  }
+
+  // ---- Amazon Bot AI proxy ----
+  if (url === "/api/bot") {
+    try {
+      if (req.method === "GET") return sendJSON(res, 200, botStatus());
+      if (req.method === "POST") {
+        const raw = await readBody(req);
+        let body;
+        try { body = JSON.parse(raw || "{}"); } catch (e) { return sendJSON(res, 400, { error: "bad_json" }); }
+        const messages = Array.isArray(body.messages) ? body.messages : [];
+        if (!messages.length) return sendJSON(res, 400, { error: "no_messages" });
+        const out = await botComplete({ messages, system: String(body.system || "") });
+        return sendJSON(res, 200, out);
+      }
+      res.writeHead(405, { Allow: "GET, POST" });
+      return res.end("Method Not Allowed");
+    } catch (e) {
+      return sendJSON(res, 200, { error: "ai_error", message: String((e && e.message) || e), fallback: true });
+    }
   }
 
   // ---- API ----
