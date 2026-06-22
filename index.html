@@ -424,6 +424,56 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .op-rate button.on{background:var(--brand-1);color:#fff;border-color:var(--brand-1)}
 .op-bigprog{height:10px;border-radius:99px;background:var(--surface-3);overflow:hidden;margin:6px 0}
 .op-bigprog i{display:block;height:100%;background:linear-gradient(90deg,var(--brand-1),var(--brand-2));border-radius:99px;transition:.4s}
+/* Master Workbook */
+.wb-accts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.wb-acct{text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;cursor:pointer;transition:.15s;font:inherit;color:var(--text)}
+.wb-acct:hover{border-color:var(--brand-1);transform:translateY(-2px);box-shadow:0 10px 24px -14px color-mix(in srgb,var(--brand-1) 60%,transparent)}
+.wb-acct-badge{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;color:#fff;font-size:20px;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));margin-bottom:12px}
+.wb-acct-badge.sm{width:28px;height:28px;font-size:14px;border-radius:8px;margin:0}
+.wb-acct-name{font-family:var(--font-display);font-weight:700;font-size:18px}
+.wb-acct-sub{color:var(--text-3);font-size:13px;margin-top:3px}
+.wb-acct-cta{color:var(--brand-1);font-size:13px;font-weight:600;margin-top:12px}
+.wb-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wb-acctline{display:flex;align-items:center;gap:9px;font-family:var(--font-display);font-size:16px}
+.wb-tools{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.wb-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-bottom:6px}
+.wb-kpi{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 15px}
+.wb-kpi .k{font-size:10.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.wb-kpi .v{font-size:21px;font-weight:700;font-family:var(--font-display);margin-top:3px;letter-spacing:-.02em;line-height:1.15;word-break:break-word}
+.wb-kpi .s{font-size:11.5px;color:var(--text-3);margin-top:3px}
+.wb-kpi .v.st-ok{color:#16a34a}.wb-kpi .v.st-bad{color:#ef4444}.wb-kpi .v.st-warn{color:#b97e1d}
+.wb-sec{font-family:var(--font-display);font-weight:600;font-size:14.5px;margin-bottom:10px}
+.wb-insuf{background:color-mix(in srgb,#dd9b34 10%,transparent);border:1px solid color-mix(in srgb,#dd9b34 35%,transparent);border-radius:12px;padding:13px 16px;margin-top:12px;font-size:13.5px}
+.wb-insuf b{color:#b97e1d}.wb-insuf ul{margin:6px 0 0;padding-left:18px}.wb-insuf li{margin:3px 0;color:var(--text-2)}
+.wb-badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px;white-space:nowrap}
+.wb-badge.st-ok{background:color-mix(in srgb,#16a34a 14%,transparent);color:#16a34a}
+.wb-badge.st-bad{background:color-mix(in srgb,#ef4444 14%,transparent);color:#ef4444}
+.wb-badge.st-warn{background:color-mix(in srgb,#dd9b34 16%,transparent);color:#b97e1d}
+.wb-badge.st-mut{background:var(--surface-3);color:var(--text-3)}
+.op-tbl td.num,.op-tbl th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.op-tbl td.st-bad{color:#ef4444;font-weight:600}
+.wb-rep{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)}
+.wb-rep:last-child{border-bottom:none}
+.wb-rep-sub{font-size:12.5px;color:var(--text-3);margin-top:2px}
+.wb-rec{border:1px solid var(--border);border-left:4px solid var(--text-3);border-radius:12px;padding:15px 17px;margin-bottom:11px;background:var(--surface)}
+.wb-rec.high{border-left-color:#ef4444}.wb-rec.medium{border-left-color:#dd9b34}.wb-rec.low{border-left-color:#16a34a}
+.wb-rec-top{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+.wb-pri{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:7px}
+.wb-pri.high{background:color-mix(in srgb,#ef4444 14%,transparent);color:#ef4444}
+.wb-pri.medium{background:color-mix(in srgb,#dd9b34 16%,transparent);color:#b97e1d}
+.wb-pri.low{background:color-mix(in srgb,#16a34a 14%,transparent);color:#16a34a}
+.wb-rec-cat{font-size:12px;font-weight:600;color:var(--text-2);background:var(--surface-3);padding:3px 9px;border-radius:7px}
+.wb-rec-sku{font-size:12.5px;color:var(--text-3);font-family:var(--font-display)}
+.wb-rec-problem{font-weight:600;font-size:15px;margin-bottom:9px}
+.wb-rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;font-size:13.5px;color:var(--text-2)}
+@media(max-width:620px){.wb-rec-grid{grid-template-columns:1fr}}
+.wb-rec-grid .l{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);font-weight:600;margin-bottom:1px}
+.wb-event{border:1px solid var(--border);border-radius:13px;padding:15px 17px;margin-bottom:10px;background:var(--surface)}
+.wb-ev-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wb-ev-top b{font-family:var(--font-display);font-size:16px}
+.wb-ev-days{font-size:12.5px;font-weight:600;color:var(--text-2);background:var(--surface-3);padding:4px 11px;border-radius:8px;white-space:nowrap}
+.wb-ev-days.soon{background:color-mix(in srgb,#ef4444 13%,transparent);color:#ef4444}
+.wb-ev-rec{font-size:13.5px;color:var(--text-2);margin-top:9px;line-height:1.55}
 .preview-fallback{padding:46px 24px;text-align:center;color:var(--text-2)}
 .preview-fallback .ic{width:60px;height:60px;border-radius:16px;background:var(--surface);display:grid;place-items:center;margin:0 auto 14px;color:var(--brand-1)}
 .preview-fallback .ic svg{width:28px;height:28px}
@@ -464,6 +514,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
       <button class="nav-item" data-view="fba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/><path d="M11 8.5v5M9.5 12.5h2a1 1 0 0 0 0-2h-1a1 1 0 0 1 0-2h2"/></svg>FBA Finder</button>
       <div class="nav-label">Grow</div>
       <button class="nav-item" data-view="operator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>Operator 30</button>
+      <button class="nav-item" data-view="workbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>Master Workbook</button>
       <div class="nav-label">Manage</div>
       <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>Data &amp; Backup</button>
     </nav>
@@ -711,6 +762,14 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
         </div>
         <div class="op-tabs" id="opTabs"></div>
         <div id="opBody"></div>
+      </section>
+
+      <!-- ===== MASTER WORKBOOK ===== -->
+      <section class="view" id="view-workbook">
+        <div class="view-head">
+          <div><h1>Master Workbook</h1><div class="sub">Amazon FBA USA command center — import reports, analyze deeply, get recommendations. Per account: ANAKZ · HMZA · BD</div></div>
+        </div>
+        <div id="wbRoot"></div>
       </section>
     </main>
 
@@ -2277,6 +2336,633 @@ function opSetVFilter(c){ opVFilter=c; renderOperator(); }
 function opAddVault(){ const t=($("#opVTitle")||{}).value?.trim(); if(!t){ toast("Add a title","warn"); return; } opData.vault.push({cat:($("#opVCat")||{}).value||"Lesson",title:t,note:(($("#opVNote")||{}).value||"").trim()}); saveProgram(); renderOperator(); toast("Saved to Vault","ok"); }
 function opDelVault(i){ opData.vault.splice(i,1); saveProgram(); renderOperator(); }
 
+/* ===================== MASTER WORKBOOK — Amazon FBA USA command center ===================== */
+const MWB_ACCOUNTS=["ANAKZ","HMZA","BD"];
+const MWB_DBNAME="taskflow_mwb_v1";
+let _mwbDB=null, _mwbDBfail=false;
+
+/* ---- safe number / format helpers ---- */
+function mNum(v){ if(v==null)return NaN; if(typeof v==="number")return isFinite(v)?v:NaN; let s=String(v).trim(); if(!s||s==="-"||/^n\/?a$/i.test(s))return NaN; let neg=/^\(.*\)$/.test(s); s=s.replace(/[(),$€£%\s]/g,""); if(neg)s="-"+s; const n=parseFloat(s); return isFinite(n)?n:NaN; }
+function isN(n){ return typeof n==="number"&&isFinite(n); }
+function sdiv(a,b){ a=Number(a);b=Number(b); if(!isFinite(a)||!isFinite(b)||b===0)return NaN; return a/b; }
+function nz(n){ return isN(n)?n:0; }
+function fMoney(n){ if(!isN(n))return"—"; const neg=n<0; return (neg?"-$":"$")+Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fNum(n){ if(!isN(n))return"—"; return Math.round(n).toLocaleString(); }
+function fNum1(n){ if(!isN(n))return"—"; return n.toLocaleString(undefined,{maximumFractionDigits:1}); }
+function fPct(n,d){ if(!isN(n))return"—"; return n.toFixed(d==null?1:d)+"%"; }
+function fDays(n){ if(!isN(n))return"—"; return Math.round(n)+(Math.round(n)===1?" day":" days"); }
+function mwbNow(){ return Date.now(); }
+
+/* ---- IndexedDB layer (graceful fallback to localStorage) ---- */
+function mwbOpenDB(){
+  return new Promise((resolve)=>{
+    if(_mwbDB){ resolve(_mwbDB); return; }
+    if(_mwbDBfail||typeof indexedDB==="undefined"){ resolve(null); return; }
+    let req; try{ req=indexedDB.open(MWB_DBNAME,1); }catch(e){ _mwbDBfail=true; resolve(null); return; }
+    req.onupgradeneeded=(e)=>{ const db=e.target.result;
+      if(!db.objectStoreNames.contains("state")) db.createObjectStore("state",{keyPath:"account"});
+      if(!db.objectStoreNames.contains("reports")){ const s=db.createObjectStore("reports",{keyPath:"id"}); s.createIndex("account","account",{unique:false}); }
+      if(!db.objectStoreNames.contains("rows")) db.createObjectStore("rows",{keyPath:"id"});
+    };
+    req.onsuccess=(e)=>{ _mwbDB=e.target.result; _mwbDB.onerror=()=>{}; resolve(_mwbDB); };
+    req.onerror=()=>{ _mwbDBfail=true; resolve(null); };
+    req.onblocked=()=>{ resolve(null); };
+  });
+}
+function idbReq(req){ return new Promise((res,rej)=>{ req.onsuccess=()=>res(req.result); req.onerror=()=>rej(req.error); }); }
+async function mwbGetState(account){
+  const db=await mwbOpenDB();
+  if(!db){ try{ const o=JSON.parse(localStorage.getItem("masterWorkbook_"+account)); return o||null; }catch(e){ return null; } }
+  try{ const tx=db.transaction("state","readonly"); return (await idbReq(tx.objectStore("state").get(account)))||null; }catch(e){ return null; }
+}
+async function mwbPutState(state){
+  const db=await mwbOpenDB();
+  if(!db){ try{ localStorage.setItem("masterWorkbook_"+state.account,JSON.stringify(state)); }catch(e){} return; }
+  try{ const tx=db.transaction("state","readwrite"); tx.objectStore("state").put(state); return await new Promise(r=>{ tx.oncomplete=()=>r(); tx.onerror=()=>r(); tx.onabort=()=>r(); }); }catch(e){}
+}
+async function mwbAddReport(meta,rows){
+  const db=await mwbOpenDB();
+  if(!db){ return; }
+  try{ const tx=db.transaction(["reports","rows"],"readwrite"); tx.objectStore("reports").put(meta); tx.objectStore("rows").put({id:meta.id,rows:rows||[]}); return await new Promise(r=>{ tx.oncomplete=()=>r(); tx.onerror=()=>r(); tx.onabort=()=>r(); }); }catch(e){}
+}
+async function mwbGetReports(account){
+  const db=await mwbOpenDB(); if(!db) return [];
+  try{ const tx=db.transaction("reports","readonly"); const idx=tx.objectStore("reports").index("account"); return (await idbReq(idx.getAll(account)))||[]; }catch(e){ return []; }
+}
+async function mwbGetRows(id){
+  const db=await mwbOpenDB(); if(!db) return [];
+  try{ const tx=db.transaction("rows","readonly"); const r=await idbReq(tx.objectStore("rows").get(id)); return r&&r.rows?r.rows:[]; }catch(e){ return []; }
+}
+async function mwbClearAccount(account){
+  const db=await mwbOpenDB();
+  if(!db){ try{ localStorage.removeItem("masterWorkbook_"+account); }catch(e){} return; }
+  try{ const reps=await mwbGetReports(account); const tx=db.transaction(["state","reports","rows"],"readwrite"); tx.objectStore("state").delete(account); reps.forEach(r=>{ tx.objectStore("reports").delete(r.id); tx.objectStore("rows").delete(r.id); }); return await new Promise(r=>{ tx.oncomplete=()=>r(); tx.onerror=()=>r(); tx.onabort=()=>r(); }); }catch(e){}
+}
+
+/* ---- robust delimited (CSV/TSV) parser ---- */
+function mwbParseDelimited(text){
+  if(text==null) return {headers:[],rows:[]};
+  text=String(text).replace(/^﻿/,"");
+  if(!text.trim()) return {headers:[],rows:[]};
+  const nlIdx=text.indexOf("\n"); const firstLine=nlIdx>-1?text.slice(0,nlIdx):text;
+  const delim=(firstLine.split("\t").length>firstLine.split(",").length)?"\t":",";
+  const out=[]; let row=[],field="",inQ=false; const n=text.length;
+  for(let i=0;i<n;i++){ const c=text[i];
+    if(inQ){ if(c==='"'){ if(text[i+1]==='"'){ field+='"'; i++; } else inQ=false; } else field+=c; }
+    else{ if(c==='"') inQ=true; else if(c===delim){ row.push(field); field=""; } else if(c==='\n'){ row.push(field); out.push(row); row=[]; field=""; } else if(c!=='\r') field+=c; }
+  }
+  if(field.length||row.length){ row.push(field); out.push(row); }
+  const clean=out.filter(r=>r.some(c=>String(c).trim()!==""));
+  if(!clean.length) return {headers:[],rows:[]};
+  const headers=clean[0].map(h=>String(h).trim());
+  const rows=clean.slice(1).map(r=>{ const o={}; for(let i=0;i<headers.length;i++) o[headers[i]]=r[i]!==undefined?r[i]:""; return o; });
+  return {headers,rows};
+}
+
+/* ---- column mapping & report classification ---- */
+function mwbNormH(h){ return String(h).toLowerCase().replace(/\([^)]*\)/g," ").replace(/[^a-z0-9]+/g," ").trim(); }
+const MWB_COLMAP=[
+  ["sku",["sku","seller sku","merchant sku","msku","my sku","fnsku"]],
+  ["asin",["asin","child asin","parent asin","asin1","asin 1"]],
+  ["title",["title","product name","item name","product title","listing title","name"]],
+  ["unitsSold",["units ordered","units sold","quantity purchased","shipped quantity","units","unit ordered","quantity","qty"]],
+  ["revenue",["ordered product sales","product sales","gross sales","total sales","sales","revenue","item price"]],
+  ["sessions",["sessions","sessions total"]],
+  ["pageViews",["page views","page views total"]],
+  ["orders",["total order items","order items","total orders","orders"]],
+  ["stock",["afn fulfillable quantity","fulfillable quantity","available","sellable","quantity available","afn warehouse quantity","ending warehouse balance"]],
+  ["inbound",["afn inbound shipped quantity","afn inbound working quantity","afn inbound receiving quantity","inbound quantity","inbound"]],
+  ["spend",["spend","total spend","cost"]],
+  ["adSales",["7 day total sales","total advertising sales","attributed sales 7 day","sales 7 day","ad sales"]],
+  ["clicks",["clicks"]],
+  ["impressions",["impressions"]],
+  ["adOrders",["7 day total orders","7 day total units","orders 7 day"]],
+  ["acos",["acos","total advertising cost of sales"]],
+  ["campaign",["campaign name","campaigns","campaign"]],
+  ["searchTerm",["customer search term","search term"]],
+  ["matchType",["match type"]],
+  ["targeting",["targeting","keyword text","keyword"]],
+  ["fees",["fba fees","selling fees","amazon fees","referral fee","estimated fee total","total fees","fee"]],
+  ["returnQty",["return quantity","quantity returned","units returned"]],
+  ["returnReason",["return reason","reason"]],
+  ["price",["selling price","listing price","price"]],
+  ["date",["purchase date","payments date","start date","date","week","month"]]
+];
+function mwbHeaderMap(headers){
+  const map={}, nh=headers.map(mwbNormH);
+  for(const [canon,syns] of MWB_COLMAP){ for(let i=0;i<headers.length;i++){ if(map[canon])break; if(syns.includes(nh[i])) map[canon]=headers[i]; } }
+  for(const [canon,syns] of MWB_COLMAP){ if(map[canon])continue; for(let i=0;i<headers.length;i++){ if(map[canon])break; if(syns.some(s=>nh[i].includes(s))) map[canon]=headers[i]; } }
+  return map;
+}
+function mwbClassify(headers){
+  const map=mwbHeaderMap(headers), nh=headers.map(mwbNormH), raw=s=>nh.some(h=>h.includes(s)), has=k=>!!map[k];
+  if(raw("customer search term")||raw("search term")) return "search-term";
+  if(has("impressions")&&has("clicks")&&(has("spend")||has("campaign"))) return "ppc";
+  if(has("sessions")&&has("unitsSold")) return "business";
+  if((has("stock")||raw("afn fulfillable"))&&has("sku")) return "inventory";
+  if(has("returnQty")||raw("return reason")) return "returns";
+  if(raw("settlement id")||raw("amount description")||raw("amount type")) return "settlement";
+  if(raw("amazon order id")||raw("order id")) return "order";
+  if(has("fees")||raw("estimated fee")) return "fees";
+  if(has("unitsSold")&&has("revenue")) return "sales";
+  return "generic";
+}
+const MWB_REQUIRED={
+  business:["sku/asin","unitsSold","sessions"], sales:["sku/asin","unitsSold","revenue"],
+  inventory:["sku","stock"], ppc:["campaign","spend","clicks","impressions"],
+  "search-term":["searchTerm","spend"], returns:["sku/asin","returnQty"], fees:["sku/asin","fees"]
+};
+function mwbMissingCols(type,map){
+  const req=MWB_REQUIRED[type]; if(!req) return [];
+  return req.filter(r=>{ if(r==="sku/asin") return !map.sku&&!map.asin; return !map[r]; });
+}
+
+/* ---- ingest parsed rows into an account dataset ---- */
+function mwbBlankDataset(){ return {skus:{},searchTerms:[],campaigns:{},totals:{},periodDays:null}; }
+function mwbCanon(raw,map){ const r={}; for(const k in map) r[k]=raw[map[k]]; return r; }
+function mwbEnsureSku(ds,id,title,asin){ if(!id)return null; if(!ds.skus[id]) ds.skus[id]={sku:id,asin:asin||"",title:title||"",unitsSold:0,revenue:0,sessions:0,orders:0,stock:NaN,inbound:0,adSpend:0,adSales:0,clicks:0,impressions:0,adOrders:0,returns:0,fees:NaN}; const s=ds.skus[id]; if(asin&&!s.asin)s.asin=asin; if(title&&!s.title)s.title=title; return s; }
+function mwbSkuId(r){ let id=(r.sku||"").toString().trim()||(r.asin||"").toString().trim(); if(!id) id=(r.title||"").toString().trim().slice(0,60); return id; }
+function mwbIngest(ds,type,map,rows,periodDays){
+  if(!ds.skus)ds.skus={}; if(!ds.searchTerms)ds.searchTerms=[]; if(!ds.campaigns)ds.campaigns={};
+  if(type==="search-term"){
+    for(const raw of rows){ const r=mwbCanon(raw,map); const term=(r.searchTerm||"").toString().trim(); if(!term)continue;
+      ds.searchTerms.push({term,campaign:(r.campaign||"").toString(),matchType:(r.matchType||"").toString(),spend:nz(mNum(r.spend)),sales:nz(mNum(r.adSales)),clicks:nz(mNum(r.clicks)),orders:nz(mNum(r.adOrders)),impressions:nz(mNum(r.impressions))}); }
+    if(ds.searchTerms.length>8000) ds.searchTerms=ds.searchTerms.slice(-8000);
+    return;
+  }
+  if(type==="ppc"){
+    for(const raw of rows){ const r=mwbCanon(raw,map); const name=(r.campaign||"").toString().trim()||"(unnamed campaign)";
+      const c=ds.campaigns[name]||(ds.campaigns[name]={name,spend:0,sales:0,clicks:0,impressions:0,orders:0});
+      c.spend+=Math.max(0,nz(mNum(r.spend))); c.sales+=Math.max(0,nz(mNum(r.adSales))); c.clicks+=Math.max(0,nz(mNum(r.clicks))); c.impressions+=Math.max(0,nz(mNum(r.impressions))); c.orders+=Math.max(0,nz(mNum(r.adOrders))); }
+    return;
+  }
+  if(type==="inventory"){ // snapshot: overwrite per-SKU (sum rows within this import)
+    const snap={};
+    for(const raw of rows){ const r=mwbCanon(raw,map); const id=mwbSkuId(r); if(!id)continue; const e=snap[id]||(snap[id]={stock:0,inbound:0,title:(r.title||"").toString().trim(),asin:(r.asin||"").toString().trim()}); e.stock+=nz(mNum(r.stock)); e.inbound+=nz(mNum(r.inbound)); }
+    for(const id in snap){ const s=mwbEnsureSku(ds,id,snap[id].title,snap[id].asin); if(!s)continue; s.stock=snap[id].stock; s.inbound=snap[id].inbound; }
+    return;
+  }
+  for(const raw of rows){ const r=mwbCanon(raw,map); const id=mwbSkuId(r); if(!id)continue; const s=mwbEnsureSku(ds,id,(r.title||"").toString().trim(),(r.asin||"").toString().trim()); if(!s)continue;
+    if(type==="business"||type==="sales"||type==="order"||type==="generic"){
+      const u=mNum(r.unitsSold); if(isN(u))s.unitsSold+=u;
+      const rev=mNum(r.revenue); if(isN(rev))s.revenue+=rev;
+      const se=mNum(r.sessions); if(isN(se))s.sessions+=se;
+      const o=mNum(r.orders); if(isN(o))s.orders+=o; else if(type==="order")s.orders+=1;
+    } else if(type==="returns"){ const rq=mNum(r.returnQty); s.returns+=isN(rq)?rq:1; }
+    else if(type==="fees"){ const f=mNum(r.fees); if(isN(f))s.fees=nz(s.fees)+Math.abs(f); }
+  }
+  if(isN(periodDays)&&periodDays>0&&(type==="business"||type==="sales")) ds.periodDays=(ds.periodDays?Math.max(ds.periodDays,periodDays):periodDays);
+}
+
+/* ---- analyses (all guard against missing data) ---- */
+function mwbVelocity(ds,manual){
+  const pd=isN(ds&&ds.periodDays)&&ds.periodDays>0?ds.periodDays:null;
+  const totalUnits=ds?Object.values(ds.skus).reduce((a,s)=>a+nz(s.unitsSold),0):0;
+  let daily=NaN;
+  if(pd&&totalUnits>0) daily=totalUnits/pd;
+  else if(isN(mNum(manual.unitsPerDay))) daily=mNum(manual.unitsPerDay);
+  else if(isN(mNum(manual.unitsPerMonth))) daily=mNum(manual.unitsPerMonth)/30;
+  else if(isN(mNum(manual.unitsPerWeek))) daily=mNum(manual.unitsPerWeek)/7;
+  return {pd,totalUnits,daily};
+}
+function mwbAnalyzeSales(ds,manual){
+  const skus=Object.values(ds.skus); const v=mwbVelocity(ds,manual);
+  let totalRevenue=skus.reduce((a,s)=>a+nz(s.revenue),0); if(!totalRevenue&&isN(mNum(manual.revenue))) totalRevenue=mNum(manual.revenue);
+  const totalUnits=v.totalUnits||nz(mNum(manual.orderCount));
+  const ranked=skus.filter(s=>nz(s.unitsSold)>0).sort((a,b)=>nz(b.unitsSold)-nz(a.unitsSold));
+  const top=ranked.slice(0,5), slow=ranked.slice(-5).reverse().filter(s=>!top.includes(s));
+  const insufficient=[];
+  if(!skus.length&&!totalRevenue) insufficient.push("Upload a Business/Sales report or enter manual sales to see velocity & trends.");
+  if(!v.pd&&!isN(v.daily)) insufficient.push("Set the report period (days) on import, or enter units/day, for accurate velocity.");
+  return {totalRevenue,totalUnits,daily:v.daily,weekly:isN(v.daily)?v.daily*7:NaN,monthly:isN(v.daily)?v.daily*30:NaN,top,slow,skuCount:skus.length,insufficient};
+}
+function mwbLeadTime(manual){
+  let lt=mNum(manual.leadTime);
+  if(!isN(lt)){ const p=mNum(manual.productionTime),s=mNum(manual.shippingTime); if(isN(p)||isN(s)) lt=nz(p)+nz(s); }
+  return isN(lt)&&lt>0?lt:NaN;
+}
+function mwbAnalyzeInventory(ds,manual,eventLift){
+  const lead=mwbLeadTime(manual);
+  const bufferDays=isN(mNum(manual.bufferDays))?mNum(manual.bufferDays):(isN(lead)?Math.round(lead*0.5):14);
+  const coverDays=isN(mNum(manual.coverDays))?mNum(manual.coverDays):30;
+  const overstockDays=isN(mNum(manual.targetStock))&&false?0:120;
+  const v=mwbVelocity(ds,manual);
+  const skus=Object.values(ds.skus);
+  const rows=[]; let stockout=0,low=0,over=0,healthy=0;
+  const manualDaily=isN(v.daily)?v.daily:NaN;
+  const considered = skus.length?skus:(isN(mNum(manual.currentInventory))?[{sku:"(manual)",title:"Manual entry",stock:mNum(manual.currentInventory),unitsSold:NaN,inbound:0,_manual:true}]:[]);
+  for(const s of considered){
+    let daily;
+    if(s._manual) daily=manualDaily;
+    else daily = (v.pd&&isN(s.unitsSold)&&s.unitsSold>0)? s.unitsSold/v.pd : (skus.length===1?manualDaily:NaN);
+    const stock=isN(s.stock)?s.stock:(s._manual?nz(s.stock):NaN);
+    const inbound=nz(s.inbound);
+    if(!isN(daily)||daily<=0||!isN(stock)){ rows.push({sku:s.sku,title:s.title,stock,daily,daysLeft:NaN,reorderQty:NaN,reorderDate:null,status:"nodata"}); continue; }
+    const daysLeft=stock/daily;
+    const safety=daily*bufferDays;
+    const lift=isN(eventLift)&&eventLift>0?(1+eventLift/100):1;
+    const target=daily*(nz(lead)+coverDays)*lift + safety;
+    const reorderQty=Math.max(0,Math.round(target-(stock+inbound)));
+    const reorderInDays=isN(lead)?Math.max(0,Math.round(daysLeft-lead)):NaN;
+    const reorderDate=isN(reorderInDays)?(mwbNow()+reorderInDays*86400000):null;
+    let status;
+    if(isN(lead)&&daysLeft<lead){ status="stockout"; stockout++; }
+    else if(daysLeft<nz(lead)+bufferDays){ status="low"; low++; }
+    else if(daysLeft>overstockDays){ status="over"; over++; }
+    else { status="healthy"; healthy++; }
+    rows.push({sku:s.sku,title:s.title,stock,inbound,daily,daysLeft,safety,reorderQty,reorderInDays,reorderDate,status});
+  }
+  rows.sort((a,b)=>(isN(a.daysLeft)?a.daysLeft:1e9)-(isN(b.daysLeft)?b.daysLeft:1e9));
+  const insufficient=[];
+  if(!isN(lead)) insufficient.push("Enter supplier lead time (or production + shipping time) for reorder dates & stockout risk.");
+  if(!considered.length) insufficient.push("Upload an Inventory report or enter current inventory + units/day.");
+  return {rows,stockout,low,over,healthy,lead,bufferDays,coverDays,insufficient};
+}
+function mwbAnalyzeProfit(ds,manual){
+  const v=mwbVelocity(ds,manual);
+  const skus=Object.values(ds.skus);
+  const cost=mNum(manual.productCost), price=mNum(manual.sellingPrice), amzFee=mNum(manual.amazonFees), fbaFee=mNum(manual.fbaFees);
+  const rows=[]; let tRev=0,tCogs=0,tFees=0,tAd=0;
+  for(const s of skus){
+    const units=nz(s.unitsSold);
+    const rev=isN(s.revenue)&&s.revenue?s.revenue:(isN(price)?price*units:NaN);
+    const unitPrice=units>0&&isN(rev)?rev/units:(isN(price)?price:NaN);
+    const cogs=isN(cost)?cost*units:NaN;
+    let fees=isN(s.fees)?s.fees:NaN; if(!isN(fees)){ const pf=(isN(amzFee)?amzFee:NaN), ff=(isN(fbaFee)?fbaFee:NaN); if(isN(pf)||isN(ff)) fees=(nz(pf)+nz(ff))*units; else if(isN(rev)) fees=rev*0.15+(units*4.0); }
+    const ad=nz(s.adSpend);
+    if(!isN(rev)){ rows.push({sku:s.sku,title:s.title,nodata:true}); continue; }
+    const net=rev-nz(cogs)-nz(fees)-ad;
+    tRev+=rev; tCogs+=nz(cogs); tFees+=nz(fees); tAd+=ad;
+    const margin=sdiv(net,rev)*100; const roi=sdiv(net,cogs)*100;
+    const feePerUnit=units>0?nz(fees)/units:NaN; const bep=isN(cost)?cost+nz(feePerUnit):NaN;
+    const beAcos=isN(unitPrice)&&isN(cost)?sdiv(unitPrice-cost-nz(feePerUnit),unitPrice)*100:NaN;
+    rows.push({sku:s.sku,title:s.title,units,revenue:rev,cogs,fees,ad,net,margin,roi,breakEvenPrice:bep,breakEvenAcos:beAcos,unitPrice,costKnown:isN(cost)});
+  }
+  rows.sort((a,b)=>(b.net||-1e9)-(a.net||-1e9));
+  const totalAd=tAd||nz(mNum(manual.ppcSpend));
+  const net=tRev-tCogs-tFees-totalAd;
+  const insufficient=[];
+  if(!isN(cost)&&!skus.some(s=>isN(s.fees))) insufficient.push("Enter product cost (COGS) for true net profit, margin & ROI. Fees are estimated until a fee report is uploaded.");
+  if(!tRev) insufficient.push("Upload a Sales/Business report or enter selling price to compute profit.");
+  return {rows,totalRevenue:tRev,totalCogs:tCogs,totalFees:tFees,totalAd,net,margin:sdiv(net,tRev)*100,roi:sdiv(net,tCogs)*100,insufficient};
+}
+function mwbAnalyzePPC(ds,manual,totalRevenue){
+  const camps=Object.values(ds.campaigns);
+  let spend=camps.reduce((a,c)=>a+nz(c.spend),0), sales=camps.reduce((a,c)=>a+nz(c.sales),0),
+      clicks=camps.reduce((a,c)=>a+nz(c.clicks),0), impr=camps.reduce((a,c)=>a+nz(c.impressions),0), orders=camps.reduce((a,c)=>a+nz(c.orders),0);
+  const skuAd=Object.values(ds.skus).reduce((a,s)=>a+nz(s.adSpend),0);
+  if(!spend){ spend=skuAd||nz(mNum(manual.ppcSpend)); }
+  const target=isN(mNum(manual.targetAcos))?mNum(manual.targetAcos):30;
+  const acos=sdiv(spend,sales)*100, tacos=sdiv(spend,totalRevenue)*100, ctr=sdiv(clicks,impr)*100, cpc=sdiv(spend,clicks), cvr=sdiv(orders,clicks)*100;
+  const st=ds.searchTerms||[];
+  let wasted=0; const bad=[],good=[],toExact=[];
+  for(const t of st){ const tacosT=sdiv(t.spend,t.sales)*100;
+    if(t.orders===0&&t.spend>0) wasted+=t.spend;
+    if(t.orders===0&&t.spend>=(isN(cpc)?cpc*3:3)) bad.push(t);
+    if(t.orders>=2&&isN(tacosT)&&tacosT<=target){ good.push(t); if(!/exact/i.test(t.matchType||"")) toExact.push(t); }
+  }
+  bad.sort((a,b)=>b.spend-a.spend); good.sort((a,b)=>b.orders-a.orders); toExact.sort((a,b)=>b.orders-a.orders);
+  const campAction=camps.map(c=>{ const ca=sdiv(c.spend,c.sales)*100; let action="hold";
+    if(c.orders>0&&isN(ca)&&ca<=target*0.7) action="increase"; else if(isN(ca)&&ca>target*1.3) action="decrease"; else if(c.spend>0&&c.orders===0) action="decrease";
+    return {name:c.name,spend:c.spend,sales:c.sales,acos:ca,orders:c.orders,action}; }).sort((a,b)=>b.spend-a.spend);
+  const insufficient=[];
+  if(!spend) insufficient.push("Upload a PPC campaign report or enter PPC spend to analyze ads.");
+  if(!st.length) insufficient.push("Upload a Search-Term report to find wasted spend, bad keywords & exact-match opportunities.");
+  return {spend,sales,clicks,impr,orders,acos,tacos,ctr,cpc,cvr,target,wasted,bad:bad.slice(0,15),good:good.slice(0,15),toExact:toExact.slice(0,15),campActions:campAction,insufficient};
+}
+function mwbAnalyzeReturns(ds){
+  const skus=Object.values(ds.skus);
+  const totalUnits=skus.reduce((a,s)=>a+nz(s.unitsSold),0);
+  const totalReturns=skus.reduce((a,s)=>a+nz(s.returns),0);
+  const rate=sdiv(totalReturns,totalUnits)*100;
+  const risky=skus.filter(s=>nz(s.returns)>0&&nz(s.unitsSold)>0).map(s=>({sku:s.sku,title:s.title,returns:s.returns,units:s.unitsSold,rate:sdiv(s.returns,s.unitsSold)*100})).filter(x=>x.rate>=8).sort((a,b)=>b.rate-a.rate);
+  const insufficient=[]; if(!totalReturns) insufficient.push("Upload a Returns report to analyze return rate & high-risk SKUs.");
+  return {totalReturns,totalUnits,rate,risky:risky.slice(0,15),insufficient};
+}
+
+/* ---- USA events / holidays ---- */
+function mwbNthWeekday(y,m,wd,n){ const d=new Date(y,m,1); let count=0; while(d.getMonth()===m){ if(d.getDay()===wd){ count++; if(count===n) return new Date(y,m,d.getDate()); } d.setDate(d.getDate()+1); } return null; }
+function mwbLastWeekday(y,m,wd){ const d=new Date(y,m+1,0); while(d.getDay()!==wd) d.setDate(d.getDate()-1); return new Date(y,m,d.getDate()); }
+function mwbEaster(y){ const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,mm=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*mm+114)/31),day=((h+l-7*mm+114)%31)+1; return new Date(y,month-1,day); }
+const MWB_EVENTS=[
+  {name:"New Year",f:y=>new Date(y,0,1),gift:true,lift:[10,25]},
+  {name:"Valentine's Day",f:y=>new Date(y,1,14),gift:true,lift:[20,50]},
+  {name:"Easter",f:y=>mwbEaster(y),gift:true,lift:[15,35]},
+  {name:"Mother's Day",f:y=>mwbNthWeekday(y,4,0,2),gift:true,lift:[25,60]},
+  {name:"Memorial Day",f:y=>mwbLastWeekday(y,4,1),gift:false,lift:[10,25]},
+  {name:"Father's Day",f:y=>mwbNthWeekday(y,5,0,3),gift:true,lift:[20,50]},
+  {name:"Prime Day (approx.)",f:y=>new Date(y,6,16),gift:false,lift:[40,120]},
+  {name:"Independence Day",f:y=>new Date(y,6,4),gift:false,lift:[10,30]},
+  {name:"Back to School",f:y=>new Date(y,7,10),gift:false,lift:[20,45]},
+  {name:"Labor Day",f:y=>mwbNthWeekday(y,8,1,1),gift:false,lift:[10,25]},
+  {name:"Halloween",f:y=>new Date(y,9,31),gift:true,lift:[25,70]},
+  {name:"Thanksgiving",f:y=>mwbNthWeekday(y,10,4,4),gift:false,lift:[20,40]},
+  {name:"Black Friday",f:y=>{const t=mwbNthWeekday(y,10,4,4);return new Date(y,10,t.getDate()+1);},gift:true,lift:[80,200]},
+  {name:"Cyber Monday",f:y=>{const t=mwbNthWeekday(y,10,4,4);return new Date(y,10,t.getDate()+4);},gift:true,lift:[70,180]},
+  {name:"Christmas",f:y=>new Date(y,11,25),gift:true,lift:[50,150]}
+];
+function mwbUpcoming(now,horizon){
+  now=now||new Date(); horizon=horizon||120;
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const list=[];
+  for(const ev of MWB_EVENTS){ let y=today.getFullYear(); let d=ev.f(y); if(d<today) d=ev.f(y+1);
+    const daysLeft=Math.round((d-today)/86400000);
+    list.push({name:ev.name,date:d.getTime(),daysLeft,gift:ev.gift,lift:ev.lift}); }
+  list.sort((a,b)=>a.daysLeft-b.daysLeft);
+  return list.filter(e=>e.daysLeft<=horizon);
+}
+function mwbPeakEventLift(now){ const up=mwbUpcoming(now,75); if(!up.length) return 0; const e=up[0]; return Math.round((e.lift[0]+e.lift[1])/2); }
+
+/* ---- recommendations engine ---- */
+function mwbRecommend(ds,manual){
+  const recs=[];
+  const sales=mwbAnalyzeSales(ds,manual);
+  const lift=mwbPeakEventLift();
+  const inv=mwbAnalyzeInventory(ds,manual,lift);
+  const profit=mwbAnalyzeProfit(ds,manual);
+  const ppc=mwbAnalyzePPC(ds,manual,sales.totalRevenue);
+  const ret=mwbAnalyzeReturns(ds);
+  const add=(o)=>recs.push(o);
+  // inventory: stockout & reorder
+  inv.rows.forEach(r=>{ if(r.status==="stockout"){
+    add({priority:"High",sku:r.sku,category:"Inventory",problem:`May run out in ${fDays(r.daysLeft)} — under the ${fDays(inv.lead)} supplier lead time`,
+      data:`Avg daily sales ${fNum1(r.daily)}, stock ${fNum(r.stock)}${r.inbound?(" +"+fNum(r.inbound)+" inbound"):""}, lead time ${fDays(inv.lead)}`,
+      action:`Reorder ${fNum(r.reorderQty)} units now`,reason:`Covers lead time + ${inv.bufferDays}d safety + ${inv.coverDays}d cover${lift?` + ~${lift}% upcoming-event demand`:""}`,
+      impact:"Avoid stockout, protect BSR/organic rank and ad efficiency"});
+  } else if(r.status==="low"){
+    add({priority:"Medium",sku:r.sku,category:"Inventory",problem:`Low cover — ${fDays(r.daysLeft)} of stock left`,data:`Avg daily ${fNum1(r.daily)}, stock ${fNum(r.stock)}, reorder in ~${fDays(r.reorderInDays)}`,action:`Plan a reorder of ${fNum(r.reorderQty)} units (by ${r.reorderDate?new Date(r.reorderDate).toLocaleDateString():"soon"})`,reason:"Keep buffer above the lead-time threshold",impact:"Prevent a future stockout"});
+  } else if(r.status==="over"){
+    add({priority:"Low",sku:r.sku,category:"Inventory",problem:`Overstocked — ${fDays(r.daysLeft)} of cover`,data:`Avg daily ${fNum1(r.daily)}, stock ${fNum(r.stock)}`,action:"Slow/hold reorders; consider a promo or small price drop to accelerate sell-through",reason:"Free trapped cash and avoid the aged-inventory surcharge (181+ days)",impact:"Recover cash, avoid storage surcharges"});
+  } });
+  // profit: losing money / thin margin
+  profit.rows.forEach(r=>{ if(r.nodata)return;
+    if(isN(r.net)&&r.net<0){ add({priority:"High",sku:r.sku,category:"Profit",problem:"Losing money per the current data",data:`Revenue ${fMoney(r.revenue)}, COGS ${fMoney(r.cogs)}, fees ${fMoney(r.fees)}, ad ${fMoney(r.ad)} → net ${fMoney(r.net)}`,action:r.costKnown?"Raise price, cut ad waste, or renegotiate COGS; if unfixable, reduce/stop":"Confirm COGS, then raise price or cut ad spend",reason:"Negative contribution drains cash with every sale",impact:"Turn a loss-maker into a contributor or stop the bleed"});
+    } else if(isN(r.margin)&&r.margin<10&&r.costKnown){ add({priority:"Medium",sku:r.sku,category:"Profit",problem:`Thin margin (${fPct(r.margin)})`,data:`Net ${fMoney(r.net)} on ${fMoney(r.revenue)} revenue`,action:"Test a price increase and trim low-ROI ad spend",reason:"Margins this thin leave no room for fee/ad swings",impact:"Protect net profit against cost increases"}); } });
+  // ppc actions
+  if(isN(ppc.tacos)&&ppc.tacos>(ppc.target)) add({priority:"Medium",sku:"(account)",category:"PPC",problem:`TACOS high at ${fPct(ppc.tacos)}`,data:`Ad spend ${fMoney(ppc.spend)} vs revenue ${fMoney(sales.totalRevenue)}; ACOS ${fPct(ppc.acos)}`,action:"Cut wasted spend and let organic carry more rank",reason:"You're renting too much of your revenue through ads",impact:"Higher net margin at similar revenue"});
+  if(ppc.wasted>0) add({priority:"High",sku:"(account)",category:"PPC",problem:`Wasted ad spend: ${fMoney(ppc.wasted)} on terms with 0 orders`,data:`${ppc.bad.length} zero-order terms above CPC threshold`,action:"Add the top zero-order terms as negatives",reason:"Pure waste — no conversions",impact:`Recover ~${fMoney(ppc.wasted)} to reinvest or drop to profit`});
+  ppc.toExact.slice(0,5).forEach(t=>add({priority:"Medium",sku:"(keyword)",category:"PPC",problem:`Converting term not isolated: “${t.term}”`,data:`${fNum(t.orders)} orders, spend ${fMoney(t.spend)}, ACOS ${fPct(sdiv(t.spend,t.sales)*100)}`,action:"Graduate to its own exact-match ad group and negate in discovery",reason:"Isolate winners to control bids and protect budget",impact:"Lower ACOS and scale the proven term"}));
+  ppc.campActions.filter(c=>c.action==="increase").slice(0,5).forEach(c=>add({priority:"Medium",sku:c.name,category:"PPC",problem:"Profitable campaign with room to scale",data:`ACOS ${fPct(c.acos)} (target ${fPct(ppc.target)}), ${fNum(c.orders)} orders`,action:"Increase budget/bids 15–25%",reason:"Below-target ACOS with conversions = scalable",impact:"More profitable sales and rank"}));
+  ppc.campActions.filter(c=>c.action==="decrease").slice(0,5).forEach(c=>add({priority:"Medium",sku:c.name,category:"PPC",problem:"Inefficient campaign",data:`ACOS ${fPct(c.acos)} (target ${fPct(ppc.target)}), spend ${fMoney(c.spend)}, ${fNum(c.orders)} orders`,action:"Cut budget/bids or restructure",reason:"Above-target ACOS or no conversions",impact:"Stop the leak, redeploy budget"}));
+  // sales: slow movers
+  sales.slow.forEach(s=>{ if(nz(s.unitsSold)>0) add({priority:"Low",sku:s.sku,category:"Sales",problem:"Slow-moving product",data:`Only ${fNum(s.unitsSold)} units in the period`,action:"Improve listing (main image, title, A+), add reviews, or test a promo; consider phasing out if it stays slow",reason:"Slow sellers tie up cash and storage",impact:"Either revive demand or free capital"}); });
+  // returns
+  ret.risky.forEach(s=>add({priority:"Medium",sku:s.sku,category:"Returns",problem:`High return rate (${fPct(s.rate)})`,data:`${fNum(s.returns)} returns on ${fNum(s.units)} units`,action:"Audit listing accuracy (size/expectations), images and packaging; read return reasons",reason:"Returns erase profit and hurt account health",impact:"Lower refunds, better margin and ranking"}));
+  // events
+  const up=mwbUpcoming(new Date(),75);
+  up.slice(0,3).forEach(e=>add({priority:e.daysLeft<=45?"High":"Medium",sku:"(event)",category:"Event",problem:`${e.name} in ${e.daysLeft} days`,data:`Typical lift +${e.lift[0]}–${e.lift[1]}%${e.gift?" · gift-related demand":""}`,action:`Increase inventory buffer ${e.gift?"30–40%":"15–25%"} and prep PPC budget/creative early`,reason:"Lead times mean inventory & ads must be ready before the spike",impact:"Capture the seasonal surge instead of stocking out mid-peak"}));
+  const order={High:0,Medium:1,Low:2};
+  recs.sort((a,b)=>order[a.priority]-order[b.priority]);
+  return recs;
+}
+
+/* ===================== MASTER WORKBOOK — UI layer ===================== */
+let mwb={account:null,tab:"dashboard",analysisTab:"sales",data:{},reports:{},loaded:{}};
+let _mwbSaveTimers={}, _mwbLastManualHist={}, _wbPrev={id:null,page:0,rows:null}, _xlsxP=null;
+const MWB_MANUAL_FIELDS=[
+ ["currentInventory","Current inventory (units)"],["unitsPerDay","Units sold / day"],["unitsPerWeek","Units sold / week"],["unitsPerMonth","Units sold / month"],
+ ["productCost","Product cost / unit ($)"],["sellingPrice","Selling price ($)"],["amazonFees","Amazon referral fee / unit ($)"],["fbaFees","FBA fee / unit ($)"],
+ ["ppcSpend","PPC spend ($)"],["targetAcos","Target ACOS (%)"],["acos","Current ACOS (%)"],["tacos","TACOS (%)"],["conversionRate","Conversion rate (%)"],
+ ["sessions","Sessions"],["orderCount","Order count"],["profitMargin","Profit margin (%)"],["leadTime","Supplier lead time (days)"],["productionTime","Production time (days)"],
+ ["shippingTime","Shipping time (days)"],["bufferDays","Safety / buffer (days)"],["minStock","Minimum stock level"],["targetStock","Target stock level"]
+];
+function wbTypeLabel(t){ return {business:"Business report",sales:"Sales report",inventory:"Inventory",ppc:"PPC campaigns","search-term":"Search terms",returns:"Returns",fees:"Fees",order:"Orders",settlement:"Settlement",generic:"Data"}[t]||t; }
+function wbHistKind(k){ return {import:"Import",manual:"Manual",recs:"Recommendations",clear:"Clear",export:"Export",restore:"Restore"}[k]||k; }
+
+function mwbBlankState(acc){ return {account:acc,manual:{},dataset:mwbBlankDataset(),recommendations:[],lastRecAt:null,lastImportAt:null,history:[],updatedAt:mwbNow()}; }
+async function mwbEnsureLoaded(acc){
+  if(mwb.loaded[acc]) return;
+  let st=null; try{ st=await mwbGetState(acc); }catch(e){}
+  if(!st||typeof st!=="object") st=mwbBlankState(acc);
+  st.account=acc; st.manual=st.manual||{}; st.dataset=st.dataset||mwbBlankDataset();
+  st.dataset.skus=st.dataset.skus||{}; st.dataset.searchTerms=st.dataset.searchTerms||[]; st.dataset.campaigns=st.dataset.campaigns||{};
+  st.recommendations=st.recommendations||[]; st.history=st.history||[];
+  mwb.data[acc]=st;
+  try{ mwb.reports[acc]=(await mwbGetReports(acc))||[]; }catch(e){ mwb.reports[acc]=[]; }
+  mwb.loaded[acc]=true;
+}
+function mwbSave(acc){ acc=acc||mwb.account; const st=mwb.data[acc]; if(!st)return; st.updatedAt=mwbNow(); if(_mwbSaveTimers[acc])clearTimeout(_mwbSaveTimers[acc]); _mwbSaveTimers[acc]=setTimeout(()=>mwbPutState(st),400); }
+function mwbHist(acc,kind,text){ const st=mwb.data[acc]; if(!st)return; st.history.unshift({ts:mwbNow(),kind,text}); if(st.history.length>200)st.history.length=200; }
+
+function renderWorkbook(){
+  const root=$("#wbRoot"); if(!root)return;
+  try{
+    if(!mwb.account){ root.innerHTML=wbPicker(); return; }
+    if(!mwb.loaded[mwb.account]){ root.innerHTML=`<div class="card" style="padding:30px;text-align:center;color:var(--text-3)">Loading ${esc(mwb.account)}…</div>`; mwbEnsureLoaded(mwb.account).then(()=>{ if(mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); return; }
+    root.innerHTML=wbWorkspace();
+  }catch(e){ console.error("workbook render",e); root.innerHTML=`<div class="card" style="padding:24px;color:#ef4444">Something went wrong rendering this view — your data is safe. Try switching tabs or reloading.</div>`; }
+}
+function wbPicker(){
+  MWB_ACCOUNTS.forEach(a=>{ if(!mwb.loaded[a]) mwbEnsureLoaded(a).then(()=>{ if(!mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); });
+  const cards=MWB_ACCOUNTS.map(a=>{ const st=mwb.data[a]; let stat="Tap to open";
+    if(st){ const s=mwbAnalyzeSales(st.dataset,st.manual); const reps=(mwb.reports[a]||[]).length; stat=`${reps} report${reps===1?"":"s"} · ${fNum(Object.keys(st.dataset.skus).length)} SKUs · ${fMoney(s.totalRevenue)}`; }
+    return `<button class="wb-acct" onclick="mwbSelectAccount('${a}')"><div class="wb-acct-badge">${a[0]}</div><div class="wb-acct-name">${a}</div><div class="wb-acct-sub">${esc(stat)}</div><div class="wb-acct-cta">Open workbook →</div></button>`; }).join("");
+  return `<div class="sub" style="margin-bottom:16px">Pick an account. Each Master Workbook keeps its own data, analysis, recommendations and history — nothing is shared between accounts.</div><div class="wb-accts">${cards}</div>`;
+}
+function mwbSelectAccount(a){ if(MWB_ACCOUNTS.indexOf(a)<0)return; mwb.account=a; mwb.tab="dashboard"; renderWorkbook(); }
+function mwbBackToPicker(){ mwb.account=null; renderWorkbook(); window.scrollTo({top:0,behavior:"smooth"}); }
+function mwbGo(tab){ mwb.tab=tab; _wbPrev={id:null,page:0,rows:null}; renderWorkbook(); }
+function mwbAnTab(k){ mwb.analysisTab=k; renderWorkbook(); }
+function wbWorkspace(){
+  const acc=mwb.account; const tabs=[["dashboard","Dashboard"],["import","Import"],["manual","Manual Data"],["analysis","Analysis"],["recs","Recommendations"],["events","Events"],["history","History"]];
+  const tb=tabs.map(([k,t])=>`<button class="op-tab ${mwb.tab===k?"active":""}" onclick="mwbGo('${k}')">${t}</button>`).join("");
+  let body; try{ body=({dashboard:wbDashboard,import:wbImport,manual:wbManual,analysis:wbAnalysis,recs:wbRecs,events:wbEvents,history:wbHistory}[mwb.tab]||wbDashboard)(acc); }
+  catch(e){ console.error(e); body=`<div class="card" style="padding:20px;color:#ef4444">Couldn't render this tab — your data is safe.</div>`; }
+  return `<div class="wb-top">
+      <button class="op-back" onclick="mwbBackToPicker()" style="margin:0"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>Accounts</button>
+      <div class="wb-acctline"><span class="wb-acct-badge sm">${acc[0]}</span><b>${esc(acc)} Master Workbook</b></div>
+      <div class="wb-tools">
+        <button class="btn btn-ghost btn-sm" onclick="mwbExport()">Export</button>
+        <button class="btn btn-ghost btn-sm" onclick="mwbImportBackupPick()">Import backup</button>
+        <button class="btn btn-ghost btn-sm" style="color:#ef4444" onclick="mwbClearConfirm()">Clear</button>
+        <input type="file" id="wbBackupInput" accept="application/json,.json" hidden>
+      </div>
+    </div>
+    <div class="op-tabs">${tb}</div>
+    <div id="wbBody">${body}</div>`;
+}
+function wbKpi(k,v,sub,cls){ return `<div class="wb-kpi"><div class="k">${k}</div><div class="v ${cls||""}">${v}</div>${sub?`<div class="s">${esc(sub)}</div>`:""}</div>`; }
+function wbInsuf(arr){ return arr&&arr.length?`<div class="wb-insuf"><b>Insufficient data</b><ul>${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:""; }
+function wbStatusBadge(s){ const map={stockout:["Stockout risk","st-bad"],low:["Low","st-warn"],over:["Overstock","st-warn"],healthy:["Healthy","st-ok"],nodata:["No data","st-mut"]}; const x=map[s]||map.nodata; return `<span class="wb-badge ${x[1]}">${x[0]}</span>`; }
+
+function wbDashboard(acc){
+  const st=mwb.data[acc], ds=st.dataset, manual=st.manual;
+  const reps=mwb.reports[acc]||[];
+  const empty=!reps.length && !Object.keys(ds.skus).length && !Object.keys(manual).filter(k=>String(manual[k]).trim()!=="").length;
+  if(empty) return `<div class="card" style="padding:34px;text-align:center"><div style="font-family:var(--font-display);font-weight:600;font-size:18px;margin-bottom:6px">No data yet for ${esc(acc)}</div><div class="sub" style="margin-bottom:16px">Import an Amazon report or enter manual data to light up this command center.</div><button class="btn btn-primary" onclick="mwbGo('import')">Import a report</button>&nbsp;<button class="btn btn-ghost" onclick="mwbGo('manual')">Enter manual data</button></div>`;
+  const sales=mwbAnalyzeSales(ds,manual), inv=mwbAnalyzeInventory(ds,manual,0), profit=mwbAnalyzeProfit(ds,manual), ppc=mwbAnalyzePPC(ds,manual,sales.totalRevenue);
+  const best=sales.top[0], worst=sales.slow[0];
+  const minInv=inv.rows.find(r=>isN(r.daysLeft));
+  const tacosBand=isN(ppc.tacos)?(ppc.tacos<10?"Healthy":ppc.tacos<20?"Watch":"High"):"";
+  const invHealth=inv.stockout?(inv.stockout+" at risk"):(inv.low?(inv.low+" low"):(Object.keys(ds.skus).length?"Healthy":"—"));
+  const invCls=inv.stockout?"st-bad":inv.low?"st-warn":"st-ok";
+  return `<div class="wb-kpis">
+    ${wbKpi("Total revenue",fMoney(sales.totalRevenue))}
+    ${wbKpi("Net profit",fMoney(profit.net),isN(profit.margin)?fPct(profit.margin)+" margin":"")}
+    ${wbKpi("Profit margin",fPct(profit.margin))}
+    ${wbKpi("Units sold",fNum(sales.totalUnits),isN(sales.daily)?fNum1(sales.daily)+"/day":"")}
+    ${wbKpi("Inventory health",invHealth,isN(minInv&&minInv.daysLeft)?("min "+fDays(minInv.daysLeft)+" left"):"",invCls)}
+    ${wbKpi("Stockout risk",fNum(inv.stockout),"SKUs",inv.stockout?"st-bad":"")}
+    ${wbKpi("Overstock",fNum(inv.over),"SKUs",inv.over?"st-warn":"")}
+    ${wbKpi("PPC spend",fMoney(ppc.spend))}
+    ${wbKpi("ACOS",fPct(ppc.acos))}
+    ${wbKpi("TACOS",fPct(ppc.tacos),tacosBand)}
+    ${wbKpi("Best seller",best?esc((best.title||best.sku)).slice(0,20):"—",best?fNum(best.unitsSold)+" units":"")}
+    ${wbKpi("Needs attention",worst?esc((worst.title||worst.sku)).slice(0,20):"—",worst?fNum(worst.unitsSold)+" units":"")}
+    ${wbKpi("Days of inventory",minInv?fDays(minInv.daysLeft):"—",minInv?("lowest: "+esc((minInv.title||minInv.sku)).slice(0,16)):"")}
+    ${wbKpi("Last import",st.lastImportAt?new Date(st.lastImportAt).toLocaleDateString():"—")}
+    ${wbKpi("Last recommendation",st.lastRecAt?new Date(st.lastRecAt).toLocaleDateString():"—")}
+  </div>
+  <div class="card" style="padding:16px;margin-top:4px"><div class="sub">${reps.length} report${reps.length===1?"":"s"} imported · ${fNum(Object.keys(ds.skus).length)} SKUs tracked. Open <b>Recommendations</b> for prioritized next actions, or <b>Analysis</b> for the deep dive.</div></div>`;
+}
+
+function wbImport(acc){
+  const reps=(mwb.reports[acc]||[]).slice().sort((a,b)=>b.importedAt-a.importedAt);
+  const list=reps.length?reps.map(r=>`<div class="wb-rep"><div style="min-width:0"><b>${esc(r.name)}</b><div class="wb-rep-sub">${wbTypeLabel(r.type)} · ${fNum(r.rowCount)} rows · ${new Date(r.importedAt).toLocaleString()}${r.missing&&r.missing.length?` · <span style="color:#b97e1d">missing: ${esc(r.missing.join(", "))}</span>`:""}</div></div><button class="btn btn-ghost btn-sm" onclick="mwbPreview('${r.id}')">Preview</button></div>`).join(""):`<div class="fba-empty">No reports imported yet.</div>`;
+  const period=(mwb.data[acc].manual.lastPeriod)||30;
+  return `<div class="card" style="padding:20px;margin-bottom:14px">
+      <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Import Amazon reports</div>
+      <div class="sub" style="margin-bottom:14px">CSV / TSV / TXT (and Excel .xlsx). Business, sales, inventory, PPC, search-term, returns, fee, order &amp; settlement reports are auto-detected. Unsupported, empty, or duplicate files are skipped with a clear message — the app never crashes.</div>
+      <div class="filters" style="align-items:flex-end">
+        <div class="fld"><span class="field-label">Sales report covers (days)</span><input class="input" id="wbPeriod" type="number" min="1" step="1" value="${period}" style="max-width:170px"></div>
+        <div class="fld"><span class="field-label">&nbsp;</span><label class="btn btn-primary" style="cursor:pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:7px"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>Choose files<input type="file" id="wbFileInput" accept=".csv,.tsv,.txt,.xlsx,.xls,text/csv" multiple hidden onchange="mwbOnFiles(this.files)"></label></div>
+      </div>
+      <div id="wbImportStatus" class="sub" style="margin-top:12px;line-height:1.7"></div>
+    </div>
+    <div class="card" style="padding:20px"><div style="font-family:var(--font-display);font-weight:600;margin-bottom:10px">Imported reports (${reps.length})</div>${list}<div id="wbPreviewBox"></div></div>`;
+}
+function mwbLoadXLSX(){ if(window.XLSX) return Promise.resolve(window.XLSX); if(_xlsxP) return _xlsxP; _xlsxP=new Promise((res,rej)=>{ try{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"; s.async=true; s.onload=()=>window.XLSX?res(window.XLSX):rej(new Error("xlsx")); s.onerror=()=>rej(new Error("xlsx")); document.head.appendChild(s); setTimeout(()=>{ window.XLSX?res(window.XLSX):rej(new Error("xlsx timeout")); },12000); }catch(e){ rej(e); } }); return _xlsxP; }
+async function mwbProcessFile(acc,file,period){
+  const name=file.name||"report", lower=name.toLowerCase(); let text;
+  if(/\.(xlsx|xls)$/.test(lower)){
+    let XL; try{ XL=await mwbLoadXLSX(); }catch(e){ throw {friendly:`"${name}": Excel reader unavailable (offline/blocked) — export as CSV and retry.`}; }
+    try{ const buf=await file.arrayBuffer(); const wb=XL.read(new Uint8Array(buf),{type:"array"}); const sh=wb.Sheets[wb.SheetNames[0]]; text=XL.utils.sheet_to_csv(sh); }catch(e){ throw {friendly:`Couldn't parse "${name}" as Excel — try CSV.`}; }
+  } else { try{ text=await file.text(); }catch(e){ throw {friendly:`Couldn't read "${name}".`}; } }
+  if(!text||!text.trim()) throw {friendly:`"${name}" is empty.`};
+  let parsed; try{ parsed=mwbParseDelimited(text); }catch(e){ throw {friendly:`Couldn't parse "${name}".`}; }
+  if(!parsed.headers.length) throw {friendly:`"${name}" has no header row.`};
+  if(!parsed.rows.length) throw {friendly:`"${name}" has headers but no data rows.`};
+  const map=mwbHeaderMap(parsed.headers), type=mwbClassify(parsed.headers), missing=mwbMissingCols(type,map);
+  const reps=mwb.reports[acc]||[];
+  if(reps.some(r=>r.name===name&&r.rowCount===parsed.rows.length&&r.type===type)) return {skipped:true,reason:"looks like a duplicate already imported — skipped to avoid double-counting (Clear data to re-import)."};
+  const st=mwb.data[acc];
+  try{ mwbIngest(st.dataset,type,map,parsed.rows,period); }catch(e){ throw {friendly:`Error analyzing "${name}" — skipped.`}; }
+  const id="rep_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,6);
+  const meta={id,account:acc,type,name,importedAt:mwbNow(),rowCount:parsed.rows.length,columns:parsed.headers,missing};
+  mwb.reports[acc]=mwb.reports[acc]||[]; mwb.reports[acc].push(meta);
+  mwbHist(acc,"import",`Imported ${wbTypeLabel(type)} “${name}” (${parsed.rows.length} rows)`);
+  try{ await mwbAddReport(meta,parsed.rows.slice(0,5000)); }catch(e){}
+  return {type,rowCount:parsed.rows.length,missing};
+}
+async function mwbOnFiles(fileList){
+  const acc=mwb.account; if(!acc||!fileList||!fileList.length) return;
+  const period=Math.max(1,parseInt(($("#wbPeriod")||{}).value)||30); mwb.data[acc].manual.lastPeriod=period;
+  const status=$("#wbImportStatus"); const files=[...fileList]; let okCount=0; const msgs=[];
+  for(const file of files){ if(status) status.textContent=`Reading ${file.name}…`;
+    try{ const res=await mwbProcessFile(acc,file,period);
+      if(res.skipped){ msgs.push(`⚠ ${file.name}: ${res.reason}`); continue; }
+      okCount++; msgs.push(`✓ ${file.name} → ${wbTypeLabel(res.type)}, ${fNum(res.rowCount)} rows${res.missing.length?` (missing: ${res.missing.join(", ")} — analyzed what's available)`:""}`);
+    }catch(err){ msgs.push(`✕ ${(err&&err.friendly)?err.friendly:("Couldn't read "+file.name)}`); }
+  }
+  if(okCount){ mwb.data[acc].lastImportAt=mwbNow(); mwbSave(acc); }
+  toast(okCount?`Imported ${okCount} file${okCount===1?"":"s"}`:"No files imported",okCount?"ok":"warn");
+  renderWorkbook();
+  setTimeout(()=>{ const s=$("#wbImportStatus"); if(s) s.innerHTML=msgs.map(esc).join("<br>"); },40);
+}
+async function mwbPreview(id){
+  if(_wbPrev.id===id){ _wbPrev={id:null,page:0,rows:null}; const b=$("#wbPreviewBox"); if(b)b.innerHTML=""; return; }
+  _wbPrev={id,page:0,rows:null}; const box=$("#wbPreviewBox"); if(box)box.innerHTML=`<div class="sub" style="padding:10px">Loading preview…</div>`;
+  let rows=[]; try{ rows=await mwbGetRows(id); }catch(e){} _wbPrev.rows=rows; wbRenderPreview();
+}
+function wbRenderPreview(){
+  const box=$("#wbPreviewBox"); if(!box||!_wbPrev.id)return; const rows=_wbPrev.rows||[];
+  if(!rows.length){ box.innerHTML=`<div class="sub" style="padding:10px">No stored rows to preview.</div>`; return; }
+  const cols=Object.keys(rows[0]).slice(0,8), per=25, pages=Math.max(1,Math.ceil(rows.length/per)), pg=Math.min(Math.max(0,_wbPrev.page),pages-1);
+  const slice=rows.slice(pg*per,pg*per+per);
+  box.innerHTML=`<div style="overflow:auto;margin-top:14px"><table class="op-tbl"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>${slice.map(r=>`<tr>${cols.map(c=>`<td>${esc(String(r[c]==null?"":r[c]).slice(0,40))}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:10px"><button class="btn btn-ghost btn-sm" ${pg<=0?"disabled":""} onclick="wbPrevPage(-1)">Prev</button><span class="sub">Page ${pg+1}/${pages} · ${fNum(rows.length)} rows</span><button class="btn btn-ghost btn-sm" ${pg>=pages-1?"disabled":""} onclick="wbPrevPage(1)">Next</button></div>`;
+}
+function wbPrevPage(d){ _wbPrev.page=(_wbPrev.page||0)+d; wbRenderPreview(); }
+
+function wbManual(acc){
+  const m=mwb.data[acc].manual;
+  const fields=MWB_MANUAL_FIELDS.map(([k,l])=>`<div class="fld"><span class="field-label">${l}</span><input class="input" type="text" inputmode="decimal" value="${esc(m[k]!=null?m[k]:"")}" oninput="mwbSetManual('${k}',this.value)" placeholder="—"></div>`).join("");
+  return `<div class="card" style="padding:20px">
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Manual data — ${esc(acc)}</div>
+    <div class="sub" style="margin-bottom:14px">Use this when you don't have a report yet, or to supply assumptions the analysis needs. Saves automatically. The highest-impact fields are <b>product cost</b>, <b>supplier lead time</b> (or production + shipping), and <b>selling price</b>.</div>
+    <div class="filters">${fields}</div>
+    <div class="fld" style="margin-top:14px"><span class="field-label">Notes</span><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="3" oninput="mwbSetManual('notes',this.value)" placeholder="Anything to remember for this account…">${esc(m.notes||"")}</textarea></div>
+  </div>`;
+}
+function mwbSetManual(k,v){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return; st.manual[k]=v; mwbSave(acc); const now=mwbNow(); if(!_mwbLastManualHist[acc]||now-_mwbLastManualHist[acc]>120000){ _mwbLastManualHist[acc]=now; mwbHist(acc,"manual","Updated manual data"); } }
+
+function wbAnalysis(acc){
+  const sub=[["sales","Sales"],["inventory","Inventory"],["profit","Profit"],["ppc","PPC"],["returns","Returns"]];
+  const pills=sub.map(([k,t])=>`<button class="op-tab ${mwb.analysisTab===k?"active":""}" onclick="mwbAnTab('${k}')">${t}</button>`).join("");
+  let body; try{ body=({sales:wbAnSales,inventory:wbAnInventory,profit:wbAnProfit,ppc:wbAnPPC,returns:wbAnReturns}[mwb.analysisTab]||wbAnSales)(acc); }catch(e){ console.error(e); body=`<div class="card" style="padding:20px;color:#ef4444">Couldn't compute this analysis — data is safe.</div>`; }
+  return `<div class="op-tabs" style="margin-bottom:14px">${pills}</div><div id="wbAnBody">${body}</div>`;
+}
+function wbAnSales(acc){ const st=mwb.data[acc], a=mwbAnalyzeSales(st.dataset,st.manual);
+  const k=`<div class="wb-kpis">${wbKpi("Revenue",fMoney(a.totalRevenue))}${wbKpi("Units",fNum(a.totalUnits))}${wbKpi("Daily velocity",fNum1(a.daily))}${wbKpi("Weekly",fNum1(a.weekly))}${wbKpi("Monthly",fNum1(a.monthly))}${wbKpi("SKUs",fNum(a.skuCount))}</div>`;
+  const tbl=(title,list)=>list.length?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">${title}</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>SKU</th><th>Title</th><th class="num">Units</th><th class="num">Revenue</th></tr></thead><tbody>${list.map(s=>`<tr><td>${esc(s.sku)}</td><td>${esc((s.title||"").slice(0,40))}</td><td class="num">${fNum(s.unitsSold)}</td><td class="num">${fMoney(s.revenue)}</td></tr>`).join("")}</tbody></table></div></div>`:"";
+  return k+wbInsuf(a.insufficient)+tbl("Best sellers",a.top)+tbl("Slow movers",a.slow);
+}
+function wbAnInventory(acc){ const st=mwb.data[acc], lift=mwbPeakEventLift(), a=mwbAnalyzeInventory(st.dataset,st.manual,lift);
+  const counts=`<div class="wb-kpis">${wbKpi("Stockout risk",fNum(a.stockout),"",a.stockout?"st-bad":"")}${wbKpi("Low cover",fNum(a.low),"",a.low?"st-warn":"")}${wbKpi("Healthy",fNum(a.healthy),"","st-ok")}${wbKpi("Overstock",fNum(a.over),"",a.over?"st-warn":"")}</div>`;
+  const rows=a.rows.map(r=>`<tr><td>${esc(r.sku)}</td><td class="num">${fNum(r.stock)}</td><td class="num">${fNum1(r.daily)}</td><td class="num">${isN(r.daysLeft)?fDays(r.daysLeft):"—"}</td><td class="num">${isN(r.reorderQty)?fNum(r.reorderQty):"—"}</td><td>${r.reorderDate?new Date(r.reorderDate).toLocaleDateString():"—"}</td><td>${wbStatusBadge(r.status)}</td></tr>`).join("");
+  const tbl=a.rows.length?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">Per-SKU inventory ${lift?`<span class="sub" style="font-weight:400">· reorder qty includes ~${lift}% upcoming-event demand</span>`:""}</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>SKU</th><th class="num">Stock</th><th class="num">Daily</th><th class="num">Days left</th><th class="num">Reorder qty</th><th>Reorder by</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div></div>`:"";
+  return counts+wbInsuf(a.insufficient)+tbl;
+}
+function wbAnProfit(acc){ const st=mwb.data[acc], a=mwbAnalyzeProfit(st.dataset,st.manual);
+  const k=`<div class="wb-kpis">${wbKpi("Revenue",fMoney(a.totalRevenue))}${wbKpi("COGS",fMoney(a.totalCogs))}${wbKpi("Fees",fMoney(a.totalFees))}${wbKpi("Ad spend",fMoney(a.totalAd))}${wbKpi("Net profit",fMoney(a.net),"",isN(a.net)&&a.net<0?"st-bad":"st-ok")}${wbKpi("Margin",fPct(a.margin))}${wbKpi("ROI",fPct(a.roi))}</div>`;
+  const rows=a.rows.filter(r=>!r.nodata).map(r=>`<tr><td>${esc(r.sku)}</td><td class="num">${fNum(r.units)}</td><td class="num">${fMoney(r.revenue)}</td><td class="num">${fMoney(r.net)}</td><td class="num ${isN(r.margin)&&r.margin<0?"st-bad":""}">${fPct(r.margin)}</td><td class="num">${fPct(r.roi)}</td><td class="num">${fMoney(r.breakEvenPrice)}</td><td class="num">${fPct(r.breakEvenAcos)}</td></tr>`).join("");
+  const tbl=rows?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">Per-SKU profitability</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>SKU</th><th class="num">Units</th><th class="num">Revenue</th><th class="num">Net</th><th class="num">Margin</th><th class="num">ROI</th><th class="num">Break-even price</th><th class="num">Break-even ACOS</th></tr></thead><tbody>${rows}</tbody></table></div></div>`:"";
+  return k+wbInsuf(a.insufficient)+tbl;
+}
+function wbAnPPC(acc){ const st=mwb.data[acc], s=mwbAnalyzeSales(st.dataset,st.manual), a=mwbAnalyzePPC(st.dataset,st.manual,s.totalRevenue);
+  const k=`<div class="wb-kpis">${wbKpi("Spend",fMoney(a.spend))}${wbKpi("Ad sales",fMoney(a.sales))}${wbKpi("ACOS",fPct(a.acos))}${wbKpi("TACOS",fPct(a.tacos))}${wbKpi("CTR",fPct(a.ctr,2))}${wbKpi("CPC",fMoney(a.cpc))}${wbKpi("Conv. rate",fPct(a.cvr))}${wbKpi("Wasted spend",fMoney(a.wasted),"",a.wasted>0?"st-bad":"")}</div>`;
+  const kwTbl=(title,list,extra)=>list.length?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">${title}</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>Search term</th><th class="num">Spend</th><th class="num">Sales</th><th class="num">Orders</th><th class="num">ACOS</th></tr></thead><tbody>${list.map(t=>`<tr><td>${esc((t.term||"").slice(0,46))}</td><td class="num">${fMoney(t.spend)}</td><td class="num">${fMoney(t.sales)}</td><td class="num">${fNum(t.orders)}</td><td class="num">${fPct(sdiv(t.spend,t.sales)*100)}</td></tr>`).join("")}</tbody></table></div></div>`:"";
+  const camp=a.campActions.length?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">Campaign actions</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>Campaign</th><th class="num">Spend</th><th class="num">Sales</th><th class="num">ACOS</th><th>Action</th></tr></thead><tbody>${a.campActions.map(c=>`<tr><td>${esc((c.name||"").slice(0,40))}</td><td class="num">${fMoney(c.spend)}</td><td class="num">${fMoney(c.sales)}</td><td class="num">${fPct(c.acos)}</td><td>${c.action==="increase"?'<span class="wb-badge st-ok">Increase</span>':c.action==="decrease"?'<span class="wb-badge st-bad">Decrease</span>':'<span class="wb-badge st-mut">Hold</span>'}</td></tr>`).join("")}</tbody></table></div></div>`:"";
+  return k+wbInsuf(a.insufficient)+camp+kwTbl("Bad keywords (pause / negate)",a.bad)+kwTbl("Move to exact match",a.toExact)+kwTbl("Top performers (scale)",a.good);
+}
+function wbAnReturns(acc){ const st=mwb.data[acc], a=mwbAnalyzeReturns(st.dataset);
+  const k=`<div class="wb-kpis">${wbKpi("Return rate",fPct(a.rate),"",isN(a.rate)&&a.rate>10?"st-bad":"")}${wbKpi("Total returns",fNum(a.totalReturns))}${wbKpi("Units sold",fNum(a.totalUnits))}${wbKpi("High-risk SKUs",fNum(a.risky.length),"",a.risky.length?"st-warn":"")}</div>`;
+  const tbl=a.risky.length?`<div class="card" style="padding:16px;margin-top:12px"><div class="wb-sec">High return-rate SKUs</div><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>SKU</th><th>Title</th><th class="num">Returns</th><th class="num">Units</th><th class="num">Rate</th></tr></thead><tbody>${a.risky.map(s=>`<tr><td>${esc(s.sku)}</td><td>${esc((s.title||"").slice(0,40))}</td><td class="num">${fNum(s.returns)}</td><td class="num">${fNum(s.units)}</td><td class="num st-bad">${fPct(s.rate)}</td></tr>`).join("")}</tbody></table></div></div>`:"";
+  return k+wbInsuf(a.insufficient)+tbl;
+}
+
+function wbRecs(acc){ const st=mwb.data[acc], recs=st.recommendations||[];
+  const cards=recs.length?recs.map(r=>`<div class="wb-rec ${r.priority.toLowerCase()}"><div class="wb-rec-top"><span class="wb-pri ${r.priority.toLowerCase()}">${r.priority}</span><span class="wb-rec-cat">${esc(r.category)}</span><span class="wb-rec-sku">${esc(r.sku)}</span></div><div class="wb-rec-problem">${esc(r.problem)}</div><div class="wb-rec-grid"><div><span class="l">Data</span>${esc(r.data)}</div><div><span class="l">Action</span><b>${esc(r.action)}</b></div><div><span class="l">Reason</span>${esc(r.reason)}</div><div><span class="l">Expected impact</span>${esc(r.impact)}</div></div></div>`).join(""):`<div class="fba-empty">No recommendations yet — tap “Generate recommendations”.</div>`;
+  const when=st.lastRecAt?`Last generated ${new Date(st.lastRecAt).toLocaleString()}`:"Not generated yet";
+  return `<div class="card" style="padding:20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap"><div><div style="font-family:var(--font-display);font-weight:600">Recommendations</div><div class="sub">${when} · analyzes all saved data for ${esc(acc)}</div></div><button class="btn btn-primary" onclick="mwbGenerate()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>Generate recommendations</button></div>${cards}`;
+}
+function mwbGenerate(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return; let recs=[]; try{ recs=mwbRecommend(st.dataset,st.manual); }catch(e){ console.error(e); toast("Couldn't generate recommendations","err"); return; } st.recommendations=recs; st.lastRecAt=mwbNow(); mwbHist(acc,"recs",`Generated ${recs.length} recommendations`); mwbSave(acc); renderWorkbook(); toast(`Generated ${recs.length} recommendations`,recs.length?"ok":"warn"); }
+
+function wbEvents(acc){ const up=mwbUpcoming(new Date(),150);
+  const lead=mwbLeadTime(mwb.data[acc].manual);
+  const cards=up.map(e=>{ const orderNow=isN(lead)&&lead>=e.daysLeft; return `<div class="wb-event"><div class="wb-ev-top"><b>${esc(e.name)}</b><span class="wb-ev-days ${e.daysLeft<=45?"soon":""}">${e.daysLeft===0?"Today":e.daysLeft+" days"}</span></div><div class="sub">${new Date(e.date).toLocaleDateString()} · expected lift +${e.lift[0]}–${e.lift[1]}%${e.gift?" · gift-related":""}</div><div class="wb-ev-rec">${e.gift?"Gift demand: raise inventory buffer 30–40% and prep PPC budget/creative early.":"Raise buffer 15–25% and lift ad budgets ahead of the peak."}${orderNow?` <b style="color:#ef4444">Your lead time (${fDays(lead)}) ≥ days left — order now to arrive in time.</b>`:(isN(lead)?` Lead time ${fDays(lead)} — you still have time, but plan the PO.`:"")}</div></div>`; }).join("");
+  return `<div class="sub" style="margin-bottom:12px">Upcoming US selling events for ${esc(acc)}. ${isN(lead)?`Using your ${fDays(lead)} lead time to flag what must be ordered now.`:"Enter supplier lead time in Manual Data to get order-now alerts."}</div>${up.length?cards:'<div class="fba-empty">No major events in the next 150 days.</div>'}`;
+}
+function wbHistory(acc){ const h=mwb.data[acc].history||[]; if(!h.length)return `<div class="fba-empty">No history yet. Imports, manual updates and recommendations are logged here with date &amp; time.</div>`;
+  return `<div class="card" style="padding:6px 4px"><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>When</th><th>Action</th><th>Detail</th></tr></thead><tbody>${h.map(e=>`<tr><td style="white-space:nowrap;color:var(--text-3)">${new Date(e.ts).toLocaleString()}</td><td>${esc(wbHistKind(e.kind))}</td><td>${esc(e.text)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+
+async function mwbExport(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return;
+  const reports=[]; try{ for(const r of (mwb.reports[acc]||[])){ const rows=await mwbGetRows(r.id); reports.push({meta:r,rows}); } }catch(e){}
+  try{ downloadBlob(new Blob([JSON.stringify({app:"TaskFlow Master Workbook",version:1,account:acc,exportedAt:mwbNow(),state:st,reports})],{type:"application/json"}),`masterWorkbook_${acc}_${todayStr()}.json`); mwbHist(acc,"export","Exported backup"); mwbSave(acc); toast("Backup downloaded","ok"); }catch(e){ toast("Export failed","err"); }
+}
+function mwbImportBackupPick(){ const i=$("#wbBackupInput"); if(i){ i.value=""; i.onchange=()=>mwbImportBackup(i.files); i.click(); } }
+async function mwbImportBackup(files){ const acc=mwb.account; if(!files||!files[0])return; let data; try{ data=JSON.parse(await files[0].text()); }catch(e){ toast("Couldn't read backup file","err"); return; }
+  if(!data||!data.state){ toast("Not a valid Master Workbook backup","err"); return; }
+  confirmAction("Restore backup?",`This replaces ALL current data for ${acc} with the backup's contents.`,"Restore",async()=>{
+    try{ const st=data.state; st.account=acc; mwb.data[acc]=st; await mwbClearAccount(acc); await mwbPutState(st); mwb.reports[acc]=[];
+      if(Array.isArray(data.reports)){ for(const r of data.reports){ const meta={...(r.meta||{}),account:acc}; if(!meta.id) meta.id="rep_"+Math.random().toString(36).slice(2,9); mwb.reports[acc].push(meta); await mwbAddReport(meta,r.rows||[]); } }
+      mwbHist(acc,"restore","Restored from backup"); mwbSave(acc); renderWorkbook(); toast("Backup restored","ok");
+    }catch(e){ console.error(e); toast("Restore failed","err"); }
+  });
+}
+function mwbClearConfirm(){ const acc=mwb.account; confirmAction("Clear all data?",`Permanently delete ALL reports, manual data, analysis, recommendations and history for ${acc}. This cannot be undone — export a backup first if unsure.`,"Delete everything",async()=>{ try{ await mwbClearAccount(acc); mwb.data[acc]=mwbBlankState(acc); mwb.reports[acc]=[]; renderWorkbook(); toast(`${acc} data cleared`,"ok"); }catch(e){ toast("Clear failed","err"); } }); }
+
 /* ---- flexible export scope ---- */
 function getExportScope(){
   const v=($("#exportScope")||{}).value||"all";
@@ -2395,7 +3081,7 @@ function switchView(v){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,data:renderDataPanel};
+  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,workbook:renderWorkbook,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
