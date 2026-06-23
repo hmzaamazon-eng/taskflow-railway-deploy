@@ -1,0 +1,139 @@
+{
+  "_comment": "Canonical book registry. Every file you supplied is accounted for here, de-duplicated to a single canonical 'id'. Use that id as book.id when you extract. 'source_files' lists every copy you have so duplicates collapse into one knowledge entry. 'status' tracks progress: pending | extracted | needs_identification | low_relevance.",
+
+  "taxonomy": {
+    "amazon": "Amazon-specific: history, culture, leadership, fees, compliance, selling tools",
+    "finance": "Cash flow, profit, accounting, pricing",
+    "persuasion": "Influence, negotiation, behavioral psychology",
+    "copywriting": "Advertising, sales copy, messaging",
+    "marketing": "Positioning, branding, growth, virality, marketing theory",
+    "customer-development": "Talking to customers, validating demand",
+    "systems-ops": "Process, lean, operations, SOPs, supply chain",
+    "management": "Leadership, org behavior, goals/OKRs, scaling",
+    "product": "Habit-forming products, engagement",
+    "productivity": "Focus, attention, personal effectiveness",
+    "legal-ip": "Trademarks, business law, IP",
+    "reference-academic": "Textbooks / course material (broad background, lower direct FBA relevance)"
+  },
+
+  "books": [
+    { "id": "profit-first", "title": "Profit First", "authors": ["Mike Michalowicz"], "category": "finance", "domain_relevance": "high", "status": "pending",
+      "source_files": ["Profit-First.pdf", "544611339-Profit-First-a-Simple-System-to-Transform-Any-Business-From-a-Cash-eating-Monster-to-a-Money-making-Machine-PDFDrive.pdf"] },
+
+    { "id": "influence-persuasion", "title": "Influence: The Psychology of Persuasion", "authors": ["Robert Cialdini"], "category": "persuasion", "domain_relevance": "high", "status": "pending",
+      "source_files": ["The Psychology of Persuasion.pdf", "The Psychology of Persuasion.pdf (Downloads copy)"] },
+
+    { "id": "work-the-system", "title": "Work the System", "subtitle": "The Simple Mechanics of Making More and Working Less", "authors": ["Sam Carpenter"], "category": "systems-ops", "domain_relevance": "high", "status": "pending",
+      "source_files": ["work_the_system-3rd.pdf"] },
+
+    { "id": "the-mom-test", "title": "The Mom Test", "authors": ["Rob Fitzpatrick"], "category": "customer-development", "domain_relevance": "high", "status": "pending",
+      "source_files": ["The mom test ... ( WeLib.org ).azw3.pdf"] },
+
+    { "id": "12-months-to-1-million", "title": "12 Months to $1 Million", "authors": ["Ryan Daniel Moran"], "category": "amazon", "subcategory": "ecommerce-playbook", "domain_relevance": "high", "status": "pending",
+      "source_files": ["toaz.info-12-months-to-1-million-by-ryan-daniel-moran-pr_...pdf"] },
+
+    { "id": "the-amazon-way", "title": "The Amazon Way: 14 Leadership Principles", "authors": ["John Rossman"], "category": "amazon", "subcategory": "leadership", "domain_relevance": "high", "status": "pending",
+      "source_files": ["The_Amazon_Way_14_Leadership_Principles...pdf", "806912754-The-Amazon-Way-Leadership-Principles-Sample.pdf"] },
+
+    { "id": "the-everything-store", "title": "The Everything Store: Jeff Bezos and the Age of Amazon", "authors": ["Brad Stone"], "category": "amazon", "subcategory": "history", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["the-everything-store-jeff-bezos-and-the-age-of-amazon.pdf", "489510524-The-Everything-Store...Notebook-PDFDrive-1.pdf", "667338258-The-Everything-Store-Jeff-Bezos-and-the-Age-of-Amazon.pdf"] },
+
+    { "id": "amazon-unbound", "title": "Amazon Unbound (excerpt)", "authors": ["Brad Stone"], "category": "amazon", "subcategory": "history", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["510166358-Excerpt-from-Amazon-Unbound-by-Brad-Stone.pdf"] },
+
+    { "id": "jeff-bezos", "title": "Jeff Bezos (profile)", "authors": [], "category": "amazon", "subcategory": "biography", "domain_relevance": "low", "status": "pending",
+      "source_files": ["399626108-Jeff-Bezos.pdf"] },
+
+    { "id": "breakthrough-advertising", "title": "Breakthrough Advertising", "authors": ["Eugene Schwartz"], "category": "copywriting", "domain_relevance": "high", "status": "pending",
+      "source_files": ["772553369-Break-Through-Advertising-Notes.docx", "363241075-breakthroughadvertisingreview-sample-pdf.pdf"] },
+
+    { "id": "scientific-advertising", "title": "Scientific Advertising", "authors": ["Claude Hopkins"], "category": "copywriting", "domain_relevance": "high", "status": "pending",
+      "source_files": ["38873084-Scientific-Advertising-Book-Review.pdf"] },
+
+    { "id": "building-a-storybrand", "title": "Building a StoryBrand", "authors": ["Donald Miller"], "category": "marketing", "subcategory": "messaging", "domain_relevance": "high", "status": "pending",
+      "source_files": ["555489983-...Building-StoryBrand-Donald-Miller-1.pdf", "555489983-...Building-StoryBrand-Donald-Miller-1 (1).pdf"] },
+
+    { "id": "made-to-stick", "title": "Made to Stick", "authors": ["Chip Heath", "Dan Heath"], "category": "marketing", "subcategory": "communication", "domain_relevance": "high", "status": "pending",
+      "source_files": ["86791642-Made-to-stick-teacher-guide.pdf"] },
+
+    { "id": "contagious", "title": "Contagious: Why Things Catch On", "authors": ["Jonah Berger"], "category": "marketing", "subcategory": "virality", "domain_relevance": "high", "status": "pending",
+      "source_files": ["188210658-Crafting-Contagious-Workbook.pdf"] },
+
+    { "id": "obviously-awesome", "title": "Obviously Awesome", "subtitle": "How to Nail Product Positioning", "authors": ["April Dunford"], "category": "marketing", "subcategory": "positioning", "domain_relevance": "high", "status": "pending",
+      "source_files": ["Obviously Awesome (book)", "788328609-Obviously-Awesome-April-Dunford-Summary-and-Worksheet.pdf"] },
+
+    { "id": "hacking-growth", "title": "Hacking Growth", "authors": ["Sean Ellis", "Morgan Brown"], "category": "marketing", "subcategory": "growth", "domain_relevance": "high", "status": "pending",
+      "source_files": ["856322493-Hacking-Growth.pdf"] },
+
+    { "id": "principles-of-marketing", "title": "Principles of Marketing", "authors": [], "category": "marketing", "subcategory": "theory", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["668099643-Principles-of-Marketing-e-Book.pdf"] },
+
+    { "id": "never-split-the-difference", "title": "Never Split the Difference", "authors": ["Chris Voss"], "category": "persuasion", "subcategory": "negotiation", "domain_relevance": "high", "status": "pending",
+      "source_files": ["660859576-Never-Split-the-Difference...PDFDrive.pdf"] },
+
+    { "id": "hooked", "title": "Hooked: How to Build Habit-Forming Products", "authors": ["Nir Eyal"], "category": "product", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["465101345-...Hooked-by-Nir-Eyal...pdf"] },
+
+    { "id": "indistractable", "title": "Indistractable", "authors": ["Nir Eyal"], "category": "productivity", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["504167393-Indistractable.pdf"] },
+
+    { "id": "the-toyota-way", "title": "The Toyota Way", "authors": ["Jeffrey Liker"], "category": "systems-ops", "subcategory": "lean", "domain_relevance": "high", "status": "pending",
+      "source_files": ["100141933-The-Toyota-Way.pdf"] },
+
+    { "id": "supplier-qualification-sop", "title": "Supplier Qualification SOP", "authors": [], "category": "systems-ops", "subcategory": "sourcing", "domain_relevance": "high", "status": "pending",
+      "source_files": ["861239452-Supplier-Qualification-SOP.pdf"] },
+
+    { "id": "scaling-up", "title": "Scaling Up", "authors": ["Verne Harnish"], "category": "management", "subcategory": "growth", "domain_relevance": "high", "status": "pending",
+      "source_files": ["739284818-Scaling-Up.pdf", "473031420-Scaling-Up-Verne-Harnish-1.pdf"] },
+
+    { "id": "high-output-management", "title": "High Output Management", "authors": ["Andrew S. Grove"], "category": "management", "domain_relevance": "high", "status": "pending",
+      "source_files": ["921833691-High-Output-Management-Andrew-S-Grove.pdf"] },
+
+    { "id": "measure-what-matters", "title": "Measure What Matters (OKRs)", "authors": ["John Doerr"], "category": "management", "subcategory": "goals", "domain_relevance": "high", "status": "pending",
+      "source_files": ["440122519-John-Doerr-OKRs-and-Measure-What-Matters-Book-Summary.pdf"] },
+
+    { "id": "organizational-behavior", "title": "Organizational Behavior: A Management Challenge", "authors": [], "category": "management", "subcategory": "org-behavior", "domain_relevance": "low", "status": "pending",
+      "source_files": ["408571313-Organizational-Behavior...0805838295-PDF.pdf"] },
+
+    { "id": "principles-of-management", "title": "Principles of Management (AMS 101 notes)", "authors": [], "category": "management", "domain_relevance": "low", "status": "pending",
+      "source_files": ["720761333-AMS-101-Principles-of-Management-LECTURE-NOTE.pdf"] },
+
+    { "id": "business-communication", "title": "Business Communication for Success", "authors": [], "category": "reference-academic", "domain_relevance": "low", "status": "pending",
+      "source_files": ["161557583-Business-Communication-for-Success.pdf"] },
+
+    { "id": "business-law", "title": "Business Law and the Legal Environment", "authors": [], "category": "legal-ip", "domain_relevance": "low", "status": "pending",
+      "source_files": ["149425169-Business-Law-and-the-Legal-Environment-Attributed.pdf"] },
+
+    { "id": "trademark-guidelines", "title": "IPOPHL Trademark Guidelines (IP Key SEA)", "authors": [], "category": "legal-ip", "subcategory": "trademark", "domain_relevance": "medium", "status": "pending",
+      "source_files": ["782022146-IP-Key-SEA-Activity-18-IPOPHL-Trademark-Guidelines-FINAL.pdf"] },
+
+    { "id": "amazon-deactivation-info", "title": "Amazon Account Deactivation Information", "authors": [], "category": "amazon", "subcategory": "compliance", "domain_relevance": "high", "status": "pending",
+      "source_files": ["664510959-Amazon-deactivation-information.pdf"] },
+
+    { "id": "amazon-fee-calculator-in", "title": "Amazon Seller Fees / Pricing Calculator (India)", "authors": [], "category": "amazon", "subcategory": "fees", "domain_relevance": "medium", "status": "pending",
+      "note": "India marketplace — verify before applying numbers to US FBA.",
+      "source_files": ["533021739-Amazon-Calculator-Seller-Fees-Pricing-Sell-on-Amazon-India.pdf"] },
+
+    { "id": "sellerboard-reports", "title": "sellerboard Reports (platform reference)", "authors": ["sellerboard"], "category": "amazon", "subcategory": "analytics-tools", "domain_relevance": "high", "status": "extracted",
+      "note": "Seeded from the documentation you pasted in chat — serves as the worked example.",
+      "source_files": ["pasted-in-chat: sellerboard Reports article"] },
+
+    { "id": "business-logic-geed", "title": "GEED 20142 Business Logic", "authors": [], "category": "reference-academic", "domain_relevance": "low", "status": "low_relevance",
+      "note": "Logic course material — keep only if you want background; minimal FBA value.",
+      "source_files": ["479201120-GEED-20142-BUSINESS-LOGIC-pdf.pdf"] },
+
+    { "id": "mathematical-writing", "title": "Mathematical Writing (Book of Proof excerpt)", "authors": ["Richard Hammack"], "category": "reference-academic", "domain_relevance": "low", "status": "low_relevance",
+      "note": "Looks unrelated to FBA — flagged; confirm you want it in the KB.",
+      "source_files": ["761943120-Hammack-Mathematical-Writing-from-Book-of-Proof.pdf"] },
+
+    { "id": "think-complexity", "title": "Think Complexity (2nd ed.)", "authors": ["Allen B. Downey"], "category": "reference-academic", "domain_relevance": "low", "status": "low_relevance",
+      "note": "Computational-modeling textbook — flagged; likely a mis-download for this KB.",
+      "source_files": ["1012455606-Think-Complexity...Allen-B-Downey-ebook...pdf"] }
+  ],
+
+  "needs_identification": [
+    { "source_files": ["13ebdb645ce34a48ae3c63ecef6c121e.pdf"], "note": "Hash-named file, listed twice. Open it and tell me the title so I can add it to the registry." },
+    { "source_files": ["20250807173100_9c71edc2.pdf"], "note": "Timestamp-named file. Open it and tell me the title." },
+    { "source_files": ["537128898-SLEM-HEALTH-10-WEEK-8-Q-1-FINAL.pdf"], "note": "Appears to be a health-class curriculum — almost certainly unrelated to FBA. Confirm whether to drop it." }
+  ]
+}
