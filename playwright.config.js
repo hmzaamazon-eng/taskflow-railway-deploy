@@ -29,11 +29,12 @@ module.exports = defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
   },
-  // Four real-world viewports. Phone/tablet use device presets (touch + UA);
-  // laptop/desktop use explicit viewports.
+  // Four real-world viewports. Phone/tablet use device presets for viewport +
+  // touch + UA, but are pinned to Chromium so CI only needs one browser engine
+  // (the presets otherwise default to WebKit).
   projects: [
-    { name: "iphone", use: { ...devices["iPhone 13"] } },
-    { name: "ipad", use: { ...devices["iPad (gen 7)"] } },
+    { name: "iphone", use: { ...devices["iPhone 13"], browserName: "chromium" } },
+    { name: "ipad", use: { ...devices["iPad (gen 7)"], browserName: "chromium" } },
     { name: "laptop", use: { viewport: { width: 1366, height: 768 } } },
     { name: "desktop", use: { viewport: { width: 1920, height: 1080 } } },
   ],
