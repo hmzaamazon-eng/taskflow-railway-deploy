@@ -68,7 +68,9 @@ test("restore: confirmation appears, replaces, de-dups by id, no corruption", as
   expect(saved.find((t) => t.id === "dup1").status).toBe("Completed");
 
   await navTo(page, "tasks");
+  await page.selectOption("#fPerson", "all"); // Tasks view filters by member by default
   await expect(page.locator("#taskList")).not.toContainText("Existing Task"); // replaced
+  await expect(page.locator("#taskList")).toContainText("Imported Alpha");
   await expect(page.locator("#taskList")).toContainText("Imported Beta");
 });
 
