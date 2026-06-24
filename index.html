@@ -450,6 +450,12 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .calc-chip{font-size:11.5px;background:var(--surface-3);color:var(--text-2);border-radius:6px;padding:3px 8px}
 .calc-hist-notes{margin-top:10px;font-size:13px;color:var(--text-2);background:var(--surface-3);border-radius:8px;padding:8px 10px}
 @media(max-width:880px){.calc-bar .select,.calc-bar .input{flex:1;min-width:0}}
+/* Global drag & drop */
+#tfDropOverlay{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;background:rgba(79,70,229,.12);backdrop-filter:blur(3px)}
+#tfDropOverlay.on{display:flex}
+#tfDropOverlay .tf-drop-card{pointer-events:none;background:var(--surface,#fff);border:2px dashed #4f46e5;border-radius:18px;padding:34px 46px;text-align:center;color:#4f46e5;box-shadow:0 20px 60px rgba(0,0,0,.18);max-width:90vw}
+#tfDropOverlay .tf-drop-t{font-family:var(--font-display);font-weight:700;font-size:18px;margin-top:10px;color:var(--text-1,#0f172a)}
+#tfDropOverlay .tf-drop-s{font-size:13px;color:var(--text-3,#64748b);margin-top:4px}
 .op-tbl{width:100%;border-collapse:collapse;font-size:14px}
 .op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -2721,6 +2727,63 @@ function renderCalculator(){
   </div>`;
 }
 
+/* ===================== GLOBAL DRAG & DROP → BOT READS EVERYTHING ===================== */
+const TF_TEXT_EXT=/\.(csv|tsv|txt|md|markdown|json|log|tab)$/i;
+const TF_SHEET_EXT=/\.(xlsx|xls|xlsm)$/i;
+const TF_TEXT_CAP=15000;
+function tfInitDropzone(){
+  if(window._tfDropInit)return; window._tfDropInit=true;
+  let depth=0;
+  const ov=document.createElement("div"); ov.id="tfDropOverlay";
+  ov.innerHTML='<div class="tf-drop-card"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 16v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg><div class="tf-drop-t">Drop files to add to TaskFlow</div><div class="tf-drop-s">Reports, CSV/Excel, notes &amp; docs — the Amazon Bot will read them</div></div>';
+  document.body.appendChild(ov);
+  const show=()=>ov.classList.add("on"), hide=()=>ov.classList.remove("on");
+  const hasFiles=e=>e.dataTransfer&&Array.from(e.dataTransfer.types||[]).indexOf("Files")>=0;
+  window.addEventListener("dragenter",e=>{ if(!hasFiles(e))return; e.preventDefault(); depth++; show(); });
+  window.addEventListener("dragover",e=>{ if(!hasFiles(e))return; e.preventDefault(); try{e.dataTransfer.dropEffect="copy";}catch(_){} });
+  window.addEventListener("dragleave",e=>{ if(!hasFiles(e))return; depth=Math.max(0,depth-1); if(depth===0)hide(); });
+  window.addEventListener("drop",e=>{ if(!hasFiles(e))return; e.preventDefault(); depth=0; hide(); const files=Array.from(e.dataTransfer.files||[]); if(files.length)tfIngestFiles(files); });
+}
+function tfReadText(file){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=()=>res(""); r.readAsText(file); }); }
+function tfReadBuf(file){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>res(null); r.readAsArrayBuffer(file); }); }
+async function tfExtractText(file){
+  const name=file.name||"file";
+  if(TF_SHEET_EXT.test(name)){
+    try{ const XLSX=await mwbLoadXLSX(); const buf=await tfReadBuf(file); const wb=XLSX.read(buf,{type:"array"}); let out=""; wb.SheetNames.forEach(sn=>{ out+="# Sheet: "+sn+"\n"+XLSX.utils.sheet_to_csv(wb.Sheets[sn])+"\n\n"; }); return {text:out.slice(0,TF_TEXT_CAP),kind:"spreadsheet"}; }
+    catch(e){ return {text:"",kind:"spreadsheet",note:"Excel parser unavailable (offline) — re-drop when online."}; }
+  }
+  if(TF_TEXT_EXT.test(name)){ const t=await tfReadText(file); return {text:t.slice(0,TF_TEXT_CAP),kind:/\.json$/i.test(name)?"json":"text"}; }
+  if(/\.pdf$/i.test(name)) return {text:"",kind:"pdf",note:"PDF stored — text not auto-extracted. Paste key text as a note to let the bot read it."};
+  if(/\.(png|jpe?g|gif|webp|svg|bmp)$/i.test(name)) return {text:"",kind:"image",note:"Image stored — not text-readable."};
+  if((file.size||0)<=TF_TEXT_CAP){ const t=await tfReadText(file); if(t&&/[\x20-\x7e]/.test(t)) return {text:t.slice(0,TF_TEXT_CAP),kind:"text"}; }
+  return {text:"",kind:"file",note:"File stored by name."};
+}
+async function tfIngestFiles(files){
+  try{ await loadBot(); }catch(e){}
+  let ok=0,skip=0;
+  for(const f of files){
+    try{ const r=await tfExtractText(f); await botAddKnowledge({title:(f.name||("file-"+Date.now())),text:r.text||"",note:r.note||"",scope:"file",kind:r.kind,size:f.size||0,source:"Drag & drop"}); ok++; }
+    catch(e){ skip++; }
+  }
+  if(ok)toast(ok+" file"+(ok>1?"s":"")+" added — the Amazon Bot can now read "+(ok>1?"them":"it"),"ok");
+  if(skip)toast(skip+" file"+(skip>1?"s":"")+" couldn't be added","warn");
+  if(state.view==="bot"&&typeof renderBot==="function")renderBot();
+}
+function tfBotSnapshot(){
+  let s="";
+  try{
+    const t=state.tasks||[]; if(t.length)s+=`Tasks: ${t.length} total, ${t.filter(x=>x.status==="Completed").length} completed, ${t.filter(x=>x.status==="Pending").length} pending.\n`;
+    const p=state.products||[]; if(p.length)s+=`FBA Finder products tracked: ${p.length}.\n`;
+    if(typeof calcData==="object"&&calcData&&calcData.brands&&calcData.brands.length){ const saved=calcData.brands.reduce((n,b)=>n+((b.history&&b.history.length)||0),0); s+=`Calculator: ${calcData.brands.length} brand(s), ${saved} saved calculation(s).\n`; }
+    const files=(typeof botKnow!=="undefined"?botKnow:[]).filter(k=>k&&k.scope==="file"); if(files.length)s+=`Uploaded files the bot can read: ${files.slice(0,8).map(f=>f.title).join(", ")}${files.length>8?" +"+(files.length-8)+" more":""}.\n`;
+  }catch(e){}
+  return s?("\nTaskFlow data hub (across all sections):\n"+s):"";
+}
+function tfBotSnapshotShort(){
+  try{ const bits=[]; const t=(state.tasks||[]).length; if(t)bits.push(t+" tasks"); const f=(typeof botKnow!=="undefined"?botKnow:[]).filter(k=>k&&k.scope==="file").length; if(f)bits.push(f+" uploaded file(s)"); if(typeof calcData==="object"&&calcData&&calcData.brands&&calcData.brands.length)bits.push(calcData.brands.length+" calculator brand(s)"); return bits.length?("TaskFlow data available to me: "+bits.join(", ")+"."):""; }catch(e){ return ""; }
+}
+if(document.body)tfInitDropzone(); else document.addEventListener("DOMContentLoaded",tfInitDropzone);
+
 function opOverview(){
   const p=overallProgress(); const dc=daysComplete();
   let next=1; for(let d=1;d<=30;d++){ if(dayStatus(d)!=="done"){ next=d; break; } if(d===30)next=30; }
@@ -3837,6 +3900,7 @@ function botBuildContextText(account,ctx,kb,mode){
   } else if(account!=="General"){ s+="No saved Master Workbook data for "+account+" yet — answer best-effort and list what to upload.\n"; }
   if(kb&&kb.length){ s+="Relevant items from the user's library (prioritize official):\n"; kb.forEach(k=>{ s+=`- [${k.scope==="official"?"OFFICIAL":"NOTE"}] ${k.title}: ${(k.snippet||"").slice(0,300)}\n`; }); }
   const up=botSafe(()=>mwbUpcoming(new Date(),60),[]); if(up&&up.length)s+="Upcoming USA events: "+up.slice(0,3).map(e=>`${e.name} in ${e.daysLeft}d`).join(", ")+".\n";
+  s+=tfBotSnapshot();
   return s;
 }
 function botMarkdown(s){ s=esc(String(s||"")); s=s.replace(/^######?\s*(.*)$/gm,'<h4>$1</h4>').replace(/^#{1,3}\s*(.*)$/gm,'<h4>$1</h4>'); s=s.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/__([^_]+)__/g,'<b>$1</b>'); const lines=s.split(/\n/); let out="",inList=false; for(const ln of lines){ const m=ln.match(/^\s*(?:[-*•]|\d+\.)\s+(.*)/); if(m){ if(!inList){out+="<ul>";inList=true;} out+="<li>"+m[1]+"</li>"; } else { if(inList){out+="</ul>";inList=false;} if(/^<h4>/.test(ln.trim()))out+=ln; else if(ln.trim()==="")out+=""; else out+="<p>"+ln+"</p>"; } } if(inList)out+="</ul>"; return out; }
@@ -3879,6 +3943,7 @@ function botLocalAnswer(q,account,mode,ctx,kb){
   if(kb&&kb.length)A.reasoning.push('From your library — "'+kb[0].title+'": '+(kb[0].snippet||"").slice(0,200));
   if(!A.sources.length)A.sources.push("General Amazon FBA knowledge");
   if(!botAIStatus.configured)A.sources.push("Built-in local engine — add an AI key in Data Center for full conversational answers");
+  const _snap=tfBotSnapshotShort(); if(_snap)A.account.push(_snap);
   return botFormatAnswer(A);
 }
 function botAnsInventory(A,q,account,ctx){
