@@ -160,7 +160,8 @@ a{color:inherit}
 
 /* charts */
 .chart-grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.chart-wrap{position:relative;height:230px;padding:4px 18px 18px}
+.chart-wrap{position:relative;height:230px;padding:0;overflow:hidden}
+.chart-wrap canvas{display:block;max-width:100%}
 .chart-empty{height:230px;display:grid;place-items:center;color:var(--text-3);font-size:13px;text-align:center;padding:18px}
 
 /* filters */
@@ -1579,26 +1580,35 @@ function yAxis(ctx,padL,padT,plotW,plotH,max,steps,pct){
   }
   ctx.textBaseline="alphabetic";
 }
-function xLabels(ctx,labels,padL,gapOrPos,baseY,everyFn){
-  ctx.fillStyle=tickColor(); ctx.font="11px "+UIFONT; ctx.textAlign="center"; ctx.textBaseline="alphabetic";
-  const n=labels.length, step=Math.max(1,Math.ceil(n/7));
-  labels.forEach((lab,i)=>{ if(i%step!==0 && i!==n-1)return; ctx.fillText(trim(lab,8), everyFn(i), baseY); });
+function xLabels(ctx,labels,padL,rightX,baseY,everyFn){
+  const n=labels.length; if(!n)return;
+  ctx.fillStyle=tickColor(); ctx.font="11px "+UIFONT; ctx.textBaseline="alphabetic";
+  // skip labels so they never overlap (≈58px each); always keep first + last
+  const maxLabels=Math.max(2,Math.floor((rightX-padL)/58));
+  const step=Math.max(1,Math.ceil(n/maxLabels));
+  const idx=[]; for(let i=0;i<n;i+=step) idx.push(i);
+  if(idx[idx.length-1]!==n-1){ if((n-1-idx[idx.length-1])<step*0.6) idx.pop(); idx.push(n-1); }
+  idx.forEach(i=>{ let x=everyFn(i), align="center";
+    if(i===0){ align="left"; if(x<padL)x=padL; }                  // first label hugs the left, never spills
+    else if(i===n-1){ align="right"; if(x>rightX)x=rightX; }      // last label hugs the right, never spills
+    ctx.textAlign=align; ctx.fillText(trim(labels[i],12), x, baseY); });
+  ctx.textAlign="left";
 }
 function drawBar(canvasId,wrapId,labels,data,colors,label,single){
   if(!data.length||data.every(v=>!v)){ noData(wrapId,"No data to display yet"); return; }
   const s=setupCanvas(wrapId,canvasId); if(!s) return; const {ctx,W,H}=s;
-  const padL=42,padR=14,padT=14,padB=30, plotW=W-padL-padR, plotH=H-padT-padB;
+  const padL=48,padR=24,padT=20,padB=34, plotW=W-padL-padR, plotH=H-padT-padB;
   const max=niceMax(Math.max.apply(null,data));
   yAxis(ctx,padL,padT,plotW,plotH,max,4);
   const n=data.length, gap=plotW/n, bw=Math.min(46,gap*0.62);
   data.forEach((v,i)=>{ const cx=padL+gap*i+gap/2, h=max?(v/max)*plotH:0, y=padT+plotH-h;
     if(h>0.5){ ctx.fillStyle=Array.isArray(colors)?colors[i%colors.length]:(colors||single||cssVar("--brand-1")); roundRectTop(ctx,cx-bw/2,y,bw,h,6); ctx.fill(); } });
-  xLabels(ctx,labels,padL,gap,padT+plotH+18,i=>padL+gap*i+gap/2);
+  xLabels(ctx,labels,padL,padL+plotW,padT+plotH+18,i=>padL+gap*i+gap/2);
 }
 function drawLine(canvasId,wrapId,labels,data,color,label,pctAxis){
   if(!data.length){ noData(wrapId,"No data yet"); return; }
   const s=setupCanvas(wrapId,canvasId); if(!s) return; const {ctx,W,H}=s;
-  const padL=42,padR=14,padT=14,padB=30, plotW=W-padL-padR, plotH=H-padT-padB;
+  const padL=48,padR=24,padT=20,padB=34, plotW=W-padL-padR, plotH=H-padT-padB;
   const max=pctAxis?100:niceMax(Math.max.apply(null,data.concat(1)));
   yAxis(ctx,padL,padT,plotW,plotH,max,4,pctAxis);
   const n=data.length, xs=i=> n>1? padL+plotW*(i/(n-1)) : padL+plotW/2, ys=v=> padT+plotH-(max?v/max*plotH:0);
@@ -1606,12 +1616,12 @@ function drawLine(canvasId,wrapId,labels,data,color,label,pctAxis){
   const g=ctx.createLinearGradient(0,padT,0,padT+plotH); g.addColorStop(0,hexA(color,.26)); g.addColorStop(1,hexA(color,.02)); ctx.fillStyle=g; ctx.fill();
   ctx.beginPath(); data.forEach((v,i)=> i?ctx.lineTo(xs(i),ys(v)):ctx.moveTo(xs(i),ys(v))); ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.lineJoin="round"; ctx.stroke();
   data.forEach((v,i)=>{ ctx.beginPath(); ctx.arc(xs(i),ys(v),2.6,0,Math.PI*2); ctx.fillStyle=color; ctx.fill(); });
-  xLabels(ctx,labels,padL,0,padT+plotH+18,xs);
+  xLabels(ctx,labels,padL,padL+plotW,padT+plotH+18,xs);
 }
 function drawMultiLine(canvasId,wrapId,labels,datasets){
   if(!datasets.some(d=>d.data.some(v=>v))){ noData(wrapId,"No data yet"); return; }
   const s=setupCanvas(wrapId,canvasId); if(!s) return; const {ctx,W,H}=s;
-  const padL=42,padR=14,padT=30,padB=30, plotW=W-padL-padR, plotH=H-padT-padB;
+  const padL=48,padR=24,padT=36,padB=34, plotW=W-padL-padR, plotH=H-padT-padB;
   let mx=1; datasets.forEach(d=>d.data.forEach(v=>{ if(v>mx)mx=v; })); const max=niceMax(mx);
   yAxis(ctx,padL,padT,plotW,plotH,max,4);
   const n=labels.length, xs=i=> n>1? padL+plotW*(i/(n-1)) : padL+plotW/2, ys=v=> padT+plotH-(max?v/max*plotH:0);
@@ -1621,7 +1631,7 @@ function drawMultiLine(canvasId,wrapId,labels,datasets){
   let lx=padL; ctx.textAlign="left"; ctx.textBaseline="middle"; ctx.font="11px "+UIFONT;
   datasets.forEach(ds=>{ ctx.fillStyle=ds.borderColor; roundRect(ctx,lx,8,10,10,3); ctx.fill(); ctx.fillStyle=cssVar("--text-2"); ctx.fillText(ds.label,lx+15,14); lx+=ctx.measureText(ds.label).width+42; });
   ctx.textBaseline="alphabetic";
-  xLabels(ctx,labels,padL,0,padT+plotH+18,xs);
+  xLabels(ctx,labels,padL,padL+plotW,padT+plotH+18,xs);
 }
 function drawDoughnut(canvasId,wrapId,labels,data,colors){
   if(!data.length||data.every(v=>!v)){ noData(wrapId,"No hours logged this month"); return; }
@@ -4688,7 +4698,7 @@ async function init(){
 }
 // redraw current view after full load (fonts/layout settle) and on resize
 window.addEventListener("load",()=>renderCurrentView());
-let _rzT; window.addEventListener("resize",()=>{ clearTimeout(_rzT); _rzT=setTimeout(renderCurrentView,180); });
+let _rzT,_rzW=window.innerWidth; window.addEventListener("resize",()=>{ if(window.innerWidth===_rzW)return; _rzW=window.innerWidth; clearTimeout(_rzT); _rzT=setTimeout(()=>{ try{ if(document.querySelector(".view.active .chart-wrap"))renderCurrentView(); }catch(e){} },180); });
 // When returning to the tab, refresh from the server so changes made on other
 // devices show up — but not while we still have unsynced local edits.
 document.addEventListener("visibilitychange",()=>{
