@@ -3190,10 +3190,72 @@ function skMoney(n){ if(!isFinite(n))return "—"; return (n<0?"-$":"$")+Math.ab
 function skFmtSize(b){ b=+b||0; return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"; }
 function skFmtDate(ts){ try{ return new Date(ts).toLocaleString([], {year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } }
 
+/* ---- lazy CDN loaders for real PDF / DOCX / OCR extraction ---- */
+let _skPdfP=null,_skMamP=null,_skTessP=null;
+function skLoadScript(src,check,key){ return new Promise((res,rej)=>{ if(check())return res(window[check.k]||true); const s=document.createElement("script"); s.src=src; s.async=true; s.onload=()=>check()?res(true):rej(new Error(key)); s.onerror=()=>rej(new Error(key)); document.head.appendChild(s); setTimeout(()=>check()?res(true):rej(new Error(key+" timeout")),20000); }); }
+function skLoadPDF(){ if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib); if(_skPdfP)return _skPdfP; _skPdfP=skLoadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",()=>!!window.pdfjsLib,"pdfjs").then(()=>{ try{ window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; }catch(e){} return window.pdfjsLib; }); return _skPdfP; }
+function skLoadMammoth(){ if(window.mammoth)return Promise.resolve(window.mammoth); if(_skMamP)return _skMamP; _skMamP=skLoadScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js",()=>!!window.mammoth,"mammoth").then(()=>window.mammoth); return _skMamP; }
+function skLoadTesseract(){ if(window.Tesseract)return Promise.resolve(window.Tesseract); if(_skTessP)return _skTessP; _skTessP=skLoadScript("https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js",()=>!!window.Tesseract,"tesseract").then(()=>window.Tesseract); return _skTessP; }
+
+/* ---- AI analysis via the existing /api/bot proxy (falls back to rule-based) ---- */
+function skTimeout(ms){ return new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms)); }
+async function skAITry(ex,brand,meta){
+  let content="";
+  if(ex.rows&&ex.rows.length){ const h=ex.headers; content="TABULAR FILE. Columns: "+h.join(", ")+"\nRows (first 40):\n"+ex.rows.slice(0,40).map(r=>h.map(k=>r[k]).join(" | ")).join("\n"); }
+  else content=(ex.text||"").slice(0,12000);
+  if(!content.trim())return null;
+  const sys='You are Skull, an elite analyst for an Amazon FBA seller. Analyze ONLY the provided file for the specified brand. Be specific to the actual content and numbers — no generic filler, no boilerplate. Output STRICT JSON ONLY (no prose, no markdown, no code fences) with EXACTLY this shape: {"summary":string,"extracted":[string],"findings":[string],"strong":[string],"weak":[string],"risks":[string],"insights":[string],"recommendations":{"high":[string],"medium":[string],"low":[string],"finalDecision":string,"nextActions":[string]}}. Each array 2-6 concise concrete items grounded in THIS file. Recommendations must be actionable, prioritized, and specific to the brand.';
+  const user="Brand: "+brand.name+" (brandId: "+brand.id+")\nFile: "+meta.fileName+" ("+meta.fileType+")\n\nFILE CONTENT:\n"+content;
+  let d; try{ const res=await Promise.race([fetch("/api/bot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sys,messages:[{role:"user",content:user}]})}),skTimeout(40000)]); d=await res.json(); }catch(e){ return null; }
+  if(!d||!d.ok||!d.reply)return null;
+  let obj=null; try{ let t=String(d.reply).trim().replace(/^```(?:json)?/i,"").replace(/```$/,"").trim(); const i=t.indexOf("{"),j=t.lastIndexOf("}"); if(i>=0&&j>i)t=t.slice(i,j+1); obj=JSON.parse(t); }catch(e){ return null; }
+  if(!obj||typeof obj!=="object"||!obj.recommendations)return null;
+  const arr=x=>Array.isArray(x)?x.map(v=>String(v)).filter(Boolean):[];
+  return { engine:"ai", provider:d.provider||"AI",
+    analysis:{summary:String(obj.summary||""),extracted:arr(obj.extracted),findings:arr(obj.findings),strong:arr(obj.strong),weak:arr(obj.weak),risks:arr(obj.risks),insights:arr(obj.insights)},
+    recommendations:{high:arr(obj.recommendations.high),medium:arr(obj.recommendations.medium),low:arr(obj.recommendations.low),finalDecision:String(obj.recommendations.finalDecision||""),nextActions:arr(obj.recommendations.nextActions)} };
+}
+async function skProduceAnalysis(ex,brand,meta){
+  const rule=skAnalyze(ex,brand,meta), ruleRec=skRecommend(rule,ex,brand);
+  let ai=null;
+  try{ const off=(typeof botAIStatus==="object"&&botAIStatus&&botAIStatus.checked&&!botAIStatus.configured); if(!off) ai=await skAITry(ex,brand,meta); }catch(e){}
+  if(ai&&ai.recommendations&&(ai.analysis.findings.length||ai.recommendations.high.length)) return {analysis:ai.analysis,recommendations:ai.recommendations,engine:"ai",provider:ai.provider};
+  return {analysis:rule,recommendations:ruleRec,engine:"local",provider:""};
+}
+async function skRunOCR(id){
+  const r=skAll.find(x=>x.id===id); if(!r||!r.imageData){ toast("No stored image to OCR","warn"); return; }
+  toast("Loading OCR engine…","ok"); let T; try{ T=await skLoadTesseract(); }catch(e){ toast("OCR engine unavailable (offline/blocked). Re-upload as text/CSV instead.","err"); return; }
+  skUI.ocr=true; renderSkull();
+  try{ const res=await T.recognize(r.imageData,"eng"); const text=((res&&res.data&&res.data.text)||"").trim();
+    if(!text){ skUI.ocr=false; renderSkull(); toast("No readable text found in the image","warn"); return; }
+    const brand=mbBrandById(r.brandId)||{name:r.brandName,id:r.brandId};
+    const ex={kind:"image",text:text,note:"",rows:[],headers:[]};
+    const out=await skProduceAnalysis(ex,brand,{fileName:r.fileName,fileType:r.fileType});
+    r.extractedText=text.slice(0,20000); r.analysis=out.analysis; r.recommendations=out.recommendations; r.engine=out.engine; r.provider=out.provider||""; r.extractNote=""; r.status=out.engine==="ai"?"Analyzed (AI · OCR)":"Analyzed (OCR)";
+    await skPut(r); skUI.ocr=false; if(skUI.current&&skUI.current.id===id)skUI.current=r; renderSkull(); toast("OCR complete — re-analyzed","ok");
+  }catch(e){ console.error(e); skUI.ocr=false; renderSkull(); toast("OCR failed on this image","err"); }
+}
 async function skExtract(file){
+  const name=(file.name||"").toLowerCase();
+  if(/\.pdf$/.test(name)){
+    try{ const pdfjsLib=await skLoadPDF(); const buf=await file.arrayBuffer(); const pdf=await pdfjsLib.getDocument({data:buf}).promise; let text=""; const pages=Math.min(pdf.numPages,40);
+      for(let p=1;p<=pages;p++){ const page=await pdf.getPage(p); const c=await page.getTextContent(); text+=c.items.map(it=>it.str).join(" ")+"\n"; if(text.length>60000)break; }
+      text=text.trim();
+      if(text.length>20) return {kind:"pdf",text:text.slice(0,60000),note:pdf.numPages>40?"First 40 of "+pdf.numPages+" pages read.":"",rows:[],headers:[]};
+      return {kind:"pdf",text:"",note:"This PDF has no selectable text (likely scanned). Convert to text or use OCR.",rows:[],headers:[]};
+    }catch(e){ return {kind:"pdf",text:"",note:"Couldn't read this PDF in the browser (try re-saving or exporting text).",rows:[],headers:[]}; }
+  }
+  if(/\.docx$/.test(name)){
+    try{ const mammoth=await skLoadMammoth(); const buf=await file.arrayBuffer(); const out=await mammoth.extractRawText({arrayBuffer:buf}); const text=((out&&out.value)||"").trim();
+      if(text.length>20) return {kind:"docx",text:text.slice(0,60000),note:"",rows:[],headers:[]};
+      return {kind:"docx",text:"",note:"No readable text found in this DOCX.",rows:[],headers:[]};
+    }catch(e){ return {kind:"docx",text:"",note:"Couldn't read this DOCX in the browser.",rows:[],headers:[]}; }
+  }
+  if(/\.doc$/.test(name)) return {kind:"doc",text:"",note:"Old .doc format isn't readable in-browser — save as .docx, or paste the text.",rows:[],headers:[]};
+  if(/\.(png|jpe?g|gif|webp|bmp|tiff?)$/.test(name)) return {kind:"image",text:"",note:"Image stored. Open the report and click “Run OCR on image” to extract its text.",rows:[],headers:[]};
   let r={text:"",kind:"file",note:""}; try{ r=await tfExtractText(file); }catch(e){}
   let rows=[],headers=[];
-  if(r.text && (r.kind==="spreadsheet"||r.kind==="json"||r.kind==="text"||/\.(csv|tsv|txt)$/i.test(file.name||""))){
+  if(r.text && (r.kind==="spreadsheet"||r.kind==="json"||r.kind==="text"||/\.(csv|tsv|txt)$/i.test(name))){
     const body=String(r.text).replace(/^# Sheet:.*$/gm,"").trim();
     try{ const p=mwbParseDelimited(body); if(p.rows.length && p.headers.length>1){ headers=p.headers; rows=p.rows; } }catch(e){}
   }
@@ -3277,18 +3339,20 @@ async function skAnalyzeNow(){
   try{
     const {file,meta}=skUI.draft;
     const ex=await skExtract(file);
-    const A=skAnalyze(ex,brand,meta);
-    const R=skRecommend(A,ex,brand);
+    let imageData=""; if(ex.kind==="image" && (file.size||0)<=2500000){ try{ imageData=await new Promise(res=>{ const rd=new FileReader(); rd.onload=()=>res(String(rd.result||"")); rd.onerror=()=>res(""); rd.readAsDataURL(file); }); }catch(e){} }
+    const out=await skProduceAnalysis(ex,brand,meta);
     const now=Date.now();
+    const readable=(ex.rows&&ex.rows.length)||(ex.text&&ex.text.trim().length>20);
     const rec={ id:uid(), reportId:"SK-"+now.toString(36).toUpperCase(), reportType:"Skull",
       brandId:brand.id, brandName:brand.name, fileName:meta.fileName, fileType:meta.fileType, fileSize:meta.fileSize,
-      createdAt:now, status:(ex.rows&&ex.rows.length)?"Analyzed":(ex.text&&ex.text.trim().length>20)?"Analyzed (text)":"Stored (unreadable)",
-      rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[], extractedText:(ex.text||"").slice(0,20000),
-      analysis:A, recommendations:R, notes:"" };
+      createdAt:now, status: readable?(out.engine==="ai"?"Analyzed (AI)":"Analyzed"):"Stored (unreadable)",
+      engine:out.engine, provider:out.provider||"", rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[],
+      extractedText:(ex.text||"").slice(0,20000), imageData:imageData, extractNote:ex.note||"",
+      analysis:out.analysis, recommendations:out.recommendations, notes:"" };
     await skPut(rec); skAll.unshift(rec);
     skUI.busy=false; skUI.draft=null; skUI.current=rec; skUI.view="result"; renderSkull();
-    toast("Analyzed & saved under "+brand.name,"ok");
-  }catch(e){ console.error(e); skUI.busy=false; renderSkull(); toast("Couldn't analyze that file — it's not saved. Try CSV/XLSX/TXT.","err"); }
+    toast((out.engine==="ai"?"AI-analyzed":"Analyzed")+" & saved under "+brand.name,"ok");
+  }catch(e){ console.error(e); skUI.busy=false; renderSkull(); toast("Couldn't analyze that file — it's not saved.","err"); }
 }
 
 /* ---- brand + history helpers ---- */
@@ -3361,7 +3425,7 @@ function skHistRow(r){
   const sum=(r.analysis&&r.analysis.summary||"").slice(0,120);
   return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0">
     <div class="mb-item-title">${esc(r.fileName)}</div>
-    <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span></div>
+    <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span>${r.engine==="ai"?'<span class="mb-badge sk-lo">AI</span>':""}</div>
     ${sum?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(sum)}</div>`:""}
   </div><div class="mb-acts"><button class="go" onclick="skOpen('${r.id}')">Open</button><button class="danger" onclick="skDelete('${r.id}')">Delete</button></div></div></div>`;
 }
@@ -3394,8 +3458,10 @@ function skReportHTML(r,full){
   const ul=(arr,cls)=>arr&&arr.length?`<ul class="sk-ul">${arr.map(x=>`<li>${cls?`<span class="sk-pri ${cls}">${cls==="sk-hi"?"High":cls==="sk-md"?"Med":"Low"}</span> `:""}${esc(x)}</li>`).join("")}</ul>`:`<div class="mb-empty">—</div>`;
   return `<div class="mb-card">
     <div class="mb-item-head"><div style="min-width:0"><h3 style="margin:0">${esc(r.fileName)}</h3>
-      <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>ID ${esc(r.reportId)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span></div></div></div>
+      <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>ID ${esc(r.reportId)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span><span class="mb-badge ${r.engine==="ai"?"sk-lo":"mb-st-pending"}">${r.engine==="ai"?("AI"+(r.provider?" · "+esc(r.provider):"")):"Local engine"}</span></div></div></div>
     <div class="sk-meta" style="margin-top:8px"><span>Type: ${esc(String(r.fileType))}</span><span>Size: ${skFmtSize(r.fileSize)}</span>${r.rowCount?`<span>Rows: ${r.rowCount}</span>`:""}${r.columns&&r.columns.length?`<span>Cols: ${r.columns.length}</span>`:""}<span>Brand ID: ${esc(r.brandId)}</span></div>
+    ${skUI.ocr?`<div style="text-align:center;padding:8px"><div class="sk-spin"></div><div class="sub">Running OCR…</div></div>`:""}
+    ${r.extractNote?`<div class="sub" style="color:#c2620c;margin:4px 0">⚠ ${esc(r.extractNote)}</div>`:""}
     <div class="sk-sec">Summary</div><div class="sub" style="color:var(--text-2)">${esc(A.summary||"—")}</div>
     <div class="sk-sec">Important extracted data</div>${ul(A.extracted)}
     <div class="sk-sec">Key findings</div>${ul(A.findings)}
@@ -3410,7 +3476,7 @@ function skReportHTML(r,full){
     <div class="sk-sec">Next actions</div>${ul(R.nextActions)}
     <div class="sk-sec">Notes / insights</div><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="2" placeholder="Add your own notes…" oninput="skSetNotes('${r.id}',this.value)">${esc(r.notes||"")}</textarea>
   </div>
-  <div class="mb-row" style="margin-bottom:20px"><button class="btn" onclick="skBack()">‹ Back to ${skUI.view==="report"?"history":"Skull"}</button><button class="btn danger" onclick="skDelete('${r.id}')">Delete report</button></div>`;
+  <div class="mb-row" style="margin-bottom:20px"><button class="btn" onclick="skBack()">‹ Back to ${skUI.view==="report"?"history":"Skull"}</button>${r.imageData&&!r.extractedText?`<button class="btn" onclick="skRunOCR('${r.id}')">Run OCR on image</button>`:""}<button class="btn danger" onclick="skDelete('${r.id}')">Delete report</button></div>`;
 }
 
 function opOverview(){
