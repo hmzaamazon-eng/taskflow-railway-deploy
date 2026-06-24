@@ -1043,7 +1043,7 @@ html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[
       <!-- ===== MASTER WORKBOOK ===== -->
       <section class="view" id="view-workbook">
         <div class="view-head">
-          <div><h1>Master Workbook</h1><div class="sub">Amazon FBA USA command center — import reports, analyze deeply, get recommendations. Per account: ANAKZ · HMZA · BD</div></div>
+          <div><h1>Master Workbook</h1><div class="sub">Amazon FBA USA command center — import reports, analyze deeply, get recommendations. Each account has its own command center.</div></div>
         </div>
         <div id="wbRoot"></div>
       </section>
@@ -2824,7 +2824,7 @@ async function tfIngestFiles(files){
     try{ const r=await tfExtractText(f); await botAddKnowledge({title:(name||("file-"+Date.now())),text:r.text||"",note:r.note||"",scope:"file",kind:r.kind,size:f.size||0,source:"Drag & drop"}); ok++; }
     catch(e){ skip++; }
   }
-  if(analyzed){ toast(analyzed+" report"+(analyzed>1?"s":"")+" analyzed into "+mwb.account+" Workbook · also added to Bot","ok"); try{ mwb.tab="analysis"; mwb.analysisTab="sales"; }catch(_){} if(typeof renderWorkbook==="function")renderWorkbook(); }
+  if(analyzed){ toast(analyzed+" report"+(analyzed>1?"s":"")+" analyzed into "+mwbName(mwb.account)+" Workbook · also added to Bot","ok"); try{ mwb.tab="analysis"; mwb.analysisTab="sales"; }catch(_){} if(typeof renderWorkbook==="function")renderWorkbook(); }
   else if(ok){ toast(ok+" file"+(ok>1?"s":"")+" added — the Amazon Bot can now read "+(ok>1?"them":"it"),"ok"); }
   if(skip)toast(skip+" file"+(skip>1?"s":"")+" couldn't be added","warn");
   if(state.view==="bot"&&typeof renderBot==="function")renderBot();
@@ -3678,6 +3678,13 @@ function mwbRecommend(ds,manual){
 
 /* ===================== MASTER WORKBOOK — UI layer ===================== */
 let mwb={account:null,tab:"dashboard",analysisTab:"sales",data:{},reports:{},loaded:{}};
+/* Privacy: hide real account names visually (display-only; never touches stored data/keys) */
+const MWB_HIDE_KEY="taskflow.mwb.hidenames.v1";
+let mwbHideNames=false; try{ mwbHideNames=localStorage.getItem(MWB_HIDE_KEY)==="1"; }catch(e){}
+function mwbName(acc){ if(!mwbHideNames)return acc; const i=MWB_ACCOUNTS.indexOf(acc); return i>=0?("Account "+String.fromCharCode(65+i)):"Account"; }
+function mwbInitial(acc){ if(!mwbHideNames)return (acc&&acc[0])||"?"; const i=MWB_ACCOUNTS.indexOf(acc); return i>=0?String.fromCharCode(65+i):"?"; }
+function mwbToggleNames(){ mwbHideNames=!mwbHideNames; try{ localStorage.setItem(MWB_HIDE_KEY,mwbHideNames?"1":"0"); }catch(e){} renderWorkbook(); }
+function mwbNameBtn(){ return `<button class="btn btn-ghost btn-sm" onclick="mwbToggleNames()">${mwbHideNames?"Show brand names":"Hide brand names"}</button>`; }
 let _mwbSaveTimers={}, _mwbLastManualHist={}, _wbPrev={id:null,page:0,rows:null}, _xlsxP=null;
 const MWB_MANUAL_FIELDS=[
  ["currentInventory","Current inventory (units)"],["unitsPerDay","Units sold / day"],["unitsPerWeek","Units sold / week"],["unitsPerMonth","Units sold / month"],
@@ -3708,7 +3715,7 @@ function renderWorkbook(){
   const root=$("#wbRoot"); if(!root)return;
   try{
     if(!mwb.account){ root.innerHTML=wbPicker(); return; }
-    if(!mwb.loaded[mwb.account]){ root.innerHTML=`<div class="card" style="padding:30px;text-align:center;color:var(--text-3)">Loading ${esc(mwb.account)}…</div>`; mwbEnsureLoaded(mwb.account).then(()=>{ if(mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); return; }
+    if(!mwb.loaded[mwb.account]){ root.innerHTML=`<div class="card" style="padding:30px;text-align:center;color:var(--text-3)">Loading ${esc(mwbName(mwb.account))}…</div>`; mwbEnsureLoaded(mwb.account).then(()=>{ if(mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); return; }
     root.innerHTML=wbWorkspace();
   }catch(e){ console.error("workbook render",e); root.innerHTML=`<div class="card" style="padding:24px;color:#ef4444">Something went wrong rendering this view — your data is safe. Try switching tabs or reloading.</div>`; }
 }
@@ -3750,15 +3757,15 @@ function wbPortfolioPanel(){
       metrics=`<span>${fMoney(s.rev)}</span><span>${fPct(s.margin)} margin</span><span>TACOS ${fPct(s.tacos)}</span>`; }
     return `<button class="wb-status-row" onclick="mwbSelectAccount('${a}')">
       <span class="wb-dot ${dot}"></span>
-      <span class="wb-acct-badge sm">${a[0]}</span>
-      <div class="wb-status-body"><div class="wb-status-top"><b>${a}</b><span class="wb-status-label ${dot}">${label}</span></div><div class="wb-status-sum">${esc(summary)}</div></div>
+      <span class="wb-acct-badge sm">${esc(mwbInitial(a))}</span>
+      <div class="wb-status-body"><div class="wb-status-top"><b>${esc(mwbName(a))}</b><span class="wb-status-label ${dot}">${label}</span></div><div class="wb-status-sum">${esc(summary)}</div></div>
       <div class="wb-status-metrics">${metrics}</div>
       <svg class="wb-status-chev" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
     </button>`;
   }).join("");
   const overall=anyData?`<span class="wb-pf-overall"><span class="wb-dot ${worst}" style="box-shadow:none"></span>Portfolio: ${{green:"all green",amber:"needs attention",red:"action required"}[worst]}</span>`:"";
   return `<div class="card wb-portfolio">
-    <div class="wb-portfolio-head"><b>Portfolio overview</b><span class="sub">All 3 accounts at a glance — open the reds first.</span>${overall}</div>
+    <div class="wb-portfolio-head"><b>Portfolio overview</b><span class="sub">All accounts at a glance — open the reds first.</span>${overall}<span style="margin-left:auto">${mwbNameBtn()}</span></div>
     ${rows}
   </div>`;
 }
@@ -3766,7 +3773,7 @@ function wbPicker(){
   MWB_ACCOUNTS.forEach(a=>{ if(!mwb.loaded[a]) mwbEnsureLoaded(a).then(()=>{ if(!mwb.account&&state.view==="workbook") renderWorkbook(); }).catch(()=>{}); });
   const cards=MWB_ACCOUNTS.map(a=>{ const st=mwb.data[a]; let stat="Tap to open";
     if(st){ const s=mwbAnalyzeSales(st.dataset,st.manual); const reps=(mwb.reports[a]||[]).length; stat=`${reps} report${reps===1?"":"s"} · ${fNum(Object.keys(st.dataset.skus).length)} SKUs · ${fMoney(s.totalRevenue)}`; }
-    return `<button class="wb-acct" onclick="mwbSelectAccount('${a}')"><div class="wb-acct-badge">${a[0]}</div><div class="wb-acct-name">${a}</div><div class="wb-acct-sub">${esc(stat)}</div><div class="wb-acct-cta">Open workbook →</div></button>`; }).join("");
+    return `<button class="wb-acct" onclick="mwbSelectAccount('${a}')"><div class="wb-acct-badge">${esc(mwbInitial(a))}</div><div class="wb-acct-name">${esc(mwbName(a))}</div><div class="wb-acct-sub">${esc(stat)}</div><div class="wb-acct-cta">Open workbook →</div></button>`; }).join("");
   return `${wbPortfolioPanel()}<div class="sub" style="margin-bottom:14px">Open an account. Each Master Workbook keeps its own data, analysis, recommendations and history — nothing is shared between accounts.</div><div class="wb-accts">${cards}</div>`;
 }
 function mwbSelectAccount(a){ if(MWB_ACCOUNTS.indexOf(a)<0)return; mwb.account=a; mwb.tab="dashboard"; renderWorkbook(); }
@@ -3780,8 +3787,9 @@ function wbWorkspace(){
   catch(e){ console.error(e); body=`<div class="card" style="padding:20px;color:#ef4444">Couldn't render this tab — your data is safe.</div>`; }
   return `<div class="wb-top">
       <button class="op-back" onclick="mwbBackToPicker()" style="margin:0"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>Accounts</button>
-      <div class="wb-acctline"><span class="wb-acct-badge sm">${acc[0]}</span><b>${esc(acc)} Master Workbook</b></div>
+      <div class="wb-acctline"><span class="wb-acct-badge sm">${esc(mwbInitial(acc))}</span><b>${esc(mwbName(acc))} Master Workbook</b></div>
       <div class="wb-tools">
+        ${mwbNameBtn()}
         <button class="btn btn-ghost btn-sm" onclick="mwbExport()">Export</button>
         <button class="btn btn-ghost btn-sm" onclick="mwbImportBackupPick()">Import backup</button>
         <button class="btn btn-ghost btn-sm" style="color:#ef4444" onclick="mwbClearConfirm()">Clear</button>
@@ -3799,7 +3807,7 @@ function wbDashboard(acc){
   const st=mwb.data[acc], ds=st.dataset, manual=st.manual;
   const reps=mwb.reports[acc]||[];
   const empty=!reps.length && !Object.keys(ds.skus).length && !Object.keys(manual).filter(k=>String(manual[k]).trim()!=="").length;
-  if(empty) return `<div class="card" style="padding:34px;text-align:center"><div style="font-family:var(--font-display);font-weight:600;font-size:18px;margin-bottom:6px">No data yet for ${esc(acc)}</div><div class="sub" style="margin-bottom:16px">Import an Amazon report or enter manual data to light up this command center.</div><button class="btn btn-primary" onclick="mwbGo('import')">Import a report</button>&nbsp;<button class="btn btn-ghost" onclick="mwbGo('manual')">Enter manual data</button></div>`;
+  if(empty) return `<div class="card" style="padding:34px;text-align:center"><div style="font-family:var(--font-display);font-weight:600;font-size:18px;margin-bottom:6px">No data yet for ${esc(mwbName(acc))}</div><div class="sub" style="margin-bottom:16px">Import an Amazon report or enter manual data to light up this command center.</div><button class="btn btn-primary" onclick="mwbGo('import')">Import a report</button>&nbsp;<button class="btn btn-ghost" onclick="mwbGo('manual')">Enter manual data</button></div>`;
   const sales=mwbAnalyzeSales(ds,manual), inv=mwbAnalyzeInventory(ds,manual,0), profit=mwbAnalyzeProfit(ds,manual), ppc=mwbAnalyzePPC(ds,manual,sales.totalRevenue);
   const best=sales.top[0], worst=sales.slow[0];
   const minInv=inv.rows.find(r=>isN(r.daysLeft));
@@ -3904,7 +3912,7 @@ function wbManual(acc){
   const m=mwb.data[acc].manual;
   const fields=MWB_MANUAL_FIELDS.map(([k,l])=>`<div class="fld"><span class="field-label">${l}</span><input class="input" type="text" inputmode="decimal" value="${esc(m[k]!=null?m[k]:"")}" oninput="mwbSetManual('${k}',this.value)" placeholder="—"></div>`).join("");
   return `<div class="card" style="padding:20px">
-    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Manual data — ${esc(acc)}</div>
+    <div style="font-family:var(--font-display);font-weight:600;margin-bottom:6px">Manual data — ${esc(mwbName(acc))}</div>
     <div class="sub" style="margin-bottom:14px">Use this when you don't have a report yet, or to supply assumptions the analysis needs. Saves automatically. The highest-impact fields are <b>product cost</b>, <b>supplier lead time</b> (or production + shipping), and <b>selling price</b>.</div>
     <div class="filters">${fields}</div>
     <div class="fld" style="margin-top:14px"><span class="field-label">Notes</span><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="3" oninput="mwbSetManual('notes',this.value)" placeholder="Anything to remember for this account…">${esc(m.notes||"")}</textarea></div>
@@ -3950,7 +3958,7 @@ function wbAnReturns(acc){ const st=mwb.data[acc], a=mwbAnalyzeReturns(st.datase
 function wbRecs(acc){ const st=mwb.data[acc], recs=st.recommendations||[];
   const cards=recs.length?recs.map(r=>`<div class="wb-rec ${r.priority.toLowerCase()}"><div class="wb-rec-top"><span class="wb-pri ${r.priority.toLowerCase()}">${r.priority}</span><span class="wb-rec-cat">${esc(r.category)}</span><span class="wb-rec-sku">${esc(r.sku)}</span></div><div class="wb-rec-problem">${esc(r.problem)}</div><div class="wb-rec-grid"><div><span class="l">Data</span>${esc(r.data)}</div><div><span class="l">Action</span><b>${esc(r.action)}</b></div><div><span class="l">Reason</span>${esc(r.reason)}</div><div><span class="l">Expected impact</span>${esc(r.impact)}</div></div></div>`).join(""):`<div class="fba-empty">No recommendations yet — tap “Generate recommendations”.</div>`;
   const when=st.lastRecAt?`Last generated ${new Date(st.lastRecAt).toLocaleString()}`:"Not generated yet";
-  return `<div class="card" style="padding:20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap"><div><div style="font-family:var(--font-display);font-weight:600">Recommendations</div><div class="sub">${when} · analyzes all saved data for ${esc(acc)}</div></div><button class="btn btn-primary" onclick="mwbGenerate()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>Generate recommendations</button></div>${cards}`;
+  return `<div class="card" style="padding:20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap"><div><div style="font-family:var(--font-display);font-weight:600">Recommendations</div><div class="sub">${when} · analyzes all saved data for ${esc(mwbName(acc))}</div></div><button class="btn btn-primary" onclick="mwbGenerate()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>Generate recommendations</button></div>${cards}`;
 }
 function mwbAutoRecs(acc){ const st=mwb.data[acc]; if(!st)return; try{ const recs=mwbRecommend(st.dataset,st.manual); st.recommendations=recs; st.lastRecAt=mwbNow(); mwbHist(acc,"recs",`Auto-generated ${recs.length} recommendations on import`); }catch(e){} }
 function mwbGenerate(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return; let recs=[]; try{ recs=mwbRecommend(st.dataset,st.manual); }catch(e){ console.error(e); toast("Couldn't generate recommendations","err"); return; } st.recommendations=recs; st.lastRecAt=mwbNow(); mwbHist(acc,"recs",`Generated ${recs.length} recommendations`); mwbSave(acc); renderWorkbook(); toast(`Generated ${recs.length} recommendations`,recs.length?"ok":"warn"); }
@@ -3958,7 +3966,7 @@ function mwbGenerate(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return; 
 function wbEvents(acc){ const up=mwbUpcoming(new Date(),150);
   const lead=mwbLeadTime(mwb.data[acc].manual);
   const cards=up.map(e=>{ const orderNow=isN(lead)&&lead>=e.daysLeft; return `<div class="wb-event"><div class="wb-ev-top"><b>${esc(e.name)}</b><span class="wb-ev-days ${e.daysLeft<=45?"soon":""}">${e.daysLeft===0?"Today":e.daysLeft+" days"}</span></div><div class="sub">${new Date(e.date).toLocaleDateString()} · expected lift +${e.lift[0]}–${e.lift[1]}%${e.gift?" · gift-related":""}</div><div class="wb-ev-rec">${e.gift?"Gift demand: raise inventory buffer 30–40% and prep PPC budget/creative early.":"Raise buffer 15–25% and lift ad budgets ahead of the peak."}${orderNow?` <b style="color:#ef4444">Your lead time (${fDays(lead)}) ≥ days left — order now to arrive in time.</b>`:(isN(lead)?` Lead time ${fDays(lead)} — you still have time, but plan the PO.`:"")}</div></div>`; }).join("");
-  return `<div class="sub" style="margin-bottom:12px">Upcoming US selling events for ${esc(acc)}. ${isN(lead)?`Using your ${fDays(lead)} lead time to flag what must be ordered now.`:"Enter supplier lead time in Manual Data to get order-now alerts."}</div>${up.length?cards:'<div class="fba-empty">No major events in the next 150 days.</div>'}`;
+  return `<div class="sub" style="margin-bottom:12px">Upcoming US selling events for ${esc(mwbName(acc))}. ${isN(lead)?`Using your ${fDays(lead)} lead time to flag what must be ordered now.`:"Enter supplier lead time in Manual Data to get order-now alerts."}</div>${up.length?cards:'<div class="fba-empty">No major events in the next 150 days.</div>'}`;
 }
 function wbHistory(acc){ const h=mwb.data[acc].history||[]; if(!h.length)return `<div class="fba-empty">No history yet. Imports, manual updates and recommendations are logged here with date &amp; time.</div>`;
   return `<div class="card" style="padding:6px 4px"><div style="overflow:auto"><table class="op-tbl"><thead><tr><th>When</th><th>Action</th><th>Detail</th></tr></thead><tbody>${h.map(e=>`<tr><td style="white-space:nowrap;color:var(--text-3)">${new Date(e.ts).toLocaleString()}</td><td>${esc(wbHistKind(e.kind))}</td><td>${esc(e.text)}</td></tr>`).join("")}</tbody></table></div></div>`;
@@ -3971,14 +3979,14 @@ async function mwbExport(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)retu
 function mwbImportBackupPick(){ const i=$("#wbBackupInput"); if(i){ i.value=""; i.onchange=()=>mwbImportBackup(i.files); i.click(); } }
 async function mwbImportBackup(files){ const acc=mwb.account; if(!files||!files[0])return; let data; try{ data=JSON.parse(await files[0].text()); }catch(e){ toast("Couldn't read backup file","err"); return; }
   if(!data||!data.state){ toast("Not a valid Master Workbook backup","err"); return; }
-  confirmAction("Restore backup?",`This replaces ALL current data for ${acc} with the backup's contents.`,"Restore",async()=>{
+  confirmAction("Restore backup?",`This replaces ALL current data for ${mwbName(acc)} with the backup's contents.`,"Restore",async()=>{
     try{ const st=data.state; st.account=acc; mwb.data[acc]=st; await mwbClearAccount(acc); await mwbPutState(st); mwb.reports[acc]=[];
       if(Array.isArray(data.reports)){ for(const r of data.reports){ const meta={...(r.meta||{}),account:acc}; if(!meta.id) meta.id="rep_"+Math.random().toString(36).slice(2,9); mwb.reports[acc].push(meta); await mwbAddReport(meta,r.rows||[]); } }
       mwbHist(acc,"restore","Restored from backup"); mwbSave(acc); renderWorkbook(); toast("Backup restored","ok");
     }catch(e){ console.error(e); toast("Restore failed","err"); }
   });
 }
-function mwbClearConfirm(){ const acc=mwb.account; confirmAction("Clear all data?",`Permanently delete ALL reports, manual data, analysis, recommendations and history for ${acc}. This cannot be undone — export a backup first if unsure.`,"Delete everything",async()=>{ try{ await mwbClearAccount(acc); mwb.data[acc]=mwbBlankState(acc); mwb.reports[acc]=[]; renderWorkbook(); toast(`${acc} data cleared`,"ok"); }catch(e){ toast("Clear failed","err"); } }); }
+function mwbClearConfirm(){ const acc=mwb.account; confirmAction("Clear all data?",`Permanently delete ALL reports, manual data, analysis, recommendations and history for ${mwbName(acc)}. This cannot be undone — export a backup first if unsure.`,"Delete everything",async()=>{ try{ await mwbClearAccount(acc); mwb.data[acc]=mwbBlankState(acc); mwb.reports[acc]=[]; renderWorkbook(); toast(`${mwbName(acc)} data cleared`,"ok"); }catch(e){ toast("Clear failed","err"); } }); }
 
 /* ---- flexible export scope ---- */
 function getExportScope(){
