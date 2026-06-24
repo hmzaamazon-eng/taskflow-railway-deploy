@@ -422,6 +422,34 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .exec-open{background:none;border:1px solid var(--border);color:var(--text-2);font-size:12.5px;font-weight:600;border-radius:8px;padding:5px 11px;cursor:pointer;white-space:nowrap;transition:.12s}
 .exec-open:hover{background:var(--surface-3);color:var(--text-1)}
 @media(max-width:880px){.exec-filters .select{flex:1;min-width:0}}
+/* Calculator */
+.calc-group+.calc-group{margin-top:16px}
+.calc-group-title{font-family:var(--font-display);font-weight:600;font-size:14px;margin:0 0 10px}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.calc-fld{display:flex;flex-direction:column;gap:5px}
+.calc-unit{color:var(--text-3);font-weight:500;font-size:11px}
+.calc-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.calc-bar .select{height:40px;min-width:160px;padding:0 30px 0 12px;border-radius:10px}
+.calc-hi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px}
+.calc-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.calc-res{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 13px}
+.calc-hi .calc-res{background:var(--surface-3)}
+.calc-res .k{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.calc-res .v{font-size:19px;font-weight:700;font-family:var(--font-display);margin-top:3px}
+.calc-res.good .v{color:#16a34a}.calc-res.bad .v{color:#ef4444}
+.calc-hist-item{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--surface)}
+.calc-hist-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.calc-hist-title{font-weight:600;font-size:14.5px}
+.calc-hist-meta{font-size:12px;color:var(--text-3);margin-top:2px}
+.calc-hist-actions{display:flex;gap:6px;flex-wrap:wrap}
+.calc-hist-actions button{background:none;border:1px solid var(--border);color:var(--text-2);font-size:12px;font-weight:600;border-radius:8px;padding:5px 10px;cursor:pointer;transition:.12s}
+.calc-hist-actions button:hover{background:var(--surface-3);color:var(--text-1)}
+.calc-hist-actions button.danger:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca}
+.calc-hist-det{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.calc-hist-inputs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.calc-chip{font-size:11.5px;background:var(--surface-3);color:var(--text-2);border-radius:6px;padding:3px 8px}
+.calc-hist-notes{margin-top:10px;font-size:13px;color:var(--text-2);background:var(--surface-3);border-radius:8px;padding:8px 10px}
+@media(max-width:880px){.calc-bar .select,.calc-bar .input{flex:1;min-width:0}}
 .op-tbl{width:100%;border-collapse:collapse;font-size:14px}
 .op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -693,6 +721,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
       <div class="nav-label">Grow</div>
       <button class="nav-item" data-view="operator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>Operator 30</button>
       <button class="nav-item" data-view="execution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Execution</button>
+      <button class="nav-item" data-view="calculator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h.01M8 14h2M12 14h2M16 14h.01M8 18h6"/></svg>Calculator</button>
       <button class="nav-item" data-view="workbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>Master Workbook</button>
       <button class="nav-item" data-view="bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1.1" fill="currentColor"/><circle cx="15" cy="13" r="1.1" fill="currentColor"/><path d="M2 12v3M22 12v3"/></svg>Amazon Bot</button>
       <div class="nav-label">Manage</div>
@@ -950,6 +979,14 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
           <div><h1>Execution</h1><div class="sub">Every action across the 30-day program in one board. Tap to cycle ○ → in progress → ✓ — synced with Operator 30.</div></div>
         </div>
         <div id="execRoot"></div>
+      </section>
+
+      <!-- ===== CALCULATOR ===== -->
+      <section class="view" id="view-calculator">
+        <div class="view-head">
+          <div><h1>Calculator</h1><div class="sub">Per-brand Amazon FBA calculator — enter numbers, get every key metric, and save a separate history for each brand.</div></div>
+        </div>
+        <div id="calcRoot"></div>
       </section>
 
       <!-- ===== MASTER WORKBOOK ===== -->
@@ -2454,6 +2491,236 @@ function renderExecution(){
     ${body}`;
 }
 
+/* ===================== CALCULATOR (per-brand FBA calculator + history) ===================== */
+const CALC_KEY="taskflow.calculator.v1";
+let calcData={brands:[],selectedBrandId:null,hideNames:false};
+let calcUI={editingHistoryId:null,renaming:false,search:"",sort:"new",scope:"brand",openHistory:null};
+let calcInputs={};
+let _calcLoaded=false;
+const calcMoney=n=>{ n=isFinite(n)?n:0; return (n<0?"-$":"$")+Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}); };
+const calcPct=n=>{ if(n==null||!isFinite(n))return "—"; return n.toFixed(1)+"%"; };
+
+function calcLoad(){
+  try{ const raw=localStorage.getItem(CALC_KEY); if(raw){ const o=JSON.parse(raw); if(o&&typeof o==="object"){ calcData={brands:Array.isArray(o.brands)?o.brands:[],selectedBrandId:o.selectedBrandId||null,hideNames:!!o.hideNames}; } } }
+  catch(e){ calcData={brands:[],selectedBrandId:null,hideNames:false}; }
+  calcData.brands.forEach(b=>{ if(!Array.isArray(b.history))b.history=[]; });
+  if(calcData.selectedBrandId && !calcData.brands.some(b=>b.id===calcData.selectedBrandId)) calcData.selectedBrandId=null;
+  if(!calcData.selectedBrandId && calcData.brands.length) calcData.selectedBrandId=calcData.brands[0].id;
+}
+function calcSave(){ try{ localStorage.setItem(CALC_KEY,JSON.stringify(calcData)); }catch(e){ toast("Could not save (storage full?)","err"); } }
+function calcBrand(){ return calcData.brands.find(b=>b.id===calcData.selectedBrandId)||null; }
+function calcBrandLabel(b){ if(!b)return ""; if(!calcData.hideNames)return b.name; return "Brand "+(calcData.brands.indexOf(b)+1); }
+function calcFindHistory(id){ for(const b of calcData.brands){ const item=b.history.find(h=>h.id===id); if(item)return{brand:b,item}; } return null; }
+
+const CALC_FIELDS=[
+  {g:"Pricing & unit economics (per unit)",f:[
+    ["sellPrice","Selling price","$"],["productCost","Product cost (COGS)","$"],["shippingCost","Inbound shipping / freight","$"],
+    ["referralFee","Referral fee","$"],["fbaFee","FBA fee","$"],["amazonFees","Other Amazon fees","$"]]},
+  {g:"Sales & advertising (period totals)",f:[
+    ["unitsSold","Units sold","#"],["periodDays","Period length","days"],["ppcSpend","PPC spend (total)","$"],
+    ["adSales","Sales from ads (optional)","$"],["refunds","Refunds (total)","$"],["storageFee","Storage fees (total)","$"],["otherCosts","Other costs (total)","$"]]},
+  {g:"Inventory",f:[
+    ["inventoryCost","Inventory cost (optional)","$"],["remainingStock","Remaining stock","#"],["reorderPoint","Reorder point","#"]]}
+];
+const CALC_ALLKEYS=CALC_FIELDS.flatMap(s=>s.f.map(x=>x[0]));
+function calcNum(k){ const v=parseFloat(calcInputs[k]); return isFinite(v)?v:0; }
+function calcCompute(){
+  const sellPrice=calcNum("sellPrice"),productCost=calcNum("productCost"),shippingCost=calcNum("shippingCost"),
+    referralFee=calcNum("referralFee"),fbaFee=calcNum("fbaFee"),amazonFees=calcNum("amazonFees"),
+    unitsSold=calcNum("unitsSold"),ppcSpend=calcNum("ppcSpend"),adSales=calcNum("adSales"),
+    refunds=calcNum("refunds"),storageFee=calcNum("storageFee"),otherCosts=calcNum("otherCosts"),
+    remainingStock=calcNum("remainingStock"),reorderPoint=calcNum("reorderPoint"),inventoryCost=calcNum("inventoryCost");
+  let periodDays=calcNum("periodDays"); if(periodDays<=0)periodDays=30;
+  const landedCost=productCost+shippingCost;
+  const variableCostPerUnit=landedCost+referralFee+fbaFee+amazonFees;
+  const adCostPerUnit=unitsSold>0?ppcSpend/unitsSold:0;
+  const costPerUnit=variableCostPerUnit+adCostPerUnit;
+  const totalRevenue=sellPrice*unitsSold;
+  const totalCOGS=landedCost*unitsSold;
+  const totalUnitFees=(referralFee+fbaFee+amazonFees)*unitsSold;
+  const totalCost=totalCOGS+totalUnitFees+ppcSpend+storageFee+refunds+otherCosts;
+  const grossProfit=totalRevenue-totalCOGS;
+  const netProfit=totalRevenue-totalCost;
+  const profitPerUnit=unitsSold>0?netProfit/unitsSold:(sellPrice-costPerUnit);
+  const profitMargin=totalRevenue>0?netProfit/totalRevenue*100:0;
+  const roi=costPerUnit>0?profitPerUnit/costPerUnit*100:0;
+  const tacos=totalRevenue>0?ppcSpend/totalRevenue*100:0;
+  const acos=adSales>0?ppcSpend/adSales*100:null;
+  const breakEvenPrice=variableCostPerUnit+adCostPerUnit;
+  const breakEvenAcos=sellPrice>0?(sellPrice-variableCostPerUnit)/sellPrice*100:0;
+  const dailyProfit=netProfit/periodDays;
+  const monthlyProfit=dailyProfit*30;
+  const stockValue=remainingStock>0?remainingStock*landedCost:inventoryCost;
+  const needsReorder=reorderPoint>0&&remainingStock>0&&remainingStock<=reorderPoint;
+  return {totalRevenue,totalCost,totalCOGS,grossProfit,netProfit,profitPerUnit,costPerUnit,profitMargin,roi,acos,tacos,breakEvenPrice,breakEvenAcos,dailyProfit,monthlyProfit,stockValue,needsReorder,reorderPoint,periodDays};
+}
+function calcResultsHTML(){
+  const r=calcCompute();
+  const tile=(k,v,cls)=>`<div class="calc-res ${cls||''}"><div class="k">${k}</div><div class="v">${v}</div></div>`;
+  const hi=`<div class="calc-hi">
+    ${tile("Net profit",calcMoney(r.netProfit),r.netProfit>=0?"good":"bad")}
+    ${tile("Profit margin",calcPct(r.profitMargin),r.profitMargin>=0?"good":"bad")}
+    ${tile("ROI",calcPct(r.roi),r.roi>=0?"good":"bad")}
+    ${tile("Total revenue",calcMoney(r.totalRevenue))}</div>`;
+  const grid=`<div class="calc-results">
+    ${tile("Total cost",calcMoney(r.totalCost))}
+    ${tile("Gross profit",calcMoney(r.grossProfit))}
+    ${tile("Cost / unit",calcMoney(r.costPerUnit))}
+    ${tile("Profit / unit",calcMoney(r.profitPerUnit),r.profitPerUnit>=0?"good":"bad")}
+    ${tile("Break-even price",calcMoney(r.breakEvenPrice))}
+    ${tile("Break-even ACoS",calcPct(r.breakEvenAcos))}
+    ${tile("ACoS",r.acos==null?"—":calcPct(r.acos))}
+    ${tile("TACoS",calcPct(r.tacos))}
+    ${tile("Daily profit",calcMoney(r.dailyProfit))}
+    ${tile("Monthly estimate",calcMoney(r.monthlyProfit))}
+    ${tile("Stock value",calcMoney(r.stockValue))}
+    ${tile("Reorder status",r.needsReorder?"⚠ Reorder now":(r.reorderPoint>0?"OK":"—"),r.needsReorder?"bad":"")}</div>`;
+  return hi+grid;
+}
+function calcRenderResults(){ const el=$("#calcResults"); if(el)el.innerHTML=calcResultsHTML(); }
+
+function calcHistoryItems(){
+  let items=[];
+  if(calcUI.scope==="all"){ calcData.brands.forEach(b=>b.history.forEach(h=>items.push({...h,_brand:b}))); }
+  else { const b=calcBrand(); if(b) items=b.history.map(h=>({...h,_brand:b})); }
+  const q=calcUI.search.trim().toLowerCase();
+  if(q) items=items.filter(h=>((h.title||"")+" "+(h.notes||"")+" "+(h.dateStr||"")).toLowerCase().includes(q));
+  items.sort((a,b)=> calcUI.sort==="old"?(a.createdAt||0)-(b.createdAt||0):(b.createdAt||0)-(a.createdAt||0));
+  return items;
+}
+function calcHistoryHTML(){
+  const items=calcHistoryItems();
+  if(!items.length) return `<div class="sub" style="padding:10px 2px">${calcUI.search?"No saved calculations match your search.":(calcUI.scope==="all"?"No saved calculations yet.":"No saved calculations for this brand yet.")}</div>`;
+  return items.map(h=>{
+    const open=calcUI.openHistory===h.id; const r=h.results||{};
+    const brandTag=calcUI.scope==="all"?`<span class="op-tag ss">${esc(calcBrandLabel(h._brand))}</span> `:"";
+    let det="";
+    if(open){
+      const resPairs=[["Net profit",calcMoney(r.netProfit||0)],["Margin",calcPct(r.profitMargin||0)],["ROI",calcPct(r.roi||0)],["Revenue",calcMoney(r.totalRevenue||0)],["Total cost",calcMoney(r.totalCost||0)],["Profit/unit",calcMoney(r.profitPerUnit||0)]];
+      const inputChips=CALC_FIELDS.map(s=>s.f.filter(f=>h.inputs&&h.inputs[f[0]]!==""&&h.inputs[f[0]]!=null).map(f=>`<span class="calc-chip">${esc(f[1])}: ${esc(String(h.inputs[f[0]]))}</span>`).join("")).join("");
+      det=`<div class="calc-hist-det">
+        <div class="calc-results">${resPairs.map(([k,v])=>`<div class="calc-res"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("")}</div>
+        ${inputChips?`<div class="calc-hist-inputs">${inputChips}</div>`:""}
+        ${h.notes?`<div class="calc-hist-notes">${esc(h.notes)}</div>`:""}</div>`;
+    }
+    return `<div class="calc-hist-item">
+      <div class="calc-hist-head">
+        <div><div class="calc-hist-title">${brandTag}${esc(h.title||"Untitled")}</div>
+        <div class="calc-hist-meta">${esc(h.dateStr||"")} ${esc(h.timeStr||"")} · Net ${calcMoney(r.netProfit||0)} · ROI ${calcPct(r.roi||0)}</div></div>
+        <div class="calc-hist-actions">
+          <button onclick="calcToggleDetails('${h.id}')">${open?"Hide":"View"}</button>
+          <button onclick="calcEditHistory('${h.id}')">Edit</button>
+          <button onclick="calcDuplicateHistory('${h.id}')">Duplicate</button>
+          <button class="danger" onclick="calcDeleteHistory('${h.id}')">Delete</button>
+        </div>
+      </div>${det}</div>`;
+  }).join("");
+}
+function calcRenderHistory(){ const el=$("#calcHistoryList"); if(el)el.innerHTML=calcHistoryHTML(); }
+
+function calcAddBrand(){ const el=$("#calcNewBrand"); const name=((el&&el.value)||"").trim(); if(!name){ toast("Enter a brand name","warn"); return; }
+  if(calcData.brands.some(b=>b.name.toLowerCase()===name.toLowerCase())){ toast("That brand already exists","warn"); return; }
+  const b={id:uid(),name,history:[]}; calcData.brands.push(b); calcData.selectedBrandId=b.id; calcSave(); renderCalculator(); toast("Brand added","ok"); }
+function calcSelectBrand(id){ calcData.selectedBrandId=id; calcUI.renaming=false; calcUI.editingHistoryId=null; calcSave(); renderCalculator(); }
+function calcStartRename(){ if(!calcBrand())return; calcUI.renaming=true; renderCalculator(); setTimeout(()=>{ const i=$("#calcRenameInput"); if(i){i.focus();i.select();} },20); }
+function calcCancelRename(){ calcUI.renaming=false; renderCalculator(); }
+function calcSaveRename(){ const b=calcBrand(); if(!b)return; const i=$("#calcRenameInput"); const name=((i&&i.value)||"").trim();
+  if(!name){ toast("Name can't be empty","warn"); return; }
+  if(calcData.brands.some(x=>x!==b&&x.name.toLowerCase()===name.toLowerCase())){ toast("Another brand has that name","warn"); return; }
+  b.name=name; calcUI.renaming=false; calcSave(); renderCalculator(); toast("Brand renamed","ok"); }
+function calcDeleteBrand(){ const b=calcBrand(); if(!b)return;
+  confirmAction("Delete brand?","This permanently deletes \""+b.name+"\" and its "+b.history.length+" saved calculation(s). This cannot be undone.","Delete brand",()=>{
+    calcData.brands.splice(calcData.brands.indexOf(b),1); calcData.selectedBrandId=calcData.brands.length?calcData.brands[0].id:null; calcUI.editingHistoryId=null; calcSave(); renderCalculator(); toast("Brand deleted","ok"); }); }
+function calcToggleHide(){ calcData.hideNames=!calcData.hideNames; calcSave(); renderCalculator(); }
+function calcSetInput(k,v){ calcInputs[k]=v; calcRenderResults(); }
+function calcClearInputs(){ calcInputs={}; calcUI.editingHistoryId=null; renderCalculator(); }
+function calcCancelEdit(){ calcUI.editingHistoryId=null; renderCalculator(); }
+function calcSetSearch(v){ calcUI.search=v; calcRenderHistory(); }
+function calcSetSort(v){ calcUI.sort=v; calcRenderHistory(); }
+function calcSetScope(v){ calcUI.scope=v; calcUI.openHistory=null; calcRenderHistory(); }
+function calcToggleDetails(id){ calcUI.openHistory=calcUI.openHistory===id?null:id; calcRenderHistory(); }
+function calcSaveCalculation(){
+  const b=calcBrand(); if(!b){ toast("Add or select a brand first","warn"); return; }
+  const title=(($("#calcTitle")&&$("#calcTitle").value)||"").trim();
+  const notes=(($("#calcNotes")&&$("#calcNotes").value)||"").trim();
+  const inputs={}; CALC_ALLKEYS.forEach(k=>{ inputs[k]=calcInputs[k]??""; });
+  const results=calcCompute();
+  if(calcUI.editingHistoryId){ const f=calcFindHistory(calcUI.editingHistoryId);
+    if(f){ f.item.title=title||f.item.title; f.item.notes=notes; f.item.inputs=inputs; f.item.results=results; f.item.updatedAt=Date.now(); calcUI.editingHistoryId=null; calcSave(); renderCalculator(); toast("Calculation updated","ok"); return; } }
+  const now=new Date();
+  b.history.unshift({id:uid(),title:title||("Calculation "+now.toLocaleDateString()),notes,inputs,results,createdAt:Date.now(),dateStr:now.toLocaleDateString(),timeStr:now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  calcSave(); renderCalculator(); toast("Calculation saved","ok"); }
+function calcEditHistory(id){ const f=calcFindHistory(id); if(!f)return; calcData.selectedBrandId=f.brand.id; calcInputs={...f.item.inputs}; calcUI.editingHistoryId=id; calcUI.renaming=false; renderCalculator(); window.scrollTo({top:0,behavior:"smooth"}); toast("Editing — change values then Update","ok"); }
+function calcDuplicateHistory(id){ const f=calcFindHistory(id); if(!f)return; const now=new Date();
+  const copy=JSON.parse(JSON.stringify(f.item)); copy.id=uid(); copy.title=(f.item.title||"Calculation")+" (copy)"; copy.createdAt=Date.now(); copy.dateStr=now.toLocaleDateString(); copy.timeStr=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  f.brand.history.unshift(copy); calcSave(); renderCalculator(); toast("Duplicated","ok"); }
+function calcDeleteHistory(id){ const f=calcFindHistory(id); if(!f)return;
+  confirmAction("Delete calculation?","Delete \""+(f.item.title||"Untitled")+"\"? This cannot be undone.","Delete",()=>{ f.brand.history.splice(f.brand.history.indexOf(f.item),1); if(calcUI.editingHistoryId===id)calcUI.editingHistoryId=null; calcSave(); renderCalculator(); toast("Deleted","ok"); }); }
+
+function renderCalculator(){
+  if(!_calcLoaded){ calcLoad(); _calcLoaded=true; }
+  const root=$("#calcRoot"); if(!root)return;
+  if(!calcData.brands.length){
+    root.innerHTML=`<div class="card" style="padding:24px;max-width:520px">
+      <div style="font-family:var(--font-display);font-weight:600;font-size:18px;margin-bottom:6px">Add your first brand</div>
+      <div class="sub" style="margin-bottom:14px">Each brand keeps its own separate calculation history.</div>
+      <div class="calc-bar">
+        <input class="input" id="calcNewBrand" placeholder="e.g. Brand A" style="max-width:260px" onkeydown="if(event.key==='Enter')calcAddBrand()">
+        <button class="btn btn-primary" onclick="calcAddBrand()">Add brand</button>
+      </div></div>`;
+    return;
+  }
+  const b=calcBrand();
+  const editing=calcUI.editingHistoryId?calcFindHistory(calcUI.editingHistoryId):null;
+  const editTitle=editing?(editing.item.title||""):""; const editNotes=editing?(editing.item.notes||""):"";
+  let brandCtl;
+  if(calcUI.renaming){
+    brandCtl=`<input class="input" id="calcRenameInput" value="${esc(b.name)}" style="max-width:240px" onkeydown="if(event.key==='Enter')calcSaveRename();if(event.key==='Escape')calcCancelRename()">
+      <button class="btn btn-primary" onclick="calcSaveRename()">Save</button><button class="btn" onclick="calcCancelRename()">Cancel</button>`;
+  } else {
+    const opts=calcData.brands.map(x=>`<option value="${x.id}" ${x.id===b.id?"selected":""}>${esc(calcBrandLabel(x))}</option>`).join("");
+    brandCtl=`<select class="select" onchange="calcSelectBrand(this.value)">${opts}</select>
+      <button class="btn" onclick="calcStartRename()">Edit</button><button class="btn" onclick="calcDeleteBrand()">Delete</button>`;
+  }
+  const inputsHTML=CALC_FIELDS.map(s=>`<div class="calc-group"><div class="calc-group-title">${esc(s.g)}</div><div class="calc-grid">${s.f.map(f=>`<div class="calc-fld"><label class="field-label">${esc(f[1])} ${f[2]?`<span class="calc-unit">${esc(f[2])}</span>`:""}</label><input class="input" type="number" step="any" inputmode="decimal" value="${esc(calcInputs[f[0]]??"")}" placeholder="0" oninput="calcSetInput('${f[0]}',this.value)"></div>`).join("")}</div></div>`).join("");
+  root.innerHTML=`
+  <div class="card" style="padding:18px;margin-bottom:16px">
+    <div class="calc-group-title" style="margin-top:0">Brand selector &amp; privacy</div>
+    <div class="calc-bar">${brandCtl}<span style="flex:1;min-width:10px"></span>
+      <button class="btn" onclick="calcToggleHide()">${calcData.hideNames?"Show brand names":"Hide brand names"}</button></div>
+    <div class="calc-bar" style="margin-top:10px">
+      <input class="input" id="calcNewBrand" placeholder="New brand name…" style="max-width:240px" onkeydown="if(event.key==='Enter')calcAddBrand()">
+      <button class="btn btn-primary" onclick="calcAddBrand()">Add brand</button>
+      ${calcData.hideNames?`<span class="sub" style="align-self:center">Names hidden — real names are safe.</span>`:""}</div>
+  </div>
+  <div class="card" style="padding:18px;margin-bottom:16px">
+    <div class="calc-group-title" style="margin-top:0">Manual inputs <span class="sub" style="font-weight:400">— all optional; blank counts as 0</span></div>
+    ${inputsHTML}
+    <div class="calc-bar" style="margin-top:14px"><button class="btn btn-primary" onclick="calcRenderResults();toast('Calculated','ok')">Calculate</button><button class="btn" onclick="calcClearInputs()">Clear inputs</button></div>
+  </div>
+  <div class="card" style="padding:18px;margin-bottom:16px">
+    <div class="calc-group-title" style="margin-top:0">Results summary</div>
+    <div id="calcResults">${calcResultsHTML()}</div>
+  </div>
+  <div class="card" style="padding:18px;margin-bottom:16px">
+    <div class="calc-group-title" style="margin-top:0">${editing?"Update saved calculation":"Save calculation"}</div>
+    <div class="calc-grid">
+      <div class="calc-fld" style="grid-column:1/-1"><label class="field-label">Title</label><input class="input" id="calcTitle" placeholder="e.g. June 24 PPC Check" value="${esc(editTitle)}"></div>
+      <div class="calc-fld" style="grid-column:1/-1"><label class="field-label">Notes</label><textarea class="textarea" id="calcNotes" rows="2" placeholder="Optional notes…">${esc(editNotes)}</textarea></div>
+    </div>
+    <div class="calc-bar" style="margin-top:12px"><button class="btn btn-primary" onclick="calcSaveCalculation()">${editing?"Update calculation":"Save calculation"}</button>${editing?`<button class="btn" onclick="calcCancelEdit()">Cancel edit</button>`:""}<span class="sub" style="align-self:center">Saving under: <b>${esc(calcBrandLabel(b))}</b></span></div>
+  </div>
+  <div class="card" style="padding:18px">
+    <div class="calc-group-title" style="margin-top:0">Saved history</div>
+    <div class="calc-bar" style="margin-bottom:12px">
+      <input class="input" id="calcSearch" placeholder="Search title/notes…" style="max-width:220px" value="${esc(calcUI.search)}" oninput="calcSetSearch(this.value)">
+      <select class="select" onchange="calcSetScope(this.value)"><option value="brand" ${calcUI.scope==="brand"?"selected":""}>This brand</option><option value="all" ${calcUI.scope==="all"?"selected":""}>All brands</option></select>
+      <select class="select" onchange="calcSetSort(this.value)"><option value="new" ${calcUI.sort==="new"?"selected":""}>Newest first</option><option value="old" ${calcUI.sort==="old"?"selected":""}>Oldest first</option></select>
+    </div>
+    <div id="calcHistoryList">${calcHistoryHTML()}</div>
+  </div>`;
+}
+
 function opOverview(){
   const p=overallProgress(); const dc=daysComplete();
   let next=1; for(let d=1;d<=30;d++){ if(dayStatus(d)!=="done"){ next=d; break; } if(d===30)next=30; }
@@ -3866,7 +4133,7 @@ function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes ev
 function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
 
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
+  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
