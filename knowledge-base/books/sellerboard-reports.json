@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "book": {
+    "id": "sellerboard-reports",
+    "title": "sellerboard Reports",
+    "subtitle": "Complete reference to every downloadable report (Profit → Reports)",
+    "authors": ["sellerboard"],
+    "category": "amazon",
+    "subcategory": "analytics-tools",
+    "domain_relevance": "high",
+    "source_files": ["pasted-in-chat: sellerboard Reports article"],
+    "one_line": "sellerboard's Reports page exports every major Amazon FBA data set (P&L, orders, ads, inventory, COGS, refunds) as Excel/CSV for offline analysis.",
+    "thesis": "The Reports page at Profit → Reports is sellerboard's hub for downloading business data as spreadsheets. Ten report types cover daily/monthly/per-product P&L, orders, sales trends, advertising, repeat customers, historical stock, COGS, and refunds. Each report has standard controls (date range, Excel/CSV, download or email-when-ready) and a few have unique behaviors worth knowing before you rely on them.",
+    "tags": ["sellerboard", "reports", "p&l", "ppc", "inventory", "cogs", "refunds", "export"]
+  },
+
+  "outline": [
+    { "ref": "Overview", "title": "What the Reports page is", "summary": "Central hub (Profit → Reports) to download business data as spreadsheets for offline/BI analysis." },
+    { "ref": "Common Controls", "title": "Shared controls", "summary": "Date-range picker, Excel/CSV format, Download button, email-when-ready, trial restriction." },
+    { "ref": "Reports 1-3", "title": "Dashboard reports", "summary": "By Day / By Month / By Product — same P&L metrics at different granularity, plus a detailed-breakdown option." },
+    { "ref": "Reports 4-10", "title": "Operational reports", "summary": "Orders, Sales by Product/Month, Advertising, Repeat Customers, Stock History, COGS, Refunds." },
+    { "ref": "How-To Guides", "title": "Task recipes", "summary": "Step-by-step recipes for common exports (annual P&L, return rates, historical stock, COGS audit, ad export, retention)." },
+    { "ref": "FAQ", "title": "Frequently asked questions", "summary": "Trial limits, ACOS vs TACOS, why single-date/no-date on some reports, file-size limits, format choice." }
+  ],
+
+  "concepts": [
+    { "id": "sellerboard-reports.location-and-purpose", "name": "Where Reports live & what they're for", "type": "definition",
+      "summary": "Reports are at Profit → Reports; they take live dashboard data offline as spreadsheets to share, feed BI tools, and analyze deeper than the browser allows.",
+      "detail": "The Reports page is the central hub for downloading business data in spreadsheet format. It complements the live dashboards: use it to take data offline, share with the team, feed external tools (Looker Studio, Power BI, custom spreadsheets), and do deeper analysis than the browser UI supports. Each report shows a name + short description; clicking it expands a configuration panel where you set parameters before downloading.",
+      "fba_application": "This is your raw-data tap for the Master Workbook — pull the same numbers sellerboard shows on screen into your own multi-account analysis.",
+      "source_ref": "Overview; How the Reports Page Works", "tags": ["navigation", "purpose"] },
+
+    { "id": "sellerboard-reports.common-controls", "name": "Common report controls", "type": "process",
+      "summary": "Most reports share a From/To date picker, Excel (.xlsx) or CSV format, a Download button, and an optional email-when-ready for slow exports.",
+      "detail": "Standard controls: (1) Date Range Picker — most reports need a From/To window shown on a two-month calendar. (2) File Format — Excel (.xlsx, default, formatted, opens in Excel/Sheets) or CSV (plain, no formatting, best for databases/BI/scripts, universally compatible). (3) Download button — triggers export; a 'Downloading' dialog shows while the file is prepared and closes when ready. (4) Email notification — for files under 16 MB you can have sellerboard email the file when ready so you can close the browser.",
+      "steps": ["Open Profit → Reports", "Click the report to expand its panel", "Set From/To date range if required", "Pick Excel or CSV", "(Dashboard reports) optionally tick detailed breakdown", "Click Download", "Wait for the dialog to close, or click 'Email me when ready'"],
+      "fba_application": "Pick CSV when importing into a database/BI tool; Excel when a human will eyeball it. Use email-when-ready for wide date ranges so a long export doesn't block you.",
+      "source_ref": "Common Controls", "tags": ["controls", "csv", "excel", "date-range"] },
+
+    { "id": "sellerboard-reports.trial-restriction", "name": "Reports require a paid subscription", "type": "rule",
+      "summary": "Report downloads are blocked on a free trial; a paid sellerboard subscription (Settings → Billing) is required to download any report.",
+      "detail": "Trial users cannot download reports. Attempting it shows a message directing you to subscribe under Settings → Billing. All report types become available immediately upon subscribing.",
+      "fba_application": "Budget for the subscription if your workflow depends on exporting data for the Master Workbook.",
+      "source_ref": "Common Controls (trial note); FAQ", "tags": ["billing", "trial"] },
+
+    { "id": "sellerboard-reports.dashboard-by-day", "name": "Dashboard by Day", "type": "metric",
+      "summary": "A day-by-day P&L export — one row per calendar day with the full set of dashboard metrics.",
+      "detail": "Mirrors all metrics in the dashboard 'More' panel, one row per day in the range: Sales, Units, Refunds, Promo, Advertising cost, Shipping costs, Refund cost, Amazon fees, Cost of goods, Gross profit, Indirect expenses, Net profit, Estimated payout, Real ACOS, % Refunds, Sellable returns, Margin, ROI, Active subscriptions (SnS), Sessions, Unit session percentage. Date selection: range. Formats: Excel/CSV. Has the detailed-breakdown option.",
+      "when_to_use": "Analyzing daily trends, spotting spike/drop days, building time-series charts.",
+      "fba_application": "Detect the exact day a PPC change or stockout moved net profit; chart daily margin per account.",
+      "source_ref": "Report 1", "tags": ["p&l", "daily", "dashboard"] },
+
+    { "id": "sellerboard-reports.dashboard-by-month", "name": "Dashboard by Month", "type": "metric",
+      "summary": "Identical metrics to Dashboard by Day but aggregated one row per calendar month.",
+      "detail": "Same metric set as Dashboard by Day, aggregated monthly (one row per month). Date selection: range. Formats: Excel/CSV. Has the detailed-breakdown option.",
+      "when_to_use": "Monthly P&L reviews, board reporting, year-over-year comparisons, long-term trends.",
+      "fba_application": "Generate a clean 12-row annual P&L per account for review meetings (see the annual-pnl checklist).",
+      "source_ref": "Report 2", "tags": ["p&l", "monthly", "dashboard"] },
+
+    { "id": "sellerboard-reports.dashboard-by-product", "name": "Dashboard by Product", "type": "metric",
+      "summary": "The most granular dashboard report — one row per product per day with the full P&L metric set.",
+      "detail": "Combines daily breakdown with per-product breakdown: each row = one product on one day, with all dashboard metrics (Sales, Units, Refunds, Advertising cost, Gross profit, Net profit, Margin, ROI, etc.). Date selection: range. Formats: Excel/CSV. Has the detailed-breakdown option. Warning: produces very large files with many products × wide date ranges (one row per product per day).",
+      "when_to_use": "SKU-level profitability over time, ranking best/worst products, product-specific P&L dashboards.",
+      "fba_application": "Find which SKU dragged net profit on a bad day; build per-ASIN profit trends across accounts.",
+      "source_ref": "Report 3", "tags": ["p&l", "product", "sku", "large-file"] },
+
+    { "id": "sellerboard-reports.detailed-breakdown-caveat", "name": "Detailed-breakdown option & merge caveat", "type": "rule",
+      "summary": "Ticking 'Show detailed breakdown' splits fees/refund-cost/COGS into component columns, but those columns vary by period so files can't be reliably merged across time.",
+      "detail": "Only the three Dashboard reports offer 'Show detailed breakdown of Amazon fees, refund costs and COGS'. Enabled, each fee category is split into component columns instead of one aggregated figure. WARNING: the columns that appear depend on the fees present in that period — if Amazon introduced a new fee type in one period and not another, two exports will have different columns, making it hard/impossible to concatenate multiple files (e.g. one per month) in a spreadsheet. Use it only for one-off deep dives, not for multi-period combined reports.",
+      "fba_application": "Leave it OFF when stacking monthly exports into the Master Workbook; turn it ON only to dissect a single period's fees.",
+      "source_ref": "The 'Show Detailed Breakdown' Option; FAQ", "tags": ["fees", "cogs", "gotcha", "merge"] },
+
+    { "id": "sellerboard-reports.orders", "name": "Orders report", "type": "metric",
+      "summary": "Line-item export of every order in the range — the report for raw transaction-level data.",
+      "detail": "One row per order (or order line item): Order ID and date, product info (title, ASIN, SKU), units ordered, sales revenue, coupon codes used, marketplace, customer and fulfillment details. Date selection: range. Formats: Excel/CSV. No special option.",
+      "when_to_use": "Order reconciliation, coupon-usage review, auditing transactions, customer-behavior investigation, feeding external systems.",
+      "fba_application": "Use this (not aggregates) to find which orders used a specific promo code or to reconcile a disputed transaction.",
+      "source_ref": "Report 4", "tags": ["orders", "transactions", "coupons", "asin"] },
+
+    { "id": "sellerboard-reports.sales-by-product-month", "name": "Sales by Product/Month", "type": "metric",
+      "summary": "Cross-tab of sales by product (rows) × month (columns) to spot trends and slow-movers fast.",
+      "detail": "Product per row, month per column/grouping, showing sales volume and revenue so you can see month-by-month trend per product. Date selection: range. Formats: Excel/CSV. sellerboard frames it as analyzing the 'sales dynamic' to react in time on products needing attention.",
+      "when_to_use": "Seasonal patterns, catching declining products early, comparing products across months, sales-trend decks.",
+      "fba_application": "Sort/filter to surface SKUs with falling month-over-month sales before they become dead stock.",
+      "source_ref": "Report 5", "tags": ["sales", "trend", "seasonality", "slow-movers"] },
+
+    { "id": "sellerboard-reports.advertising-performance", "name": "Advertising Performance Report", "type": "metric",
+      "summary": "PPC analytics export covering Conversion Rate, CPC, TACOS, ROAS, and PPC ACOS over a date range.",
+      "detail": "Evaluates PPC effectiveness: Conversion Rate (clicks → purchase), CPC (avg cost per click), TACOS (ad spend ÷ total sales, organic+paid), ROAS (revenue per ad dollar), PPC ACOS (ad spend ÷ PPC-attributed sales). May also include impressions, clicks, ad spend, attributed sales, campaign-level breakdowns. Date selection: range. Formats: Excel/CSV.",
+      "when_to_use": "Deep-diving PPC, finding underperforming campaigns, benchmarking ACOS/TACOS over time, budget decisions, sharing with agencies.",
+      "fba_application": "Export per quarter to track whether TACOS is trending toward your target as organic rank improves.",
+      "source_ref": "Report 6", "tags": ["ppc", "acos", "tacos", "roas", "cpc", "advertising"] },
+
+    { "id": "sellerboard-reports.repeat-customers", "name": "Repeat Customers (by Brand)", "type": "metric",
+      "summary": "Loyalty report giving the share of orders from buyers who purchased the same brand more than once in the period.",
+      "detail": "Splits orders into first-time vs repeat per brand. A 'repeat customer' = a buyer with more than one order for the same brand within the selected period. Metrics: total orders, repeat-customer orders, repeat share/percentage. It does NOT expose personal customer identities (Amazon doesn't share PII); it tracks repeat behavior by buyer ID at an aggregate level. Date selection: range. Formats: Excel/CSV.",
+      "when_to_use": "Measuring brand loyalty/retention, assessing follow-up email campaigns, tracking repeat-rate over time.",
+      "fba_application": "Compare repeat-purchase share across quarters to judge whether your brand/listing experience is building loyalty.",
+      "source_ref": "Report 7", "tags": ["retention", "loyalty", "brand", "repeat"] },
+
+    { "id": "sellerboard-reports.stock-history", "name": "Stock History Report", "type": "metric",
+      "summary": "Inventory snapshot for a SINGLE chosen date — units in stock per product across marketplaces at that point in time.",
+      "detail": "Unique among date-based reports: uses a single date, not a range, because inventory is a point-in-time measurement. Returns product name, ASIN, SKU, marketplace, and inventory quantity on the selected date (FBA stock, local stock, or both). Date selection: single date. Formats: Excel/CSV.",
+      "when_to_use": "Reconstructing historical stock ('how many units on Black Friday?'), inventory audits, accounting periods, validating against Amazon, investigating stockouts.",
+      "fba_application": "Pull the last day of a quarter to value inventory for accounting, or confirm a stockout window that hurt sales.",
+      "source_ref": "Report 8", "tags": ["inventory", "snapshot", "single-date", "stockout"] },
+
+    { "id": "sellerboard-reports.cogs", "name": "Cost of Goods Sold (COGS) report", "type": "metric",
+      "summary": "Configuration export of the COGS values currently entered per product — the only report with NO date selector.",
+      "detail": "Reflects current COGS configuration in your account (no history, no date picker). Returns product name, ASIN, SKU, the entered cost-of-goods value, and possibly currency/marketplace. It is a configuration export, not a transaction report. To see COGS effect over time, use Dashboard by Day/Month which include COGS in the P&L.",
+      "when_to_use": "Auditing COGS inputs, verifying every product has accurate cost data, sharing with accountants, cross-referencing against POs.",
+      "fba_application": "First place to check when a product shows wrong net profit — products with $0/blank COGS skew profit across the whole platform.",
+      "source_ref": "Report 9", "tags": ["cogs", "no-date", "audit", "accuracy"] },
+
+    { "id": "sellerboard-reports.refunds", "name": "Refunds report", "type": "metric",
+      "summary": "Refunded orders summarized per product, to find high-return SKUs and quantify return cost.",
+      "detail": "Per product: number of refunded orders and refund amounts, grouped by product so high-return items stand out. Date selection: range. Formats: Excel/CSV. Distinct from the 'Money Back' sidebar tool (which finds Amazon reimbursement opportunities for lost/damaged inventory and fee errors).",
+      "when_to_use": "Identifying high-return products, investigating return trends (e.g. post-holiday), calculating true cost of returns, flagging quality issues to suppliers.",
+      "fba_application": "Sort by refund count/value to find the SKU whose returns are eating margin, then review listing/quality with the supplier.",
+      "source_ref": "Report 10", "tags": ["refunds", "returns", "quality", "product"] }
+  ],
+
+  "checklists": [
+    { "id": "sellerboard-reports.recipe-annual-pnl", "name": "Month-by-month P&L for the year", "when_to_use": "Annual review / board reporting.",
+      "items": ["Reports → Dashboard by month", "From = Jan 1, To = Dec 31 of the year", "Choose Excel", "Download → one row per month with all P&L metrics"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-return-rates", "name": "Find highest return-rate products", "when_to_use": "Quality / margin investigation.",
+      "items": ["Reports → Refunds", "Set range (e.g. last 3 months)", "Download Excel", "Sort by refund count or value descending", "Review top items' reviews, quality, and listing copy"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-historical-stock", "name": "Check historical inventory on a date", "when_to_use": "Accounting / stockout forensics.",
+      "items": ["Reports → Stock history report", "Pick the exact date in the single-date calendar", "Choose format and Download", "File shows units per product on that date"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-cogs-audit", "name": "Audit COGS data", "when_to_use": "Before trusting any profit number.",
+      "items": ["Reports → Cost of Goods Sold", "Choose Excel", "Download", "Confirm every product has a non-zero COGS — blanks/$0 skew all profit math"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-ad-export", "name": "Export advertising data for external analysis", "when_to_use": "Feeding a BI tool or agency.",
+      "items": ["Reports → Advertising Performance Report", "Set range to your analysis period", "CSV for BI import, Excel for manual review", "File includes Conversion Rate, CPC, TACOS, ROAS, PPC ACOS"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-retention", "name": "Measure customer retention over time", "when_to_use": "Judging brand loyalty trend.",
+      "items": ["Reports → Repeat customers (by brand)", "Run for Q1 year A, then Q1 year B", "Compare repeat-customer %", "Rising = improving loyalty; falling = product/experience issue"],
+      "source_ref": "How-To Guides" },
+    { "id": "sellerboard-reports.recipe-large-export", "name": "Download a large report without waiting", "when_to_use": "Wide date ranges / many products.",
+      "items": ["Click Download as normal", "When the Downloading dialog appears, click 'Email me when ready'", "sellerboard prepares it in the background", "File emailed to your registered address (must be < 16 MB)", "If over 16 MB, download in-browser or split the date range"],
+      "source_ref": "How-To Guides; FAQ" }
+  ],
+
+  "glossary": [
+    { "term": "ACOS (PPC ACOS)", "definition": "Advertising Cost of Sale: ad spend as a percentage of sales generated directly by ads (PPC-attributed sales only).", "source_ref": "FAQ" },
+    { "term": "TACOS", "definition": "Total Advertising Cost of Sale: ad spend divided by total sales (organic + ad-attributed) — a holistic view of ad efficiency vs. the whole business.", "source_ref": "FAQ" },
+    { "term": "ROAS", "definition": "Return on Ad Spend: revenue generated per dollar spent on ads.", "source_ref": "Report 6" },
+    { "term": "CPC", "definition": "Cost Per Click: average cost for each ad click.", "source_ref": "Report 6" },
+    { "term": "Real ACOS", "definition": "Total advertising spend divided by total sales (including organic).", "source_ref": "Report 1" },
+    { "term": "Sellable returns", "definition": "Percentage of returned items re-entered into sellable inventory.", "source_ref": "Report 1" },
+    { "term": "Unit session percentage", "definition": "Conversion rate — units ordered per customer session.", "source_ref": "Report 1" },
+    { "term": "Money Back (vs Refunds report)", "definition": "A separate sidebar tool that finds reimbursement opportunities (lost/damaged inventory, incorrect fees) — distinct from the Refunds report, which exports refunded orders by product for analysis.", "source_ref": "FAQ" }
+  ],
+
+  "quotes": [],
+
+  "open_questions": [
+    "Exact column lists per report are not enumerated in the source for Orders/Sales-by-Product/Advertising beyond the named fields — confirm against an actual export before building rigid importers.",
+    "The 16 MB email limit and single-date vs range behavior are current-version facts; re-verify if sellerboard changes the Reports UI."
+  ]
+}

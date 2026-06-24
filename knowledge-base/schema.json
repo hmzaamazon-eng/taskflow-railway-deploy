@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "taskflow/knowledge-base/book.schema.json",
+  "title": "TaskFlow Knowledge Base - Book Extract",
+  "description": "One JSON file per canonical book/document. Atomic, retrieval-friendly knowledge. Every card is small and self-contained so it can be fetched alone without loading the whole book.",
+  "type": "object",
+  "required": ["schema_version", "book", "concepts"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+
+    "book": {
+      "type": "object",
+      "required": ["id", "title", "authors", "category", "domain_relevance", "source_files", "one_line", "thesis", "tags"],
+      "additionalProperties": false,
+      "properties": {
+        "id":            { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "canonical kebab-case id from registry.json (e.g. 'profit-first')" },
+        "title":         { "type": "string" },
+        "subtitle":      { "type": "string" },
+        "authors":       { "type": "array", "items": { "type": "string" } },
+        "year":          { "type": "integer" },
+        "category":      { "type": "string", "description": "top-level category from registry.json taxonomy" },
+        "subcategory":   { "type": "string" },
+        "domain_relevance": { "type": "string", "enum": ["high", "medium", "low"], "description": "relevance to Amazon FBA operations" },
+        "source_files":  { "type": "array", "items": { "type": "string" }, "description": "original filename(s) this extract was built from (dedupes multiple copies)" },
+        "one_line":      { "type": "string", "maxLength": 160, "description": "single-sentence essence; shown in the compact index" },
+        "thesis":        { "type": "string", "description": "2-4 sentence core argument of the book" },
+        "tags":          { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "outline": {
+      "type": "array",
+      "description": "chapter-by-chapter map so nothing is skipped",
+      "items": {
+        "type": "object",
+        "required": ["ref", "title", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "ref":     { "type": "string", "description": "e.g. 'Ch. 3' or 'Part II'" },
+          "title":   { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+
+    "concepts": {
+      "type": "array",
+      "description": "the heart of the extract: one atomic idea per card",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "summary", "detail", "source_ref"],
+        "additionalProperties": false,
+        "properties": {
+          "id":           { "type": "string", "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+$", "description": "stable id: '<book.id>.<concept-slug>'" },
+          "name":         { "type": "string" },
+          "type":         { "type": "string", "enum": ["framework", "principle", "tactic", "rule", "definition", "process", "metric", "story", "stat", "model"] },
+          "summary":      { "type": "string", "maxLength": 240, "description": "ONE sentence; this is what loads in search results / the index" },
+          "detail":       { "type": "string", "description": "full explanation, enough to act on without the book" },
+          "when_to_use":  { "type": "string" },
+          "steps":        { "type": "array", "items": { "type": "string" }, "description": "ordered actions if this is a process/framework" },
+          "examples":     { "type": "array", "items": { "type": "string" } },
+          "fba_application": { "type": "string", "description": "concrete way this applies to running an Amazon FBA business" },
+          "source_ref":   { "type": "string", "description": "where in the book (chapter/page/section)" },
+          "tags":         { "type": "array", "items": { "type": "string" } },
+          "related":      { "type": "array", "items": { "type": "string" }, "description": "ids of related cards (any book) for cross-linking" }
+        }
+      }
+    },
+
+    "checklists": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "items"],
+        "additionalProperties": false,
+        "properties": {
+          "id":         { "type": "string", "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+$" },
+          "name":       { "type": "string" },
+          "when_to_use":{ "type": "string" },
+          "items":      { "type": "array", "items": { "type": "string" } },
+          "source_ref": { "type": "string" }
+        }
+      }
+    },
+
+    "glossary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["term", "definition"],
+        "additionalProperties": false,
+        "properties": {
+          "term":       { "type": "string" },
+          "definition": { "type": "string" },
+          "source_ref": { "type": "string" }
+        }
+      }
+    },
+
+    "quotes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text"],
+        "additionalProperties": false,
+        "properties": {
+          "text": { "type": "string" },
+          "ref":  { "type": "string" }
+        }
+      }
+    },
+
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "anything the source left ambiguous or that needs verification"
+    }
+  }
+}
