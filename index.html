@@ -497,6 +497,23 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 .mb-form .full{grid-column:1/-1}
 html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[data-theme="dark"] .mb-pri-high,html[data-theme="dark"] .mb-pri-urgent,html[data-theme="dark"] .mb-st-pending,html[data-theme="dark"] .mb-st-progress,html[data-theme="dark"] .mb-st-completed,html[data-theme="dark"] .mb-over{background:var(--surface-3);color:var(--text-2)}
 @media(max-width:600px){.mb-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}}
+/* ===== Skull ===== */
+.sk-logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#272d3b,#0a0c12);display:flex;align-items:center;justify-content:center;color:#e8eaf2;box-shadow:0 8px 20px rgba(0,0,0,.32);flex:none;border:1px solid #2c3346}
+.sk-logo svg{width:27px;height:27px}
+.sk-drop{border:2px dashed var(--border-strong);border-radius:16px;padding:32px 20px;text-align:center;background:var(--surface-2);transition:.15s;cursor:pointer}
+.sk-drop:hover{border-color:var(--brand-1,#6366f1)}
+.sk-drop.over{border-color:#6366f1;background:color-mix(in srgb,#6366f1 9%,var(--surface-2))}
+.sk-drop svg{width:34px;height:34px;color:var(--text-3);margin-bottom:6px}
+.sk-drop .t{font-weight:600;font-family:var(--font-display)}
+.sk-meta{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:12.5px;color:var(--text-3);margin-top:6px}
+.sk-pri{font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 8px;letter-spacing:.03em;text-transform:uppercase}
+.sk-hi{background:#fef2f2;color:#dc2626}.sk-md{background:#fff7ed;color:#c2620c}.sk-lo{background:#eef2ff;color:#4f46e5}
+.sk-sec{font-family:var(--font-display);font-weight:600;font-size:13.5px;margin:16px 0 8px}
+.sk-ul{margin:0;padding-left:18px}.sk-ul li{margin-bottom:5px;font-size:13.5px;line-height:1.5}
+.sk-spin{width:34px;height:34px;border:3px solid var(--border);border-top-color:#6366f1;border-radius:50%;animation:skspin .8s linear infinite;margin:10px auto}
+@keyframes skspin{to{transform:rotate(360deg)}}
+.sk-decision{background:var(--surface-3);border-radius:11px;padding:12px 14px;font-size:14px;font-weight:600;border-left:3px solid #6366f1}
+html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="dark"] .sk-lo{background:var(--surface-3);color:var(--text-2)}
 .op-tbl{width:100%;border-collapse:collapse;font-size:14px}
 .op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -758,6 +775,7 @@ html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[
     <div class="nav-label">Overview</div>
     <nav class="nav" id="nav">
       <button class="nav-item" data-view="masterbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/></svg>Masterbook</button>
+      <button class="nav-item" data-view="skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.3" fill="currentColor"/><circle cx="15" cy="11" r="1.3" fill="currentColor"/><path d="M10 19v2M12 19v2M14 19v2"/></svg>Skull</button>
       <button class="nav-item active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</button>
       <button class="nav-item" data-view="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12H3M16 6H3M21 18H3"/><path d="M18 9l2 2 4-4" transform="translate(-3 0)"/></svg>Tasks</button>
       <div class="nav-label">Reports</div>
@@ -1031,6 +1049,9 @@ html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[
 
       <!-- ===== MASTERBOOK ===== -->
       <section class="view" id="view-masterbook"></section>
+
+      <!-- ===== SKULL ===== -->
+      <section class="view" id="view-skull"></section>
 
       <!-- ===== CALCULATOR ===== -->
       <section class="view" id="view-calculator">
@@ -3151,6 +3172,247 @@ function mbExportData(){ try{ downloadBlob(new Blob([JSON.stringify({app:"Master
 function mbImportPick(){ let i=document.getElementById("mbImportInput"); if(!i){ i=document.createElement("input"); i.type="file"; i.id="mbImportInput"; i.accept=".json,application/json"; i.style.display="none"; document.body.appendChild(i); } i.value=""; i.onchange=async()=>{ if(!i.files||!i.files[0])return; let o; try{ o=JSON.parse(await i.files[0].text()); }catch(e){ toast("Couldn't read that file","err"); return; } const data=(o&&o.data)?o.data:o; if(!data||typeof data!=="object"){ toast("Not a Masterbook backup","err"); return; } confirmAction("Import & replace?","This replaces your current Masterbook tasks, notes, files, activity & settings with the backup. Brands/calculations are untouched.","Import",()=>{ mb={tasks:Array.isArray(data.tasks)?data.tasks:[],notes:Array.isArray(data.notes)?data.notes:[],files:Array.isArray(data.files)?data.files:[],brandMeta:data.brandMeta||{},activity:Array.isArray(data.activity)?data.activity:[],settings:Object.assign({hideBrands:false,hidden:{}},data.settings||{})}; mbSave(); renderMasterbook(); toast("Imported","ok"); }); }; i.click(); }
 function mbReset(){ confirmAction("Reset Masterbook?","Deletes all Masterbook tasks, notes, files and activity. Brands & calculations are kept. This cannot be undone.","Reset",()=>{ mb={tasks:[],notes:[],files:[],brandMeta:{},activity:[],settings:{hideBrands:mb.settings.hideBrands,hidden:mb.settings.hidden}}; mbSave(); renderMasterbook(); toast("Masterbook reset","ok"); }); }
 
+/* ===================== SKULL — per-brand file analysis & reports ===================== */
+const SKULL_DB="taskflow_skull_v1", SKULL_LS="tf_skull_reports", SKBRAND_KEY="taskflow.skull.brand";
+const SK_LOGO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="11" r="1.5" fill="currentColor" stroke="none"/><path d="M10 19v1.5M12 19v1.5M14 19v1.5"/></svg>';
+let _skDB=null,_skDBfail=false,_skLoaded=false,skAll=[];
+let skUI={brandId:null,view:"home",current:null,draft:null,busy:false,hist:{q:"",status:"all",y:"any",m:"any",d:"any"}};
+try{ skUI.brandId=localStorage.getItem(SKBRAND_KEY)||null; }catch(e){}
+
+function skOpenDB(){ return new Promise(res=>{ if(_skDB)return res(_skDB); if(_skDBfail)return res(null); let req; try{ req=indexedDB.open(SKULL_DB,1); }catch(e){ _skDBfail=true; return res(null); } req.onupgradeneeded=()=>{ const db=req.result; if(!db.objectStoreNames.contains("reports")){ const os=db.createObjectStore("reports",{keyPath:"id"}); os.createIndex("brandId","brandId",{unique:false}); } }; req.onsuccess=()=>{ _skDB=req.result; res(_skDB); }; req.onerror=()=>{ _skDBfail=true; res(null); }; }); }
+async function skAllRecords(){ const db=await skOpenDB(); if(!db){ try{return JSON.parse(localStorage.getItem(SKULL_LS))||[];}catch(e){return [];} } try{ const tx=db.transaction("reports","readonly"); return (await idbReq(tx.objectStore("reports").getAll()))||[]; }catch(e){ return []; } }
+async function skPut(rec){ const db=await skOpenDB(); if(!db){ const arr=await skAllRecords(); const i=arr.findIndex(x=>x.id===rec.id); if(i>=0)arr[i]=rec; else arr.unshift(rec); try{localStorage.setItem(SKULL_LS,JSON.stringify(arr));}catch(e){ toast("Storage full — couldn't save Skull report","err"); } return; } try{ const tx=db.transaction("reports","readwrite"); tx.objectStore("reports").put(rec); await new Promise(r=>{tx.oncomplete=()=>r();tx.onerror=()=>r();tx.onabort=()=>r();}); }catch(e){} }
+async function skDelDB(id){ const db=await skOpenDB(); if(!db){ const arr=(await skAllRecords()).filter(x=>x.id!==id); try{localStorage.setItem(SKULL_LS,JSON.stringify(arr));}catch(e){} return; } try{ const tx=db.transaction("reports","readwrite"); tx.objectStore("reports").delete(id); await new Promise(r=>{tx.oncomplete=()=>r();tx.onerror=()=>r();tx.onabort=()=>r();}); }catch(e){} }
+async function skLoad(){ if(_skLoaded)return; try{ skAll=await skAllRecords(); }catch(e){ skAll=[]; } skAll.sort((a,b)=>b.createdAt-a.createdAt); _skLoaded=true; }
+
+function skParseNum(v){ const n=parseFloat(String(v==null?"":v).replace(/[$,%\s]/g,"")); return isFinite(n)?n:NaN; }
+function skMoney(n){ if(!isFinite(n))return "—"; return (n<0?"-$":"$")+Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:2}); }
+function skFmtSize(b){ b=+b||0; return b<1024?b+" B":b<1048576?(b/1024).toFixed(1)+" KB":(b/1048576).toFixed(2)+" MB"; }
+function skFmtDate(ts){ try{ return new Date(ts).toLocaleString([], {year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } }
+
+async function skExtract(file){
+  let r={text:"",kind:"file",note:""}; try{ r=await tfExtractText(file); }catch(e){}
+  let rows=[],headers=[];
+  if(r.text && (r.kind==="spreadsheet"||r.kind==="json"||r.kind==="text"||/\.(csv|tsv|txt)$/i.test(file.name||""))){
+    const body=String(r.text).replace(/^# Sheet:.*$/gm,"").trim();
+    try{ const p=mwbParseDelimited(body); if(p.rows.length && p.headers.length>1){ headers=p.headers; rows=p.rows; } }catch(e){}
+  }
+  return {kind:r.kind,text:r.text||"",note:r.note||"",rows,headers};
+}
+function skAnalyze(ex,brand,meta){
+  const A={summary:"",extracted:[],findings:[],strong:[],weak:[],risks:[],insights:[]};
+  const bn=brand?brand.name:"this brand";
+  if(ex.rows&&ex.rows.length){
+    const rows=ex.rows,headers=ex.headers,n=rows.length;
+    A.extracted.push(`${n} data rows × ${headers.length} columns: ${headers.slice(0,8).map(h=>String(h)).join(", ")}${headers.length>8?"…":""}`);
+    const numCols=[];
+    headers.forEach(h=>{ let nums=0,sum=0,zeros=0,blanks=0,min=Infinity,max=-Infinity; rows.forEach(r=>{ const raw=r[h]; if(raw===""||raw==null){blanks++;return;} const v=skParseNum(raw); if(isFinite(v)){nums++;sum+=v;if(v===0)zeros++;if(v<min)min=v;if(v>max)max=v;} }); if(nums>=Math.max(2,n*0.5))numCols.push({h,sum,avg:sum/nums,min,max,zeros,blanks,nums}); });
+    const findH=kw=>headers.find(h=>kw.some(k=>String(h).toLowerCase().includes(k)));
+    const revH=findH(["ordered product sales","product sales","sales","revenue","amount"]),unitH=findH(["units","qty","quantity"]),costH=findH(["cost","cogs","fee"]),labelH=headers.find(h=>/title|name|asin|sku|product|item/i.test(h))||headers[0];
+    const revCol=numCols.find(c=>c.h===revH),unitCol=numCols.find(c=>c.h===unitH);
+    if(revCol){ A.findings.push(`Total ${revCol.h}: ${skMoney(revCol.sum)} (avg ${skMoney(revCol.avg)}/row).`); A.strong.push(`Sales data present and non-zero (${skMoney(revCol.sum)} total).`); }
+    if(unitCol)A.findings.push(`Total ${unitCol.h}: ${Math.round(unitCol.sum).toLocaleString()} (avg ${unitCol.avg.toFixed(1)}/row).`);
+    if(revCol&&unitCol&&unitCol.sum>0)A.findings.push(`Implied average price ≈ ${skMoney(revCol.sum/unitCol.sum)}.`);
+    if(revH){ const sorted=[...rows].sort((a,b)=>skParseNum(b[revH])-skParseNum(a[revH])); const top=sorted[0],bot=sorted[sorted.length-1]; if(top)A.findings.push(`Top by ${revH}: "${String(top[labelH]).slice(0,40)}" (${skMoney(skParseNum(top[revH]))}).`); if(bot&&n>3)A.insights.push(`Weakest by ${revH}: "${String(bot[labelH]).slice(0,40)}" (${skMoney(skParseNum(bot[revH]))}) — decide keep / fix / cut.`);
+      const vals=rows.map(r=>skParseNum(r[revH])).filter(isFinite),total=vals.reduce((a,b)=>a+b,0); if(total>0){ const mx=Math.max.apply(null,vals); if(mx/total>0.5)A.risks.push(`Concentration risk: one row is ${Math.round(mx/total*100)}% of total ${revH} — over-reliant on a single item.`); } }
+    numCols.forEach(c=>{ const bp=c.blanks/n,zp=c.zeros/Math.max(1,c.nums); if(bp>0.2)A.weak.push(`"${c.h}" is ${Math.round(bp*100)}% empty — fill it for accurate analysis.`); if(zp>0.3)A.weak.push(`"${c.h}" has ${Math.round(zp*100)}% zero values — verify these aren't missing data.`); });
+    if(numCols.length)A.strong.push(`${numCols.length} numeric column(s) ready to analyze.`);
+    if(!costH)A.weak.push("No cost / COGS / fee column — profit & margin can't be computed from this file alone.");
+    else if(revH)A.insights.push("Both revenue and cost columns exist — compute per-row margin to rank winners vs. losers.");
+    A.insights.push(`Sort the ${n} rows ascending by ${revH||"the key metric"} and review the bottom 20%.`);
+    A.summary=`${meta.fileName} for ${bn}: a ${n}-row dataset across ${headers.length} columns${revCol?`, totaling ${skMoney(revCol.sum)} in ${revCol.h}`:""}. ${numCols.length} numeric metric(s) analyzed; ${A.weak.length} data-quality issue(s) found.`;
+  } else if(ex.text&&ex.text.trim().length>20){
+    const text=ex.text,words=text.split(/\s+/).filter(Boolean);
+    A.extracted.push(`${words.length.toLocaleString()} words · ${text.length.toLocaleString()} characters.`);
+    const money=(text.match(/\$\s?\d[\d,]*(\.\d+)?/g)||[]).slice(0,10),pcts=(text.match(/\d+(\.\d+)?\s?%/g)||[]).slice(0,10),dates=(text.match(/\b(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/g)||[]).slice(0,8);
+    if(money.length)A.findings.push("Money figures: "+money.join(", "));
+    if(pcts.length)A.findings.push("Percentages: "+pcts.join(", "));
+    if(dates.length)A.findings.push("Dates referenced: "+dates.join(", "));
+    const stop=new Set("the a an and or of to in for on with is are be this that your you it as at by from will can have has not but if then so we our".split(" "));
+    const freq={}; words.forEach(w=>{ w=w.toLowerCase().replace(/[^a-z0-9]/g,""); if(w.length<4||stop.has(w))return; freq[w]=(freq[w]||0)+1; });
+    const kw=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]);
+    if(kw.length){ A.findings.push("Top keywords: "+kw.join(", ")); A.extracted.push("Main themes: "+kw.slice(0,5).join(", ")); }
+    const firstSent=text.replace(/\s+/g," ").trim().split(/(?<=[.!?])\s/).slice(0,2).join(" ").slice(0,300);
+    A.summary=`${meta.fileName} for ${bn}: ${firstSent||"text document with "+words.length+" words"}`;
+    A.strong.push("Readable text content extracted successfully.");
+    if(words.length<40)A.weak.push("Very short document — limited content to analyze.");
+    if(!money.length&&!pcts.length)A.weak.push("No figures or percentages detected — hard to derive quantitative decisions.");
+    if(/(urgent|deadline|penalt|suspend|violat|infring|complaint|refund|chargeback|policy|warning)/i.test(text))A.risks.push("Contains risk / compliance language (e.g. policy, suspension, violation) — review this carefully and verify in official sources.");
+    A.insights.push("Turn the key figures into a tracked task or a Calculator entry for "+bn+".");
+  } else {
+    A.summary=`${meta.fileName} (${meta.fileType||"file"}) for ${bn}: stored, but contents couldn't be auto-read (${ex.note||"binary / unsupported for in-browser text extraction"}).`;
+    A.weak.push("Content not machine-readable here (PDF/DOC/image are not text-extracted in the browser). Analysis is based on file info only.");
+    A.insights.push("Re-upload as CSV / XLSX / TXT, or paste the key text, to get a full content analysis.");
+    A.risks.push("Decisions can't be data-driven until the content is readable.");
+  }
+  if(!A.findings.length)A.findings.push("No structured metrics detected in this file.");
+  if(!A.strong.length)A.strong.push("File captured and saved under "+bn+".");
+  return A;
+}
+function skRecommend(A,ex,brand){
+  const R={high:[],medium:[],low:[],finalDecision:"",nextActions:[]};
+  A.risks.forEach(r=>R.high.push(r));
+  A.weak.forEach(w=>R.medium.push(w));
+  A.insights.forEach(i=>R.low.push(i));
+  if(!R.high.length)R.high.push("No critical risks detected — maintain course and re-check after the next data pull.");
+  if(!R.medium.length)R.medium.push("Data looks reasonably complete — keep records consistent for trend tracking.");
+  if(!R.low.length)R.low.push("Archive this report and compare it against the next period.");
+  R.finalDecision = A.risks.length ? "Proceed with caution — resolve the high-priority items before scaling spend or inventory for "+(brand?brand.name:"this brand")+"."
+    : (ex.rows&&ex.rows.length) ? "Data is usable — act on the prioritized fixes, then scale what's working."
+    : "Make the file readable (CSV/XLSX/TXT) before making decisions from it.";
+  R.nextActions=["Saved automatically under "+(brand?brand.name:"the brand")+" (this report).","Do first: "+R.high[0],"Create a task for the top fix with a due date.","Re-upload next period's file to track the trend."];
+  return R;
+}
+
+/* ---- file picking / drag-drop ---- */
+function skPickOpen(){ if(!mbBrandById(skUI.brandId)){ toast("Select or create a brand first","warn"); return; } let i=$("#skFileInput"); if(i){ i.value=""; i.click(); } }
+function skPick(files){ if(files&&files[0])skSetDraft(files[0]); }
+function skDrop(e){ e.preventDefault(); const z=e.currentTarget; if(z)z.classList.remove("over"); if(!mbBrandById(skUI.brandId)){ toast("Select or create a brand first","warn"); return; } const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f)skSetDraft(f); }
+function skSetDraft(file){ skUI.draft={file,meta:{fileName:file.name||"file",fileType:file.type||((file.name||"").split(".").pop()||"file"),fileSize:file.size||0}}; skUI.view="home"; renderSkull(); }
+function skClearDraft(){ skUI.draft=null; renderSkull(); }
+async function skAnalyzeNow(){
+  const brand=mbBrandById(skUI.brandId); if(!brand){ toast("Select a brand first","warn"); return; }
+  if(!skUI.draft||skUI.busy)return;
+  skUI.busy=true; renderSkull();
+  try{
+    const {file,meta}=skUI.draft;
+    const ex=await skExtract(file);
+    const A=skAnalyze(ex,brand,meta);
+    const R=skRecommend(A,ex,brand);
+    const now=Date.now();
+    const rec={ id:uid(), reportId:"SK-"+now.toString(36).toUpperCase(), reportType:"Skull",
+      brandId:brand.id, brandName:brand.name, fileName:meta.fileName, fileType:meta.fileType, fileSize:meta.fileSize,
+      createdAt:now, status:(ex.rows&&ex.rows.length)?"Analyzed":(ex.text&&ex.text.trim().length>20)?"Analyzed (text)":"Stored (unreadable)",
+      rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[], extractedText:(ex.text||"").slice(0,20000),
+      analysis:A, recommendations:R, notes:"" };
+    await skPut(rec); skAll.unshift(rec);
+    skUI.busy=false; skUI.draft=null; skUI.current=rec; skUI.view="result"; renderSkull();
+    toast("Analyzed & saved under "+brand.name,"ok");
+  }catch(e){ console.error(e); skUI.busy=false; renderSkull(); toast("Couldn't analyze that file — it's not saved. Try CSV/XLSX/TXT.","err"); }
+}
+
+/* ---- brand + history helpers ---- */
+function skSelBrand(id){ skUI.brandId=id; try{ localStorage.setItem(SKBRAND_KEY,id); }catch(e){} if(typeof calcData==="object"&&calcData)calcData.selectedBrandId=id; skUI.view="home"; skUI.current=null; renderSkull(); }
+function skBrandReports(){ return skAll.filter(r=>r.brandId===skUI.brandId); }
+function skHistFiltered(){
+  const f=skUI.hist, q=f.q.trim().toLowerCase();
+  return skBrandReports().filter(r=>{
+    if(f.status!=="all"&&r.status!==f.status)return false;
+    if(q&&!(String(r.fileName)+" "+(r.analysis&&r.analysis.summary||"")).toLowerCase().includes(q))return false;
+    const d=new Date(r.createdAt);
+    if(f.y!=="any"&&d.getFullYear()!==+f.y)return false;
+    if(f.m!=="any"&&(d.getMonth()+1)!==+f.m)return false;
+    if(f.d!=="any"&&d.getDate()!==+f.d)return false;
+    return true;
+  });
+}
+
+/* ---- views ---- */
+function skBrandBar(){
+  const brands=mbBrands();
+  const opts=brands.map(b=>`<option value="${b.id}" ${b.id===skUI.brandId?"selected":""}>${esc(mbHideName(b))}</option>`).join("");
+  return `<div class="mb-card"><div class="mb-row" style="align-items:center">
+    <span class="sub">Working brand:</span>
+    <select class="select" onchange="skSelBrand(this.value)" style="min-width:180px">${opts}</select>
+    <span class="mb-badge sk-lo">Skull</span>
+    <span style="flex:1"></span>
+    <button class="btn ${skUI.view==='history'?'btn-primary':''}" onclick="skGo('history')">History (${skBrandReports().length})</button>
+    ${skUI.view!=="home"?`<button class="btn" onclick="skBack()">‹ Back</button>`:""}
+  </div></div>`;
+}
+function mbHideName(b){ /* reuse Masterbook brand privacy if on */ try{ return (mb&&mb.settings&&mb.settings.hideBrands)?("Brand "+(mbBrands().indexOf(b)+1)):b.name; }catch(e){ return b.name; } }
+function skGo(view){ skUI.view=view; skUI.current=null; renderSkull(); window.scrollTo({top:0,behavior:"smooth"}); }
+function skBack(){ if(skUI.view==="report")skUI.view="history"; else skUI.view="home"; skUI.current=null; renderSkull(); }
+function renderSkull(){
+  const host=$("#view-skull"); if(!host)return;
+  if(!_skLoaded){ host.innerHTML=`<div class="mb-card"><div class="mb-empty">Loading Skull…</div></div>`; skLoad().then(()=>{ if(state.view==="skull")renderSkull(); }); return; }
+  if(!_calcLoaded){ try{ calcLoad(); _calcLoaded=true; }catch(e){} }
+  const brands=mbBrands();
+  if(skUI.brandId&&!mbBrandById(skUI.brandId))skUI.brandId=null;
+  if(!skUI.brandId&&brands.length)skUI.brandId=(calcData&&calcData.selectedBrandId&&mbBrandById(calcData.selectedBrandId)?calcData.selectedBrandId:brands[0].id);
+  const head=`<div class="mb-head"><div class="sk-logo">${SK_LOGO}</div><div class="mb-title"><h1>Skull</h1><div class="sub">Import any file → analyze it for the selected brand → save a brand-isolated report.</div></div></div>`;
+  if(!brands.length){ host.innerHTML=head+`<div class="mb-card"><div class="mb-empty">No brands yet. Create a brand first — every Skull report is tied to a brand.</div><div class="mb-row" style="margin-top:10px"><button class="btn btn-primary" onclick="switchView('masterbook');setTimeout(()=>mbGo('brands'),30)">Go to Brands</button></div></div>`; return; }
+  const brand=mbBrandById(skUI.brandId);
+  let body;
+  if(skUI.view==="result"&&skUI.current) body=skReportHTML(skUI.current,true);
+  else if(skUI.view==="report"&&skUI.current) body=skReportHTML(skUI.current,true);
+  else if(skUI.view==="history") body=skHistoryHTML();
+  else body=skHomeHTML(brand);
+  host.innerHTML=head+skBrandBar()+body;
+}
+function skHomeHTML(brand){
+  if(skUI.busy) return `<div class="mb-card" style="text-align:center;padding:30px"><div class="sk-spin"></div><div class="sub" style="margin-top:10px">Analyzing <b>${esc(skUI.draft?skUI.draft.meta.fileName:"file")}</b> for ${esc(brand.name)}…</div></div>`;
+  const d=skUI.draft;
+  const drop=`<div class="mb-card"><div class="sk-drop" onclick="skPickOpen()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="skDrop(event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 16v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg>
+      <div class="t">Drop a file here, or click to choose</div>
+      <div class="sub">PDF · DOC/DOCX · TXT · CSV · XLS/XLSX · images · any file — analyzed for <b>${esc(brand.name)}</b></div>
+    </div><input type="file" id="skFileInput" hidden onchange="skPick(this.files)"></div>`;
+  let draftCard="";
+  if(d){ draftCard=`<div class="mb-card"><h3>Ready to analyze</h3>
+    <div class="mb-item-title">${esc(d.meta.fileName)}</div>
+    <div class="sk-meta"><span>Type: ${esc(String(d.meta.fileType))}</span><span>Size: ${skFmtSize(d.meta.fileSize)}</span><span>Status: <b style="color:var(--text-2)">Ready</b></span><span>Brand: <b style="color:var(--text-2)">${esc(brand.name)}</b></span></div>
+    <div class="mb-row" style="margin-top:12px"><button class="btn btn-primary" onclick="skAnalyzeNow()">Analyze &amp; save</button><button class="btn" onclick="skClearDraft()">Remove</button></div></div>`; }
+  const recent=skBrandReports().slice(0,3);
+  const recentCard=recent.length?`<div class="mb-card"><h3>Recent — ${esc(brand.name)} only</h3>${recent.map(skHistRow).join("")}</div>`:`<div class="mb-card"><div class="mb-empty">No Skull reports for ${esc(brand.name)} yet. Upload a file to create the first.</div></div>`;
+  return drop+draftCard+recentCard;
+}
+function skHistRow(r){
+  const sum=(r.analysis&&r.analysis.summary||"").slice(0,120);
+  return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0">
+    <div class="mb-item-title">${esc(r.fileName)}</div>
+    <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span></div>
+    ${sum?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(sum)}</div>`:""}
+  </div><div class="mb-acts"><button class="go" onclick="skOpen('${r.id}')">Open</button><button class="danger" onclick="skDelete('${r.id}')">Delete</button></div></div></div>`;
+}
+function skHistoryHTML(){
+  const brand=mbBrandById(skUI.brandId), reps=skBrandReports();
+  const years=Array.from(new Set(reps.map(r=>new Date(r.createdAt).getFullYear()))).sort((a,b)=>b-a);
+  const f=skUI.hist;
+  const yOpt=`<option value="any">Any year</option>`+years.map(y=>`<option value="${y}" ${f.y==y?"selected":""}>${y}</option>`).join("");
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const mOpt=`<option value="any">Any month</option>`+months.map((m,i)=>`<option value="${i+1}" ${f.m==(i+1)?"selected":""}>${m}</option>`).join("");
+  let dOpt=`<option value="any">Any day</option>`; for(let i=1;i<=31;i++)dOpt+=`<option value="${i}" ${f.d==i?"selected":""}>${i}</option>`;
+  const statuses=["all","Analyzed","Analyzed (text)","Stored (unreadable)"];
+  const bar=`<div class="mb-card"><h3>History — ${esc(brand.name)} <span class="sub" style="font-weight:400">(brand-isolated)</span></h3><div class="mb-row">
+    <input class="input" placeholder="Search file / summary…" style="max-width:220px" value="${esc(f.q)}" oninput="skHistSet('q',this.value)">
+    <select class="select" onchange="skHistSet('status',this.value)">${statuses.map(s=>`<option value="${s}" ${f.status===s?"selected":""}>${s==="all"?"All status":s}</option>`).join("")}</select>
+    <select class="select" onchange="skHistSet('y',this.value)">${yOpt}</select>
+    <select class="select" onchange="skHistSet('m',this.value)">${mOpt}</select>
+    <select class="select" onchange="skHistSet('d',this.value)">${dOpt}</select>
+  </div></div>`;
+  return bar+`<div id="skHistList">${skHistListHTML()}</div>`;
+}
+function skHistListHTML(){ const items=skHistFiltered(); if(!items.length)return `<div class="mb-card"><div class="mb-empty">No Skull reports match these filters for this brand.</div></div>`; return `<div class="mb-card">`+items.map(skHistRow).join("")+`</div>`; }
+function skRenderHistList(){ const el=$("#skHistList"); if(el)el.innerHTML=skHistListHTML(); }
+function skHistSet(k,v){ skUI.hist[k]=v; skRenderHistList(); }
+function skOpen(id){ const r=skAll.find(x=>x.id===id); if(!r)return; skUI.current=r; skUI.view="report"; renderSkull(); window.scrollTo({top:0,behavior:"smooth"}); }
+function skDelete(id){ const r=skAll.find(x=>x.id===id); if(!r)return; confirmAction("Delete Skull report?","Delete \""+esc(r.fileName)+"\" for "+esc(r.brandName)+"? This cannot be undone.","Delete",async()=>{ await skDelDB(id); skAll=skAll.filter(x=>x.id!==id); if(skUI.current&&skUI.current.id===id){ skUI.current=null; skUI.view="history"; } renderSkull(); toast("Report deleted","ok"); }); }
+function skSetNotes(id,v){ const r=skAll.find(x=>x.id===id); if(!r)return; r.notes=v; skPut(r); }
+function skReportHTML(r,full){
+  const A=r.analysis||{},R=r.recommendations||{};
+  const ul=(arr,cls)=>arr&&arr.length?`<ul class="sk-ul">${arr.map(x=>`<li>${cls?`<span class="sk-pri ${cls}">${cls==="sk-hi"?"High":cls==="sk-md"?"Med":"Low"}</span> `:""}${esc(x)}</li>`).join("")}</ul>`:`<div class="mb-empty">—</div>`;
+  return `<div class="mb-card">
+    <div class="mb-item-head"><div style="min-width:0"><h3 style="margin:0">${esc(r.fileName)}</h3>
+      <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>ID ${esc(r.reportId)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span></div></div></div>
+    <div class="sk-meta" style="margin-top:8px"><span>Type: ${esc(String(r.fileType))}</span><span>Size: ${skFmtSize(r.fileSize)}</span>${r.rowCount?`<span>Rows: ${r.rowCount}</span>`:""}${r.columns&&r.columns.length?`<span>Cols: ${r.columns.length}</span>`:""}<span>Brand ID: ${esc(r.brandId)}</span></div>
+    <div class="sk-sec">Summary</div><div class="sub" style="color:var(--text-2)">${esc(A.summary||"—")}</div>
+    <div class="sk-sec">Important extracted data</div>${ul(A.extracted)}
+    <div class="sk-sec">Key findings</div>${ul(A.findings)}
+    <div class="mb-grid" style="margin-top:6px"><div><div class="sk-sec">Strong points</div>${ul(A.strong)}</div><div><div class="sk-sec">Weak points</div>${ul(A.weak)}</div></div>
+    <div class="sk-sec">Possible risks</div>${ul(A.risks)}
+  </div>
+  <div class="mb-card"><h3>Recommendations</h3>
+    <div class="sk-sec">High priority</div>${ul(R.high,"sk-hi")}
+    <div class="sk-sec">Medium priority</div>${ul(R.medium,"sk-md")}
+    <div class="sk-sec">Low priority</div>${ul(R.low,"sk-lo")}
+    <div class="sk-sec">Final decision</div><div class="sk-decision">${esc(R.finalDecision||"—")}</div>
+    <div class="sk-sec">Next actions</div>${ul(R.nextActions)}
+    <div class="sk-sec">Notes / insights</div><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="2" placeholder="Add your own notes…" oninput="skSetNotes('${r.id}',this.value)">${esc(r.notes||"")}</textarea>
+  </div>
+  <div class="mb-row" style="margin-bottom:20px"><button class="btn" onclick="skBack()">‹ Back to ${skUI.view==="report"?"history":"Skull"}</button><button class="btn danger" onclick="skDelete('${r.id}')">Delete report</button></div>`;
+}
+
 function opOverview(){
   const p=overallProgress(); const dc=daysComplete();
   let next=1; for(let d=1;d<=30;d++){ if(dayStatus(d)!=="done"){ next=d; break; } if(d===30)next=30; }
@@ -4585,7 +4847,7 @@ function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes ev
 function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
 
 function renderCurrentView(){
-  const map={masterbook:renderMasterbook,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
+  const map={masterbook:renderMasterbook,skull:renderSkull,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
