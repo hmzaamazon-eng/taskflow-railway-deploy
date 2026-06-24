@@ -306,6 +306,20 @@ select.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xm
     font-size:10px;font-weight:600;padding:5px 2px;border-radius:10px;transition:.15s}
   .botnav button svg{width:21px;height:21px}
   .botnav button.active{color:var(--brand-1)}
+  .botnav{padding-bottom:env(safe-area-inset-bottom)}
+  /* More bottom-sheet (mobile) */
+  #moreSheet{position:fixed;inset:0;z-index:120;display:none}
+  #moreSheet.open{display:block}
+  #moreSheet .more-back{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+  #moreSheet .more-panel{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:20px 20px 0 0;padding:12px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.28);max-height:80vh;overflow:auto;transform:translateY(101%);transition:transform .26s var(--ease)}
+  #moreSheet.open .more-panel{transform:none}
+  .more-grab{width:42px;height:4px;border-radius:3px;background:var(--border-strong);margin:2px auto 12px}
+  .more-title{font-family:var(--font-display);font-weight:700;margin:0 0 12px;font-size:16px}
+  #moreGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  #moreGrid .more-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:15px 6px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2);color:var(--text);font-size:11.5px;font-weight:600;cursor:pointer;text-align:center;line-height:1.2}
+  #moreGrid .more-item svg{width:22px;height:22px;color:var(--brand-1);flex:none}
+  #moreGrid .more-item:active{background:var(--surface-3);transform:scale(.97)}
+  #moreGrid .more-item.active{border-color:var(--brand-1);background:color-mix(in srgb,var(--brand-1) 10%,var(--surface-2))}
   .new-task-txt{display:none}
   .stat .value{font-size:27px}
 }
@@ -1081,11 +1095,12 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
     <!-- bottom nav (mobile) -->
     <nav class="botnav" id="botnav">
       <button class="active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Home</button>
-      <button data-view="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12H3M16 6H3M21 18H3"/></svg>Tasks</button>
-      <button data-view="daily"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Daily</button>
-      <button data-view="monthly"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>Monthly</button>
-      <button data-view="analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Stats</button>
+      <button data-view="masterbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/></svg>Master</button>
+      <button data-view="skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.3" fill="currentColor"/><circle cx="15" cy="11" r="1.3" fill="currentColor"/></svg>Skull</button>
+      <button data-view="calculator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 10h.5M12 10h.5M15 10h.5M9 14h.5M12 14h.5M15 14h.5M9 18h4"/></svg>Calc</button>
+      <button id="moreBtn" type="button" onclick="openMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>More</button>
     </nav>
+    <div id="moreSheet"><div class="more-back" onclick="closeMore()"></div><div class="more-panel"><div class="more-grab"></div><div class="more-title">All sections</div><div id="moreGrid"></div></div></div>
   </div>
 </div>
 
@@ -4598,10 +4613,14 @@ function switchView(v){
   $$(".view").forEach(s=>s.classList.toggle("active",s.id==="view-"+v));
   $$("#nav .nav-item").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
   $$("#botnav button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));
-  closeSidebar();
+  closeSidebar(); closeMore();
   renderCurrentView();
   window.scrollTo({top:0,behavior:"smooth"});
 }
+/* Mobile "More" sheet — mirrors the sidebar so every section is one tap (incl. future ones) */
+function buildMoreSheet(){ const grid=$("#moreGrid"); if(!grid)return; grid.innerHTML=""; $$("#nav .nav-item").forEach(b=>{ const v=b.dataset.view; if(!v)return; const el=document.createElement("button"); el.type="button"; el.className="more-item"+(state.view===v?" active":""); el.innerHTML=b.innerHTML; el.addEventListener("click",()=>{ closeMore(); switchView(v); }); grid.appendChild(el); }); }
+function openMore(){ buildMoreSheet(); const s=$("#moreSheet"); if(s)s.classList.add("open"); }
+function closeMore(){ const s=$("#moreSheet"); if(s)s.classList.remove("open"); }
 /* ===================== AMAZON BOT ===================== */
 const BOT_ACCOUNTS=["General","ANAKZ","HMZA","BD"];
 const BOT_MODES=[["general","General Amazon Expert"],["product","Product Research Expert"],["inventory","Inventory Expert"],["ppc","PPC Expert"],["listing","Listing Expert"],["compliance","Compliance Expert"],["supplier","Supplier Expert"],["profit","Profit Expert"]];
@@ -5113,7 +5132,7 @@ function populateSelects(){
 function bind(){
   // nav
   $$("#nav .nav-item").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
-  $$("#botnav button").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
+  $$("#botnav button[data-view]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.view)));
   $$("[data-goto]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.goto)));
   // workspace
   $$("#wsSwitch .ws-btn").forEach(b=>b.addEventListener("click",()=>switchWorkspace(b.dataset.ws)));
