@@ -3176,7 +3176,7 @@ function mbReset(){ confirmAction("Reset Masterbook?","Deletes all Masterbook ta
 const SKULL_DB="taskflow_skull_v1", SKULL_LS="tf_skull_reports", SKBRAND_KEY="taskflow.skull.brand";
 const SK_LOGO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="11" r="1.5" fill="currentColor" stroke="none"/><path d="M10 19v1.5M12 19v1.5M14 19v1.5"/></svg>';
 let _skDB=null,_skDBfail=false,_skLoaded=false,skAll=[];
-let skUI={brandId:null,view:"home",current:null,draft:null,busy:false,hist:{q:"",status:"all",y:"any",m:"any",d:"any"}};
+let skUI={brandId:null,view:"home",current:null,draft:null,busy:false,hist:{q:"",status:"all",mode:"all",y:"any",m:"any",d:"any"}};
 try{ skUI.brandId=localStorage.getItem(SKBRAND_KEY)||null; }catch(e){}
 
 function skOpenDB(){ return new Promise(res=>{ if(_skDB)return res(_skDB); if(_skDBfail)return res(null); let req; try{ req=indexedDB.open(SKULL_DB,1); }catch(e){ _skDBfail=true; return res(null); } req.onupgradeneeded=()=>{ const db=req.result; if(!db.objectStoreNames.contains("reports")){ const os=db.createObjectStore("reports",{keyPath:"id"}); os.createIndex("brandId","brandId",{unique:false}); } }; req.onsuccess=()=>{ _skDB=req.result; res(_skDB); }; req.onerror=()=>{ _skDBfail=true; res(null); }; }); }
@@ -3197,30 +3197,191 @@ function skLoadPDF(){ if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib)
 function skLoadMammoth(){ if(window.mammoth)return Promise.resolve(window.mammoth); if(_skMamP)return _skMamP; _skMamP=skLoadScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js",()=>!!window.mammoth,"mammoth").then(()=>window.mammoth); return _skMamP; }
 function skLoadTesseract(){ if(window.Tesseract)return Promise.resolve(window.Tesseract); if(_skTessP)return _skTessP; _skTessP=skLoadScript("https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js",()=>!!window.Tesseract,"tesseract").then(()=>window.Tesseract); return _skTessP; }
 
-/* ---- AI analysis via the existing /api/bot proxy (falls back to rule-based) ---- */
+/* ---- TASK INTELLIGENCE LAYER: detect expert mode, build mode-specific analysis, block generic output ---- */
 function skTimeout(ms){ return new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms)); }
-async function skAITry(ex,brand,meta){
+const SK_MODE_META={
+  ppc:{label:"Amazon PPC Operator Mode",needs:["campaign","spend","sales","impressions","clicks","orders"],ai:"You are an Amazon PPC operator. From the real numbers give: (1) the exact NEGATIVE keywords/ASINs to add — list the specific wasted search terms (clicks/spend, ~0 orders); (2) what to SCALE — terms/campaigns with ACOS below target, with new daily budget and bid % changes; (3) what to PAUSE/CUT; (4) a concrete new campaign build (type, match types, starting bids in $, daily budget); (5) target ACOS vs break-even and a clear ROAS verdict."},
+  product:{label:"Amazon FBA Product Launch Mode",needs:["price","bsr","reviews","competitor","cost","search volume"],ai:"You are an FBA product-launch analyst. Give: demand read, competition level, pricing position, gross-margin estimate, differentiation angle, launch risk, PPC cost risk, first-order inventory qty, and a clear GO / NO-GO."},
+  listing:{label:"Amazon Listing Optimization Mode",needs:["title","bullet","description","keyword","sessions"],ai:"You are a listing-optimization expert. Give: a rewritten title (≤200 chars), 5 rewritten bullets, backend keywords to add, image/A+ priorities, and the single highest-impact change first."},
+  profit:{label:"Amazon Profit / Margin Mode",needs:["price","cost","fee","units"],ai:"You are a profit analyst. Compute per-unit and total: revenue, total cost, gross & net profit, margin %, ROI %, break-even price and break-even ACOS, with exact figures, then the keep / raise-price / cut decision."},
+  supplier:{label:"Supplier / Factory Evaluation Mode",needs:["price","moq","lead time","incoterm","sample","certification"],ai:"You are a sourcing manager. Give: supplier risk read, MOQ & cash risk, exact negotiation points (target price + terms), the specific questions to ask, red flags, and write the next message to send the supplier."},
+  packaging:{label:"Packaging / Product Development Mode",needs:["dimension","weight","material","carton","compliance"],ai:"You are a packaging/product-dev engineer. Give: required dimensions & materials, master-carton plan, compliance/safety risks, the missing specs to request, and exact manufacturing notes for the factory."},
+  finance:{label:"Finance / Cost Analysis Mode",needs:["revenue","cost","fee","period"],ai:"You are a finance analyst. Give the exact figures, profit/margin, cost breakdown, break-even, cash risk, and the financial decision."},
+  ops:{label:"Brand Operations Mode",needs:["process","owner","trigger","kpi","cadence"],ai:"You are a brand-operations lead. Give SOP gaps, who-owns-what, a trigger→steps→owner→KPI→review structure, and the first process to fix."},
+  tasks:{label:"Task Management Mode",needs:["task","priority","due date","owner"],ai:"You are a chief of staff. Give prioritized task order, today vs this-week, owners, and what to drop."},
+  general:{label:"General Document Analysis Mode",needs:["a clear goal"],ai:"Extract the concrete facts, figures and decisions implied by the document and give specific next actions."}
+};
+function skDetectMode(ex,meta){
+  const name=(meta.fileName||"").toLowerCase();
+  const hdr=(ex.headers||[]).map(h=>String(h).toLowerCase());
+  const text=((ex.text||"")+" "+name+" "+hdr.join(" ")).toLowerCase();
+  const hasH=kw=>hdr.some(h=>kw.some(k=>h.includes(k)));
+  const has=kw=>kw.some(k=>text.includes(k));
+  let m="general";
+  if((hasH(["acos","impressions","cpc"])&&hasH(["clicks","campaign","keyword","search term"]))||(has(["acos","tacos","sponsored","search term report","campaign"])&&has(["clicks","impressions","cpc","bid"]))) m="ppc";
+  else if(has(["moq","fob","alibaba","supplier","factory","quotation","unit price","lead time","incoterm","ddp","exw","sample"])) m="supplier";
+  else if(has(["packaging","master carton","carton","dieline","gsm","dimension","artwork","insert card","mockup","barcode placement"])) m="packaging";
+  else if(has(["bsr","best seller rank","review count","competitor","search volume","go/no-go","validate","launch"])) m="product";
+  else if(has(["title","bullet","description","a+ content","backend keyword","main image","conversion rate"])&&!hasH(["acos","spend"])) m="listing";
+  else if(hasH(["cogs","cost","price","margin","profit","fee"])&&hasH(["sales","revenue","units"])&&(ex.rows&&ex.rows.length)) m="profit";
+  else if(has(["invoice","statement","profit and loss","p&l","cash flow","expenses","payout","settlement"])) m="finance";
+  else if(has(["sop","standard operating","workflow","operations","checklist","responsibilities"])) m="ops";
+  else if(has(["to-do","todo","task list","deadline","assignee","due date","backlog","sprint"])) m="tasks";
+  return {mode:m,modeLabel:SK_MODE_META[m].label,taskType:({ppc:"PPC performance & scale decision",product:"Product opportunity / go-no-go",listing:"Listing optimization",profit:"Profitability analysis",supplier:"Supplier evaluation & negotiation",packaging:"Packaging / product spec review",finance:"Finance / cost analysis",ops:"Operations / SOP review",tasks:"Task planning",general:"Document analysis"})[m]};
+}
+function skBaseStats(ex){
+  const S={kind:ex.kind,rowCount:0,headers:ex.headers||[],rows:ex.rows||[],numericCols:[],revTotal:NaN,unitsTotal:NaN,spendTotal:NaN,adSalesTotal:NaN,topLabel:"",topShare:NaN,costPresent:false,money:[],pcts:[],dates:[],keywords:[],wordCount:0,labelH:"",revH:"",spendH:"",adSalesH:"",ordersH:""};
+  if(ex.rows&&ex.rows.length){
+    const rows=ex.rows,headers=ex.headers,n=rows.length; S.rowCount=n;
+    const findH=kw=>headers.find(h=>kw.some(k=>String(h).toLowerCase().includes(k)));
+    headers.forEach(h=>{ let nums=0,sum=0,zeros=0,blanks=0; rows.forEach(r=>{const raw=r[h]; if(raw===""||raw==null){blanks++;return;} const v=skParseNum(raw); if(isFinite(v)){nums++;sum+=v;if(v===0)zeros++;}}); if(nums>=Math.max(2,n*0.5))S.numericCols.push({h,sum,avg:sum/nums,zeros,blanks,nums}); });
+    S.revH=findH(["ordered product sales","product sales","sales","revenue","amount"]); S.spendH=findH(["spend","ad spend"]); S.adSalesH=findH(["ad sales","7 day total sales","attributed sales","sales 7"]); S.ordersH=findH(["orders","7 day total orders","conversions"]); const unitH=findH(["units","qty","quantity"]); const costH=findH(["cogs","cost","fee"]); S.labelH=headers.find(h=>/title|name|asin|sku|product|item|campaign|search term|keyword/i.test(h))||headers[0];
+    const col=h=>S.numericCols.find(c=>c.h===h);
+    if(S.revH&&col(S.revH)){ S.revTotal=col(S.revH).sum; const sorted=[...rows].sort((a,b)=>skParseNum(b[S.revH])-skParseNum(a[S.revH])); S.topLabel=String(sorted[0][S.labelH]).slice(0,40); if(S.revTotal>0)S.topShare=skParseNum(sorted[0][S.revH])/S.revTotal; }
+    if(unitH&&col(unitH))S.unitsTotal=col(unitH).sum;
+    if(S.spendH&&col(S.spendH))S.spendTotal=col(S.spendH).sum;
+    if(S.adSalesH&&col(S.adSalesH))S.adSalesTotal=col(S.adSalesH).sum;
+    if(costH)S.costPresent=true;
+  } else if(ex.text){ const t=ex.text,w=t.split(/\s+/).filter(Boolean); S.wordCount=w.length; S.money=(t.match(/\$\s?\d[\d,]*(\.\d+)?/g)||[]).slice(0,10); S.pcts=(t.match(/\d+(\.\d+)?\s?%/g)||[]).slice(0,10); S.dates=(t.match(/\b(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/g)||[]).slice(0,8); const stop=new Set("the a an and or of to in for on with is are be this that your you it as at by from will can have has not".split(" ")); const fr={}; w.forEach(x=>{x=x.toLowerCase().replace(/[^a-z0-9]/g,"");if(x.length<4||stop.has(x))return;fr[x]=(fr[x]||0)+1;}); S.keywords=Object.entries(fr).sort((a,b)=>b[1]-a[1]).slice(0,8).map(x=>x[0]); }
+  return S;
+}
+function skUnderstanding(det,ex,brand,meta){
+  const what=ex.rows&&ex.rows.length?`a ${ex.rows.length}-row spreadsheet (${(ex.headers||[]).length} columns)`:(ex.text&&ex.text.length>20?`a ${String(ex.kind).toUpperCase()} document (~${ex.text.split(/\s+/).length} words)`:`a ${meta.fileType||"file"} (no readable text yet)`);
+  const about={ppc:"your Amazon advertising performance and where to cut vs. scale spend",product:"whether this product is worth launching",listing:"how to make the listing convert better",profit:"the true profitability and the pricing/margin decision",supplier:"whether to trust this supplier and how to negotiate",packaging:"the packaging/product specs and what's missing for production",finance:"the financial position and the money decision",ops:"how to tighten the brand's operations/SOPs",tasks:"what to prioritize and execute next",general:"the key facts and decisions in this document"}[det.mode];
+  const dec={ppc:"which campaigns/keywords to scale, cut, or rebuild",product:"a GO / NO-GO on the product",listing:"the highest-impact listing changes",profit:"whether the unit economics work and what price to set",supplier:"whether to proceed with this supplier and at what terms",packaging:"whether the spec is production-ready and what to request",finance:"the financial action to take",ops:"the first process to fix",tasks:"the execution order",general:"the next concrete action"}[det.mode];
+  return {uploaded:`You uploaded ${what}: "${meta.fileName}", for brand ${brand.name}.`,about:`This task is really about ${about}.`,decision:`This report should help you decide ${dec}.`};
+}
+function skMissingData(det,S){
+  const meta=SK_MODE_META[det.mode]||SK_MODE_META.general, miss=[];
+  if(S.rowCount){ meta.needs.forEach(need=>{ const found=(S.headers||[]).some(h=>String(h).toLowerCase().includes(need)); if(!found)miss.push("a “"+need+"” column"); }); }
+  else if((det.mode==="profit"||det.mode==="finance")&&!S.money.length) miss.push("explicit figures (none detected in the text)");
+  return miss.slice(0,6);
+}
+function skModeRecs(det,S,brand){
+  const bn=brand.name, high=[],medium=[],low=[],nextActions=[],findings=[]; let finalDecision="",decision="";
+  if(det.mode==="ppc"){
+    const acos=(isFinite(S.spendTotal)&&isFinite(S.adSalesTotal)&&S.adSalesTotal>0)?S.spendTotal/S.adSalesTotal*100:NaN;
+    if(isFinite(acos))findings.push(`Account ACOS ≈ ${acos.toFixed(1)}% (spend ${skMoney(S.spendTotal)} ÷ ad sales ${skMoney(S.adSalesTotal)}).`);
+    if(S.rows.length&&S.spendH&&S.ordersH){
+      const wasted=S.rows.filter(r=>skParseNum(r[S.spendH])>0&&skParseNum(r[S.ordersH])===0).sort((a,b)=>skParseNum(b[S.spendH])-skParseNum(a[S.spendH])).slice(0,6);
+      if(wasted.length)high.push("Add as NEGATIVE exact/phrase today (spend, 0 orders): "+wasted.map(r=>`“${String(r[S.labelH]).slice(0,28)}” (${skMoney(skParseNum(r[S.spendH]))})`).join("; ")+".");
+      if(S.adSalesH){ const win=S.rows.filter(r=>{const sl=skParseNum(r[S.adSalesH]),sp=skParseNum(r[S.spendH]);return skParseNum(r[S.ordersH])>0&&isFinite(sl)&&sl>0&&sp/sl<0.25;}).sort((a,b)=>skParseNum(b[S.adSalesH])-skParseNum(a[S.adSalesH])).slice(0,5); if(win.length)high.push("SCALE (ACOS <25%): "+win.map(r=>`“${String(r[S.labelH]).slice(0,28)}”`).join(", ")+" — raise bids +15% and daily budget +20%."); }
+    }
+    if(!high.length)high.push("Add a spend column and an orders column to the export so wasted-spend terms and winners can be isolated by name.");
+    medium.push("Pull each converting search term into its own exact-match campaign; start bids at 0.75× current CPC, daily budget "+(isFinite(S.spendTotal)?skMoney(Math.max(10,S.spendTotal/30*1.2)):"$20")+".");
+    low.push("Re-pull this report in 7 days; compare ACOS and total wasted spend against today.");
+    nextActions.push("Apply the negatives above now.","Build 1 exact-match campaign for the top converter.","Set target ACOS = your break-even ACOS; pause anything above it for 14 days.");
+    decision=isFinite(acos)?(acos>35?"Fix first":"Scale winners, cut waste"):"Wait for more data";
+    finalDecision=isFinite(acos)?(acos>35?`Do NOT scale yet — cut the wasted terms and bring ACOS (${acos.toFixed(1)}%) under your break-even first.`:`Scale the sub-25% ACOS terms and add the listed negatives now for ${bn}.`):`Re-upload a PPC report with spend, orders and ad-sales columns so ACOS can be computed for ${bn}.`;
+  } else if(det.mode==="profit"){
+    if(isFinite(S.revTotal))findings.push(`Total revenue in file: ${skMoney(S.revTotal)} across ${S.rowCount} rows.`);
+    high.push(S.costPresent?"Compute per-row margin = revenue − (COGS + Amazon fees + FBA + freight + ad cost); rank rows and flag every SKU under 20% net margin as fix-or-cut.":"Add COGS, Amazon fee, FBA fee and freight columns — without them net profit and margin cannot be computed, only revenue.");
+    if(isFinite(S.topShare)&&S.topShare>0.5)medium.push(`Reduce concentration: “${S.topLabel}” is ${Math.round(S.topShare*100)}% of revenue — protect its stock and build a second earner.`);
+    medium.push("Set each SKU's break-even ACOS = (price − landed cost − fees) ÷ price; never let PPC ACOS exceed it.");
+    low.push("Re-run after entering costs to get true net profit, margin % and ROI %.");
+    nextActions.push("Fill the cost columns.","Recompute margin per SKU.","Decide keep/raise-price/cut for sub-20% SKUs.");
+    decision=S.costPresent?"Fix first":"Re-upload missing data";
+    finalDecision=S.costPresent?`Rank ${bn}'s SKUs by net margin and cut or re-price everything under 20%.`:`Add cost columns and re-upload — ${bn}'s profit decision can't be made on revenue alone.`;
+  } else if(det.mode==="supplier"){
+    high.push("Send the supplier these now: confirmed unit price at your target MOQ, tooling/sample cost & lead time, production + shipping days, payment terms (push for 30/70), and required certifications.");
+    high.push("Get a paid sample and a recent third-party inspection report before any mass-production deposit.");
+    medium.push("Negotiate: ask for the price at 2× and 3× MOQ to find the real floor; request 60-day payment or LC to protect cash.");
+    low.push("Cross-check the supplier on a second platform and request 2 references in your category.");
+    nextActions.push("Send the questions above.","Order a sample.","Hold the deposit until the sample + inspection pass.");
+    decision="Wait for more data";
+    finalDecision=`Do not place a PO for ${bn} until unit price at MOQ, lead time, terms and a passing sample are confirmed in writing.`;
+  } else if(det.mode==="packaging"){
+    high.push("Lock and send the factory: product dimensions + weight, master-carton dimensions + units/carton, material & GSM, print method, and a print-ready dieline/artwork file.");
+    high.push("Confirm compliance marks for US Amazon: suffocation warning on poly bags, FNSKU/barcode placement, and any category safety labeling.");
+    medium.push("Request a physical pre-production sample of the packaging and drop-test it before mass production.");
+    low.push("Optimize carton cube to cut FBA dimensional weight and inbound freight per unit.");
+    nextActions.push("Send the spec sheet above.","Approve a physical sample.","Verify barcode + warnings before production.");
+    decision="Fix first";
+    finalDecision=`Don't approve ${bn}'s packaging for production until dimensions, materials, compliance marks and a physical sample are confirmed.`;
+  } else if(det.mode==="product"){
+    high.push("Decide GO/NO-GO on these gates: gross margin ≥ 30% after fees+freight, ≤ ~3 entrenched reviews-heavy competitors, a clear differentiation angle, and PPC break-even ACOS you can afford.");
+    medium.push("Estimate first order = ~60–90 days of expected sales; don't over-commit cash on an unvalidated SKU.");
+    low.push("Validate demand with a small launch (coupons + PPC) before scaling inventory.");
+    nextActions.push("Fill price, COGS, competitor count and review counts.","Compute margin & break-even ACOS.","Make the GO/NO-GO call.");
+    decision="Wait for more data";
+    finalDecision=`Hold ${bn}'s launch decision until margin, competition and differentiation are confirmed against the gates above.`;
+  } else if(det.mode==="listing"){
+    high.push("Rewrite the title: primary keyword + brand + core benefit + key attribute, ≤200 chars, no keyword stuffing.");
+    high.push("Rewrite all 5 bullets as benefit-led (problem → solution → proof); put the strongest objection-handler first.");
+    medium.push("Add missing high-volume keywords to backend search terms (≤249 bytes, no repeats, no competitor brands).");
+    low.push("Prioritize main-image clarity and an A+ comparison module before minor copy tweaks.");
+    nextActions.push("Ship the new title + bullets.","Fill backend keywords.","A/B test the main image.");
+    decision="Do this now";
+    finalDecision=`Publish the rewritten title and bullets for ${bn} now; measure conversion over the next 14 days.`;
+  } else if(det.mode==="finance"){
+    if(S.money.length)findings.push("Figures detected: "+S.money.join(", "));
+    high.push("Separate revenue, Amazon fees, COGS, ads and overhead into a clean P&L; compute net profit and net margin %.");
+    medium.push("Build a 13-week cash forecast: payouts in, PO + ad spend out — find the lowest cash week.");
+    low.push("Track net margin % monthly; investigate any month it drops >3 points.");
+    nextActions.push("Categorize every line.","Compute net margin.","Flag the tightest cash week.");
+    decision=S.money.length?"Fix first":"Re-upload missing data";
+    finalDecision=`Build ${bn}'s clean P&L and cash forecast before any new spend commitment.`;
+  } else if(det.mode==="ops"){
+    high.push("Convert this into a Trigger → Steps → Owner → KPI → Review SOP; assign one named owner per process.");
+    medium.push("Pick the process whose failure costs the most (stockouts, account health) and document it first.");
+    low.push("Schedule a weekly 30-minute review to check each SOP's KPI.");
+    nextActions.push("Name owners.","Document the highest-risk SOP.","Set the weekly review.");
+    decision="Fix first"; finalDecision=`Document ${bn}'s highest-risk process as a full SOP with an owner this week.`;
+  } else if(det.mode==="tasks"){
+    high.push("Order tasks by impact × urgency; mark the top 3 as today, the rest as this-week or drop.");
+    medium.push("Assign each kept task an owner and a due date; delete anything with no owner and no deadline.");
+    low.push("Review the list weekly and archive completed items.");
+    nextActions.push("Pick today's top 3.","Assign owners + dates.","Drop the no-owner tasks.");
+    decision="Do this now"; finalDecision=`Execute ${bn}'s top 3 tasks today; assign or drop the rest.`;
+  } else {
+    high.push("Pull the concrete facts, figures and dates from this document and turn each into a decision or a tracked task.");
+    medium.push("Identify the one question this document is meant to answer and answer it with the data present.");
+    low.push("File this report and link it to the relevant brand task.");
+    nextActions.push("Extract the key figures.","Answer the core question.","Create a follow-up task.");
+    decision="Do this now"; finalDecision=`Act on the extracted facts for ${bn}; if a decision needs numbers that aren't here, re-upload them.`;
+  }
+  return {high,medium,low,nextActions,finalDecision,decision,findings};
+}
+const SK_BANNED=[/review (the )?performance/i,/optimi[sz]e (the )?(campaign|listing)\b\.?$/i,/check (the )?data/i,/proceed with caution/i,/\bmonitor\b/i,/keep an eye/i,/review the data/i,/as needed/i,/where necessary/i,/stay on top/i];
+function skDeGeneric(rec){ const clean=a=>(a||[]).map(String).filter(x=>x.trim()&&!SK_BANNED.some(re=>re.test(x.trim()))); return {high:clean(rec.high),medium:clean(rec.medium),low:clean(rec.low),finalDecision:rec.finalDecision||"",nextActions:clean(rec.nextActions)}; }
+function skRuleReport(det,S,ex,brand,meta){
+  const base=skAnalyze(ex,brand,meta);
+  const mr=skModeRecs(det,S,brand);
+  if(mr.findings&&mr.findings.length)base.findings=mr.findings.concat(base.findings).slice(0,10);
+  return {analysis:base,recommendations:{high:mr.high,medium:mr.medium,low:mr.low,finalDecision:mr.finalDecision,nextActions:mr.nextActions},understanding:skUnderstanding(det,ex,brand,meta),missing:skMissingData(det,S),decision:mr.decision};
+}
+async function skAITry(det,S,ex,brand,meta){
   let content="";
   if(ex.rows&&ex.rows.length){ const h=ex.headers; content="TABULAR FILE. Columns: "+h.join(", ")+"\nRows (first 40):\n"+ex.rows.slice(0,40).map(r=>h.map(k=>r[k]).join(" | ")).join("\n"); }
   else content=(ex.text||"").slice(0,12000);
   if(!content.trim())return null;
-  const sys='You are Skull, an elite analyst for an Amazon FBA seller. Analyze ONLY the provided file for the specified brand. Be specific to the actual content and numbers — no generic filler, no boilerplate. Output STRICT JSON ONLY (no prose, no markdown, no code fences) with EXACTLY this shape: {"summary":string,"extracted":[string],"findings":[string],"strong":[string],"weak":[string],"risks":[string],"insights":[string],"recommendations":{"high":[string],"medium":[string],"low":[string],"finalDecision":string,"nextActions":[string]}}. Each array 2-6 concise concrete items grounded in THIS file. Recommendations must be actionable, prioritized, and specific to the brand.';
-  const user="Brand: "+brand.name+" (brandId: "+brand.id+")\nFile: "+meta.fileName+" ("+meta.fileType+")\n\nFILE CONTENT:\n"+content;
-  let d; try{ const res=await Promise.race([fetch("/api/bot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sys,messages:[{role:"user",content:user}]})}),skTimeout(40000)]); d=await res.json(); }catch(e){ return null; }
+  const md=SK_MODE_META[det.mode]||SK_MODE_META.general;
+  const sys='You are Skull, an elite Amazon FBA operator working in "'+det.modeLabel+'". '+md.ai+' Rules: be specific to THIS file and brand; use the real numbers/names from the content; NEVER use vague filler ("review performance","optimize the campaign","check the data","proceed with caution","monitor","as needed"). If a needed data point is missing, name it explicitly and STILL give the best decision from what exists. Before answering, self-check every line — if a line is generic, rewrite it as a concrete action with a number, name, or step. Output STRICT JSON ONLY (no prose, no markdown, no code fences) with EXACTLY: {"taskUnderstanding":{"uploaded":string,"about":string,"decision":string},"missing":[string],"summary":string,"extracted":[string],"findings":[string],"strong":[string],"weak":[string],"risks":[string],"insights":[string],"recommendations":{"high":[string],"medium":[string],"low":[string],"finalDecision":string,"nextActions":[string]},"decision":string}. "decision" is ONE short verdict: "Scale" | "Cut" | "Fix first" | "GO" | "NO-GO" | "Wait for more data" | "Do this now" | "Re-upload missing data".';
+  const user="Brand: "+brand.name+" (brandId: "+brand.id+")\nExpert mode: "+det.modeLabel+"\nTask type: "+det.taskType+"\nFile: "+meta.fileName+" ("+meta.fileType+")\n\nFILE CONTENT:\n"+content;
+  let d; try{ const res=await Promise.race([fetch("/api/bot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sys,messages:[{role:"user",content:user}]})}),skTimeout(45000)]); d=await res.json(); }catch(e){ return null; }
   if(!d||!d.ok||!d.reply)return null;
   let obj=null; try{ let t=String(d.reply).trim().replace(/^```(?:json)?/i,"").replace(/```$/,"").trim(); const i=t.indexOf("{"),j=t.lastIndexOf("}"); if(i>=0&&j>i)t=t.slice(i,j+1); obj=JSON.parse(t); }catch(e){ return null; }
-  if(!obj||typeof obj!=="object"||!obj.recommendations)return null;
-  const arr=x=>Array.isArray(x)?x.map(v=>String(v)).filter(Boolean):[];
-  return { engine:"ai", provider:d.provider||"AI",
+  if(!obj||!obj.recommendations)return null;
+  const arr=x=>Array.isArray(x)?x.map(v=>String(v)).filter(Boolean):[]; const tu=obj.taskUnderstanding||{};
+  return { engine:"ai", provider:d.provider||"AI", understanding:{uploaded:String(tu.uploaded||""),about:String(tu.about||""),decision:String(tu.decision||"")}, missing:arr(obj.missing), decision:String(obj.decision||""),
     analysis:{summary:String(obj.summary||""),extracted:arr(obj.extracted),findings:arr(obj.findings),strong:arr(obj.strong),weak:arr(obj.weak),risks:arr(obj.risks),insights:arr(obj.insights)},
     recommendations:{high:arr(obj.recommendations.high),medium:arr(obj.recommendations.medium),low:arr(obj.recommendations.low),finalDecision:String(obj.recommendations.finalDecision||""),nextActions:arr(obj.recommendations.nextActions)} };
 }
 async function skProduceAnalysis(ex,brand,meta){
-  const rule=skAnalyze(ex,brand,meta), ruleRec=skRecommend(rule,ex,brand);
-  let ai=null;
-  try{ const off=(typeof botAIStatus==="object"&&botAIStatus&&botAIStatus.checked&&!botAIStatus.configured); if(!off) ai=await skAITry(ex,brand,meta); }catch(e){}
-  if(ai&&ai.recommendations&&(ai.analysis.findings.length||ai.recommendations.high.length)) return {analysis:ai.analysis,recommendations:ai.recommendations,engine:"ai",provider:ai.provider};
-  return {analysis:rule,recommendations:ruleRec,engine:"local",provider:""};
+  const det=skDetectMode(ex,meta), S=skBaseStats(ex);
+  const rule=skRuleReport(det,S,ex,brand,meta);
+  let ai=null; try{ const off=(typeof botAIStatus==="object"&&botAIStatus&&botAIStatus.checked&&!botAIStatus.configured); if(!off) ai=await skAITry(det,S,ex,brand,meta); }catch(e){}
+  let out;
+  if(ai&&ai.recommendations){ out={analysis:ai.analysis,recommendations:skDeGeneric(ai.recommendations),understanding:ai.understanding,missing:ai.missing,decision:ai.decision,engine:"ai",provider:ai.provider};
+    ["high","medium","low","nextActions"].forEach(k=>{ if(!out.recommendations[k]||!out.recommendations[k].length)out.recommendations[k]=rule.recommendations[k]; });
+    if(!out.recommendations.finalDecision)out.recommendations.finalDecision=rule.recommendations.finalDecision;
+    if(!out.understanding||!out.understanding.about)out.understanding=rule.understanding;
+    if(!out.missing||!out.missing.length)out.missing=rule.missing;
+    if(!out.decision)out.decision=rule.decision;
+    if(!out.analysis||!out.analysis.summary)out.analysis=rule.analysis;
+  } else { out={analysis:rule.analysis,recommendations:skDeGeneric(rule.recommendations),understanding:rule.understanding,missing:rule.missing,decision:rule.decision,engine:"local",provider:""}; }
+  out.mode=det.mode; out.modeLabel=det.modeLabel; out.taskType=det.taskType;
+  return out;
 }
 async function skRunOCR(id){
   const r=skAll.find(x=>x.id===id); if(!r||!r.imageData){ toast("No stored image to OCR","warn"); return; }
@@ -3231,7 +3392,7 @@ async function skRunOCR(id){
     const brand=mbBrandById(r.brandId)||{name:r.brandName,id:r.brandId};
     const ex={kind:"image",text:text,note:"",rows:[],headers:[]};
     const out=await skProduceAnalysis(ex,brand,{fileName:r.fileName,fileType:r.fileType});
-    r.extractedText=text.slice(0,20000); r.analysis=out.analysis; r.recommendations=out.recommendations; r.engine=out.engine; r.provider=out.provider||""; r.extractNote=""; r.status=out.engine==="ai"?"Analyzed (AI · OCR)":"Analyzed (OCR)";
+    r.extractedText=text.slice(0,20000); r.analysis=out.analysis; r.recommendations=out.recommendations; r.engine=out.engine; r.provider=out.provider||""; r.extractNote=""; r.mode=out.mode; r.modeLabel=out.modeLabel; r.taskType=out.taskType; r.understanding=out.understanding; r.missing=out.missing; r.decision=out.decision; r.status=out.engine==="ai"?"Analyzed (AI · OCR)":"Analyzed (OCR)";
     await skPut(r); skUI.ocr=false; if(skUI.current&&skUI.current.id===id)skUI.current=r; renderSkull(); toast("OCR complete — re-analyzed","ok");
   }catch(e){ console.error(e); skUI.ocr=false; renderSkull(); toast("OCR failed on this image","err"); }
 }
@@ -3343,10 +3504,12 @@ async function skAnalyzeNow(){
     const out=await skProduceAnalysis(ex,brand,meta);
     const now=Date.now();
     const readable=(ex.rows&&ex.rows.length)||(ex.text&&ex.text.trim().length>20);
-    const rec={ id:uid(), reportId:"SK-"+now.toString(36).toUpperCase(), reportType:"Skull",
+    const rec={ id:uid(), reportId:"SK-"+now.toString(36).toUpperCase(), reportType:"Skull", section:"Skull",
       brandId:brand.id, brandName:brand.name, fileName:meta.fileName, fileType:meta.fileType, fileSize:meta.fileSize,
       createdAt:now, status: readable?(out.engine==="ai"?"Analyzed (AI)":"Analyzed"):"Stored (unreadable)",
-      engine:out.engine, provider:out.provider||"", rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[],
+      engine:out.engine, provider:out.provider||"", mode:out.mode, modeLabel:out.modeLabel, taskType:out.taskType,
+      understanding:out.understanding, missing:out.missing, decision:out.decision,
+      rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[],
       extractedText:(ex.text||"").slice(0,20000), imageData:imageData, extractNote:ex.note||"",
       analysis:out.analysis, recommendations:out.recommendations, notes:"" };
     await skPut(rec); skAll.unshift(rec);
@@ -3362,6 +3525,7 @@ function skHistFiltered(){
   const f=skUI.hist, q=f.q.trim().toLowerCase();
   return skBrandReports().filter(r=>{
     if(f.status!=="all"&&r.status!==f.status)return false;
+    if(f.mode!=="all"&&r.mode!==f.mode)return false;
     if(q&&!(String(r.fileName)+" "+(r.analysis&&r.analysis.summary||"")).toLowerCase().includes(q))return false;
     const d=new Date(r.createdAt);
     if(f.y!=="any"&&d.getFullYear()!==+f.y)return false;
@@ -3425,7 +3589,7 @@ function skHistRow(r){
   const sum=(r.analysis&&r.analysis.summary||"").slice(0,120);
   return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0">
     <div class="mb-item-title">${esc(r.fileName)}</div>
-    <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span>${r.engine==="ai"?'<span class="mb-badge sk-lo">AI</span>':""}</div>
+    <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span>${r.modeLabel?`<span class="mb-badge sk-md">${esc(r.modeLabel.replace(/ Mode$/,""))}</span>`:""}<span>🏷 ${esc(r.brandName)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span>${r.engine==="ai"?'<span class="mb-badge sk-lo">AI</span>':""}${r.decision?`<span>· ${esc(r.decision)}</span>`:""}</div>
     ${sum?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(sum)}</div>`:""}
   </div><div class="mb-acts"><button class="go" onclick="skOpen('${r.id}')">Open</button><button class="danger" onclick="skDelete('${r.id}')">Delete</button></div></div></div>`;
 }
@@ -3441,6 +3605,7 @@ function skHistoryHTML(){
   const bar=`<div class="mb-card"><h3>History — ${esc(brand.name)} <span class="sub" style="font-weight:400">(brand-isolated)</span></h3><div class="mb-row">
     <input class="input" placeholder="Search file / summary…" style="max-width:220px" value="${esc(f.q)}" oninput="skHistSet('q',this.value)">
     <select class="select" onchange="skHistSet('status',this.value)">${statuses.map(s=>`<option value="${s}" ${f.status===s?"selected":""}>${s==="all"?"All status":s}</option>`).join("")}</select>
+    <select class="select" onchange="skHistSet('mode',this.value)"><option value="all" ${f.mode==="all"?"selected":""}>All task types</option>${Array.from(new Set(reps.map(r=>r.mode).filter(Boolean))).map(mk=>`<option value="${mk}" ${f.mode===mk?"selected":""}>${esc((SK_MODE_META[mk]&&SK_MODE_META[mk].label)||mk)}</option>`).join("")}</select>
     <select class="select" onchange="skHistSet('y',this.value)">${yOpt}</select>
     <select class="select" onchange="skHistSet('m',this.value)">${mOpt}</select>
     <select class="select" onchange="skHistSet('d',this.value)">${dOpt}</select>
@@ -3459,11 +3624,15 @@ function skReportHTML(r,full){
   return `<div class="mb-card">
     <div class="mb-item-head"><div style="min-width:0"><h3 style="margin:0">${esc(r.fileName)}</h3>
       <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>ID ${esc(r.reportId)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span><span class="mb-badge ${r.engine==="ai"?"sk-lo":"mb-st-pending"}">${r.engine==="ai"?("AI"+(r.provider?" · "+esc(r.provider):"")):"Local engine"}</span></div></div></div>
-    <div class="sk-meta" style="margin-top:8px"><span>Type: ${esc(String(r.fileType))}</span><span>Size: ${skFmtSize(r.fileSize)}</span>${r.rowCount?`<span>Rows: ${r.rowCount}</span>`:""}${r.columns&&r.columns.length?`<span>Cols: ${r.columns.length}</span>`:""}<span>Brand ID: ${esc(r.brandId)}</span></div>
+    <div class="sk-meta" style="margin-top:8px"><span>Type: ${esc(String(r.fileType))}</span><span>Size: ${skFmtSize(r.fileSize)}</span>${r.rowCount?`<span>Rows: ${r.rowCount}</span>`:""}${r.columns&&r.columns.length?`<span>Cols: ${r.columns.length}</span>`:""}<span>Brand ID: ${esc(r.brandId)}</span><span>Section: Skull</span><span>Mode: <b style="color:var(--text-2)">${esc(r.modeLabel||"—")}</b></span></div>
+    <div class="sk-sec">Task understanding</div>
+    <div class="sub" style="color:var(--text-2)">${esc((r.understanding&&r.understanding.uploaded)||"")} ${esc((r.understanding&&r.understanding.about)||"")} ${esc((r.understanding&&r.understanding.decision)||"")}</div>
+    <div class="sk-meta" style="margin-top:6px"><span>Task type: <b style="color:var(--text-2)">${esc(r.taskType||"—")}</b></span>${r.decision?`<span>Verdict: <b style="color:var(--text-2)">${esc(r.decision)}</b></span>`:""}</div>
     ${skUI.ocr?`<div style="text-align:center;padding:8px"><div class="sk-spin"></div><div class="sub">Running OCR…</div></div>`:""}
     ${r.extractNote?`<div class="sub" style="color:#c2620c;margin:4px 0">⚠ ${esc(r.extractNote)}</div>`:""}
     <div class="sk-sec">Summary</div><div class="sub" style="color:var(--text-2)">${esc(A.summary||"—")}</div>
     <div class="sk-sec">Important extracted data</div>${ul(A.extracted)}
+    <div class="sk-sec">Missing data needed for a full decision</div>${(r.missing&&r.missing.length)?`<ul class="sk-ul">${r.missing.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:`<div class="sub">Nothing critical missing for this task.</div>`}
     <div class="sk-sec">Key findings</div>${ul(A.findings)}
     <div class="mb-grid" style="margin-top:6px"><div><div class="sk-sec">Strong points</div>${ul(A.strong)}</div><div><div class="sk-sec">Weak points</div>${ul(A.weak)}</div></div>
     <div class="sk-sec">Possible risks</div>${ul(A.risks)}
@@ -3472,7 +3641,7 @@ function skReportHTML(r,full){
     <div class="sk-sec">High priority</div>${ul(R.high,"sk-hi")}
     <div class="sk-sec">Medium priority</div>${ul(R.medium,"sk-md")}
     <div class="sk-sec">Low priority</div>${ul(R.low,"sk-lo")}
-    <div class="sk-sec">Final decision</div><div class="sk-decision">${esc(R.finalDecision||"—")}</div>
+    <div class="sk-sec">Final decision</div><div class="sk-decision">${r.decision?`<span class="sk-pri sk-hi" style="margin-right:8px">${esc(r.decision)}</span>`:""}${esc(R.finalDecision||"—")}</div>
     <div class="sk-sec">Next actions</div>${ul(R.nextActions)}
     <div class="sk-sec">Notes / insights</div><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="2" placeholder="Add your own notes…" oninput="skSetNotes('${r.id}',this.value)">${esc(r.notes||"")}</textarea>
   </div>
