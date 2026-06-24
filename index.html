@@ -456,6 +456,46 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
 #tfDropOverlay .tf-drop-card{pointer-events:none;background:var(--surface,#fff);border:2px dashed #4f46e5;border-radius:18px;padding:34px 46px;text-align:center;color:#4f46e5;box-shadow:0 20px 60px rgba(0,0,0,.18);max-width:90vw}
 #tfDropOverlay .tf-drop-t{font-family:var(--font-display);font-weight:700;font-size:18px;margin-top:10px;color:var(--text-1,#0f172a)}
 #tfDropOverlay .tf-drop-s{font-size:13px;color:var(--text-3,#64748b);margin-top:4px}
+/* ===== Masterbook ===== */
+.mb-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.mb-logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 22px rgba(99,102,241,.4);flex:none}
+.mb-logo svg{width:27px;height:27px}
+.mb-title h1{font-size:24px;margin:0;font-family:var(--font-display);font-weight:700}
+.mb-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--border)}
+.mb-tab{display:flex;align-items:center;gap:7px;padding:9px 13px;border:none;background:transparent;color:var(--text-2);font-size:13.5px;font-weight:600;border-radius:9px 9px 0 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.12s;white-space:nowrap}
+.mb-tab svg{width:16px;height:16px;opacity:.85}
+.mb-tab:hover{background:var(--surface-3);color:var(--text)}
+.mb-tab.active{color:var(--brand-1,#6366f1);border-bottom-color:var(--brand-1,#6366f1)}
+.mb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:13px}
+.mb-stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:15px 16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.mb-stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);font-weight:700}
+.mb-stat .v{font-size:26px;font-weight:700;font-family:var(--font-display);margin-top:4px}
+.mb-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:0 1px 2px rgba(0,0,0,.03);margin-bottom:14px}
+.mb-card h3{font-family:var(--font-display);font-size:15px;margin:0 0 12px}
+.mb-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.mb-item{border:1px solid var(--border);border-radius:11px;padding:11px 13px;margin-bottom:9px;background:var(--surface)}
+.mb-item-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.mb-item-title{font-weight:600;font-size:14px}
+.mb-item-meta{font-size:12px;color:var(--text-3);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mb-acts{display:flex;gap:6px;flex-wrap:wrap}
+.mb-acts button{background:none;border:1px solid var(--border);color:var(--text-2);font-size:12px;font-weight:600;border-radius:8px;padding:5px 10px;cursor:pointer;transition:.12s}
+.mb-acts button:hover{background:var(--surface-3);color:var(--text)}
+.mb-acts button.danger:hover{color:#dc2626;border-color:#fca5a5}
+.mb-acts button.go:hover{color:var(--brand-1,#6366f1);border-color:var(--brand-1,#6366f1)}
+.mb-badge{font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 9px;display:inline-block}
+.mb-pri-low{background:#eef2ff;color:#4f46e5}.mb-pri-medium{background:#ecfeff;color:#0891b2}.mb-pri-high{background:#fff7ed;color:#c2620c}.mb-pri-urgent{background:#fef2f2;color:#dc2626}
+.mb-st-pending{background:#f1f5f9;color:#475569}.mb-st-progress{background:#fef9c3;color:#a16207}.mb-st-completed{background:#dcfce7;color:#15803d}
+.mb-over{background:#fef2f2;color:#dc2626}
+.mb-quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.mb-quick button{display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px;cursor:pointer;transition:.14s;color:var(--text)}
+.mb-quick button:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08);border-color:var(--brand-1,#6366f1)}
+.mb-quick .qt{font-weight:700;font-family:var(--font-display)}
+.mb-quick .qs{font-size:12px;color:var(--text-3)}
+.mb-empty{color:var(--text-3);font-size:13.5px;padding:14px 2px}
+.mb-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.mb-form .full{grid-column:1/-1}
+html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[data-theme="dark"] .mb-pri-high,html[data-theme="dark"] .mb-pri-urgent,html[data-theme="dark"] .mb-st-pending,html[data-theme="dark"] .mb-st-progress,html[data-theme="dark"] .mb-st-completed,html[data-theme="dark"] .mb-over{background:var(--surface-3);color:var(--text-2)}
+@media(max-width:600px){.mb-tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}}
 .op-tbl{width:100%;border-collapse:collapse;font-size:14px}
 .op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -716,6 +756,7 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
     </div>
     <div class="nav-label">Overview</div>
     <nav class="nav" id="nav">
+      <button class="nav-item" data-view="masterbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/></svg>Masterbook</button>
       <button class="nav-item active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</button>
       <button class="nav-item" data-view="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12H3M16 6H3M21 18H3"/><path d="M18 9l2 2 4-4" transform="translate(-3 0)"/></svg>Tasks</button>
       <div class="nav-label">Reports</div>
@@ -986,6 +1027,9 @@ html[data-theme="dark"] .op-tag.m,html[data-theme="dark"] .op-tag.a,html[data-th
         </div>
         <div id="execRoot"></div>
       </section>
+
+      <!-- ===== MASTERBOOK ===== -->
+      <section class="view" id="view-masterbook"></section>
 
       <!-- ===== CALCULATOR ===== -->
       <section class="view" id="view-calculator">
@@ -2790,6 +2834,313 @@ function tfBotSnapshotShort(){
 }
 if(document.body)tfInitDropzone(); else document.addEventListener("DOMContentLoaded",tfInitDropzone);
 
+/* ===================== MASTERBOOK — organized control center ===================== */
+const MB_KEY="taskflow.masterbook.v1";
+const MB_PRIOS=["Low","Medium","High","Urgent"];
+const MB_STATUSES=["Pending","In Progress","Completed"];
+const MB_SECTIONS=[["dashboard","Dashboard"],["tasks","Tasks"],["brands","Brands"],["calculator","Calculator"],["reports","Reports"],["history","History"],["notes","Notes"],["files","Files"],["settings","Settings"]];
+const MB_LOGO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/><circle cx="18.6" cy="5.4" r="1.5" fill="currentColor" stroke="none"/></svg>';
+const MB_ICONS={dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',tasks:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',brands:'<path d="M20 13l-7 7-9-9V4h7z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor" stroke="none"/>',calculator:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 10h.5M12 10h.5M15 10h.5M9 14h.5M12 14h.5M15 14h.5M9 18h3"/>',reports:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>',history:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/>',notes:'<path d="M4 4h16v12l-5 5H4z"/><path d="M15 21v-5h5"/>',files:'<path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>',settings:'<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a7 7 0 0 0-1.7-1L14.5 2h-5l-.3 2.5a7 7 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 1.7 1l.3 2.5h5l.3-2.5a7 7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5a7 7 0 0 0 .1-1z"/>'};
+function mbTabIcon(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(MB_ICONS[k]||"")+'</svg>'; }
+let mb={tasks:[],notes:[],files:[],brandMeta:{},activity:[],settings:{hideBrands:false,hidden:{}}};
+let mbUI={tab:"dashboard",taskF:{status:"all",priority:"all",brand:"all",q:""},taskDraft:null,noteDraft:null,hist:{section:"all",q:""},calcBrandId:null,brandOpen:null,repRange:30};
+let _mbLoaded=false;
+const MB_PRI_CLASS={Low:"mb-pri-low",Medium:"mb-pri-medium",High:"mb-pri-high",Urgent:"mb-pri-urgent"};
+const MB_ST_CLASS={"Pending":"mb-st-pending","In Progress":"mb-st-progress","Completed":"mb-st-completed"};
+
+function mbLoad(){ try{ const o=JSON.parse(localStorage.getItem(MB_KEY)); if(o&&typeof o==="object"){ mb={tasks:Array.isArray(o.tasks)?o.tasks:[],notes:Array.isArray(o.notes)?o.notes:[],files:Array.isArray(o.files)?o.files:[],brandMeta:(o.brandMeta&&typeof o.brandMeta==="object")?o.brandMeta:{},activity:Array.isArray(o.activity)?o.activity:[],settings:Object.assign({hideBrands:false,hidden:{}},o.settings||{})}; } }catch(e){} }
+function mbSave(){ try{ localStorage.setItem(MB_KEY,JSON.stringify(mb)); }catch(e){ toast("Could not save Masterbook data (storage full?)","err"); } }
+function mbAct(section,action,detail,brandId){ mb.activity.unshift({id:uid(),ts:Date.now(),section,action,detail:detail||"",brandId:brandId||""}); if(mb.activity.length>500)mb.activity.length=500; mbSave(); }
+function mbLocalDate(ts){ const d=new Date(ts); const z=new Date(d.getTime()-d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); }
+function mbToday(){ return mbLocalDate(Date.now()); }
+function mbFmtTs(ts){ try{ return new Date(ts).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } }
+function mbBrands(){ if((typeof calcData!=="object"||!calcData)&&!_calcLoaded){ try{ calcLoad(); _calcLoaded=true; }catch(e){} } return (typeof calcData==="object"&&calcData&&calcData.brands)||[]; }
+function mbBrandName(b){ if(!b)return "—"; if(mb.settings.hideBrands) return "Brand "+(mbBrands().indexOf(b)+1); return b.name||"Untitled"; }
+function mbBrandById(id){ return mbBrands().find(b=>b.id===id)||null; }
+function mbBrandOptions(sel,allowNone){ let o=allowNone?`<option value="" ${!sel?"selected":""}>— none —</option>`:""; mbBrands().forEach(b=>{ o+=`<option value="${b.id}" ${b.id===sel?"selected":""}>${esc(mbBrandName(b))}</option>`; }); return o; }
+
+function renderMasterbook(){
+  if(!_mbLoaded){ mbLoad(); _mbLoaded=true; }
+  if(!_calcLoaded){ try{ calcLoad(); _calcLoaded=true; }catch(e){} }
+  const host=$("#view-masterbook"); if(!host)return;
+  const tabs=MB_SECTIONS.filter(([k])=> k==="dashboard"||k==="settings"||!mb.settings.hidden[k]);
+  if(!tabs.some(([k])=>k===mbUI.tab)) mbUI.tab="dashboard";
+  const subnav=tabs.map(([k,t])=>`<button class="mb-tab ${mbUI.tab===k?"active":""}" onclick="mbGo('${k}')">${mbTabIcon(k)}${t}</button>`).join("");
+  let body="";
+  try{ body=({dashboard:mbDashboard,tasks:mbTasksView,brands:mbBrandsView,calculator:mbCalcView,reports:mbReportsView,history:mbHistoryView,notes:mbNotesView,files:mbFilesView,settings:mbSettingsView}[mbUI.tab]||mbDashboard)(); }
+  catch(e){ console.error(e); body=`<div class="mb-card" style="color:#ef4444">Couldn't render this section — your data is safe.</div>`; }
+  host.innerHTML=`<div class="mb-head"><div class="mb-logo">${MB_LOGO}</div><div class="mb-title"><h1>Masterbook</h1><div class="sub">Your organized control center — every section does its own job.</div></div></div><div class="mb-tabs">${subnav}</div><div id="mbBody">${body}</div>`;
+}
+function mbGo(tab){ mbUI.tab=tab; mbUI.brandOpen=null; mbUI.taskDraft=null; mbUI.noteDraft=null; renderMasterbook(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+/* ---------- Dashboard ---------- */
+function mbDashboard(){
+  const t=mb.tasks, today=mbToday(), mkey=today.slice(0,7);
+  const total=t.length,done=t.filter(x=>x.status==="Completed").length,prog=t.filter(x=>x.status==="In Progress").length,pend=t.filter(x=>x.status==="Pending").length;
+  const addedToday=t.filter(x=>mbLocalDate(x.createdAt)===today).length;
+  const doneToday=t.filter(x=>x.completedAt&&mbLocalDate(x.completedAt)===today).length;
+  const monthT=t.filter(x=>mbLocalDate(x.createdAt).slice(0,7)===mkey), monthDone=monthT.filter(x=>x.status==="Completed").length;
+  const mpct=monthT.length?Math.round(monthDone/monthT.length*100):0;
+  const overdue=t.filter(x=>x.due&&x.due<today&&x.status!=="Completed");
+  const urgent=t.filter(x=>x.priority==="Urgent"&&x.status!=="Completed");
+  const stat=(k,v)=>`<div class="mb-stat"><div class="k">${k}</div><div class="v">${v}</div></div>`;
+  const alerts=[]; if(overdue.length)alerts.push(`<span class="mb-badge mb-over">${overdue.length} overdue</span>`); if(urgent.length)alerts.push(`<span class="mb-badge mb-pri-urgent">${urgent.length} urgent</span>`); if(pend>0)alerts.push(`<span class="mb-badge mb-st-pending">${pend} pending</span>`);
+  const acts=mb.activity.slice(0,6).map(a=>`<div class="mb-item-meta" style="margin:0 0 7px"><b style="color:var(--text-2)">${esc(a.section)}</b> · ${esc(a.action)}${a.detail?" — "+esc(a.detail):""} <span style="margin-left:auto">${mbFmtTs(a.ts)}</span></div>`).join("")||`<div class="mb-empty">No activity yet.</div>`;
+  const quickDefs=[["tasks","Tasks","Add & track work"],["brands","Brands","Per-brand data"],["calculator","Calculator","Run the numbers"],["reports","Reports","Daily / monthly"],["notes","Notes","Ideas & planning"],["files","Files","Docs & links"]];
+  const quick=quickDefs.filter(([k])=>!mb.settings.hidden[k]).map(([k,tt,s])=>`<button onclick="mbGo('${k}')"><span class="qt">${tt}</span><span class="qs">${s}</span></button>`).join("");
+  return `<div class="mb-grid">${stat("Total tasks",total)}${stat("Completed",done)}${stat("In progress",prog)}${stat("Pending",pend)}${stat("Added today",addedToday)}${stat("Done today",doneToday)}</div>
+  <div class="mb-card" style="margin-top:14px"><h3>Monthly progress</h3><div class="sub" style="margin-bottom:8px">${monthDone}/${monthT.length} tasks completed this month · ${mpct}%</div><div class="calc-hi" style="margin:0"><div style="height:10px;border-radius:6px;background:var(--surface-3);overflow:hidden;grid-column:1/-1"><div style="height:100%;width:${mpct}%;background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div></div></div>
+  <div class="mb-card"><h3>Important alerts</h3>${alerts.length?`<div class="mb-row">${alerts.join("")}</div>`:`<div class="mb-empty">All clear — nothing urgent or overdue.</div>`}</div>
+  <div class="mb-card"><h3>Quick access</h3><div class="mb-quick">${quick}</div></div>
+  <div class="mb-card"><h3>Recent activity</h3>${acts}</div>`;
+}
+
+/* ---------- Tasks ---------- */
+function mbTasksView(){
+  const f=mbUI.taskF;
+  const draft=mbUI.taskDraft;
+  let form="";
+  if(draft){
+    form=`<div class="mb-card"><h3>${draft.id?"Edit task":"New task"}</h3><div class="mb-form">
+      <div class="full"><label class="field-label">Title</label><input class="input" id="mbTd_title" value="${esc(draft.title||"")}" placeholder="What needs doing?"></div>
+      <div><label class="field-label">Owner</label><input class="input" id="mbTd_owner" value="${esc(draft.owner||"")}" placeholder="Who?"></div>
+      <div><label class="field-label">Priority</label><select class="select" id="mbTd_priority">${MB_PRIOS.map(p=>`<option ${draft.priority===p?"selected":""}>${p}</option>`).join("")}</select></div>
+      <div><label class="field-label">Status</label><select class="select" id="mbTd_status">${MB_STATUSES.map(s=>`<option ${draft.status===s?"selected":""}>${s}</option>`).join("")}</select></div>
+      <div><label class="field-label">Due date</label><input class="input" type="date" id="mbTd_due" value="${esc(draft.due||"")}"></div>
+      <div><label class="field-label">Brand (optional)</label><select class="select" id="mbTd_brandId">${mbBrandOptions(draft.brandId,true)}</select></div>
+      <div class="full"><label class="field-label">Notes</label><textarea class="textarea" id="mbTd_notes" rows="2" placeholder="Details…">${esc(draft.notes||"")}</textarea></div>
+    </div><div class="mb-row" style="margin-top:12px"><button class="btn btn-primary" onclick="mbTaskSaveDraft()">${draft.id?"Update task":"Add task"}</button><button class="btn" onclick="mbTaskCancel()">Cancel</button></div></div>`;
+  }
+  const bar=`<div class="mb-card"><div class="mb-row">
+    <button class="btn btn-primary" onclick="mbTaskNew()">+ Add task</button>
+    <input class="input" placeholder="Search tasks…" style="max-width:220px" value="${esc(f.q)}" oninput="mbTaskSearch(this.value)">
+    <select class="select" onchange="mbTaskFilter('status',this.value)"><option value="all">All status</option>${MB_STATUSES.map(s=>`<option ${f.status===s?"selected":""}>${s}</option>`).join("")}</select>
+    <select class="select" onchange="mbTaskFilter('priority',this.value)"><option value="all">All priority</option>${MB_PRIOS.map(p=>`<option ${f.priority===p?"selected":""}>${p}</option>`).join("")}</select>
+    <select class="select" onchange="mbTaskFilter('brand',this.value)"><option value="all">All brands</option>${mbBrands().map(b=>`<option value="${b.id}" ${f.brand===b.id?"selected":""}>${esc(mbBrandName(b))}</option>`).join("")}</select>
+  </div></div>`;
+  return form+bar+`<div id="mbTaskList">${mbTaskListHTML()}</div>`;
+}
+function mbTaskFiltered(){
+  const f=mbUI.taskF, q=f.q.trim().toLowerCase(), rank={Urgent:0,High:1,Medium:2,Low:3};
+  return mb.tasks.filter(t=>{
+    if(f.status!=="all"&&t.status!==f.status)return false;
+    if(f.priority!=="all"&&t.priority!==f.priority)return false;
+    if(f.brand!=="all"&&t.brandId!==f.brand)return false;
+    if(q&&!((t.title||"")+" "+(t.owner||"")+" "+(t.notes||"")).toLowerCase().includes(q))return false;
+    return true;
+  }).sort((a,b)=>{ const ac=a.status==="Completed"?1:0,bc=b.status==="Completed"?1:0; if(ac!==bc)return ac-bc; const ar=rank[a.priority]??2,br=rank[b.priority]??2; if(ar!==br)return ar-br; return (a.due||"~").localeCompare(b.due||"~"); });
+}
+function mbTaskListHTML(){
+  const list=mbTaskFiltered(), today=mbToday();
+  if(!list.length)return `<div class="mb-card"><div class="mb-empty">No tasks${mbUI.taskF.q||mbUI.taskF.status!=="all"?" match your filters":" yet — add your first one"}.</div></div>`;
+  return `<div class="mb-card">`+list.map(t=>{
+    const over=t.due&&t.due<today&&t.status!=="Completed";
+    const brand=t.brandId?mbBrandById(t.brandId):null;
+    return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0">
+      <div class="mb-item-title" style="${t.status==="Completed"?"text-decoration:line-through;opacity:.6":""}">${esc(t.title)}</div>
+      <div class="mb-item-meta"><span class="mb-badge ${MB_PRI_CLASS[t.priority]||""}">${esc(t.priority)}</span><span class="mb-badge ${MB_ST_CLASS[t.status]||""}">${esc(t.status)}</span>${t.owner?`<span>👤 ${esc(t.owner)}</span>`:""}${t.due?`<span class="${over?"mb-badge mb-over":""}">📅 ${esc(t.due)}${over?" overdue":""}</span>`:""}${brand?`<span>🏷 ${esc(mbBrandName(brand))}</span>`:""}</div>
+      ${t.notes?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(t.notes)}</div>`:""}
+    </div><div class="mb-acts">
+      <button class="go" onclick="mbTaskComplete('${t.id}')">${t.status==="Completed"?"Reopen":"✓ Complete"}</button>
+      <button onclick="mbTaskEdit('${t.id}')">Edit</button>
+      <button class="danger" onclick="mbTaskDelete('${t.id}')">Delete</button>
+    </div></div></div>`;
+  }).join("")+`</div>`;
+}
+function mbRenderTaskList(){ const el=$("#mbTaskList"); if(el)el.innerHTML=mbTaskListHTML(); }
+function mbTaskSearch(v){ mbUI.taskF.q=v; mbRenderTaskList(); }
+function mbTaskFilter(k,v){ mbUI.taskF[k]=v; mbRenderTaskList(); }
+function mbTaskNew(){ mbUI.taskDraft={id:null,title:"",owner:"",priority:"Medium",status:"Pending",due:"",brandId:"",notes:""}; renderMasterbook(); }
+function mbTaskEdit(id){ const t=mb.tasks.find(x=>x.id===id); if(!t)return; mbUI.taskDraft={id:t.id,title:t.title,owner:t.owner||"",priority:t.priority||"Medium",status:t.status||"Pending",due:t.due||"",brandId:t.brandId||"",notes:t.notes||""}; renderMasterbook(); window.scrollTo({top:0,behavior:"smooth"}); }
+function mbTaskCancel(){ mbUI.taskDraft=null; renderMasterbook(); }
+function mbTaskSaveDraft(){
+  const g=id=>{ const el=$("#mbTd_"+id); return el?el.value:""; };
+  const title=g("title").trim(); if(!title){ toast("Task needs a title","warn"); return; }
+  const d={title,owner:g("owner").trim(),priority:g("priority"),status:g("status"),due:g("due"),brandId:g("brandId"),notes:g("notes").trim()};
+  const editing=mbUI.taskDraft&&mbUI.taskDraft.id;
+  if(editing){ const t=mb.tasks.find(x=>x.id===editing); if(t){ const wasDone=t.status==="Completed"; Object.assign(t,d); t.updatedAt=Date.now(); if(d.status==="Completed"&&!wasDone)t.completedAt=Date.now(); if(d.status!=="Completed")t.completedAt=null; mbAct("Tasks","updated",title,d.brandId); } }
+  else { const t={id:uid(),...d,createdAt:Date.now(),updatedAt:Date.now(),completedAt:d.status==="Completed"?Date.now():null}; mb.tasks.unshift(t); mbAct("Tasks","added",title,d.brandId); }
+  mbUI.taskDraft=null; mbSave(); renderMasterbook(); toast(editing?"Task updated":"Task added","ok");
+}
+function mbTaskComplete(id){ const t=mb.tasks.find(x=>x.id===id); if(!t)return; if(t.status==="Completed"){ t.status="Pending"; t.completedAt=null; mbAct("Tasks","reopened",t.title,t.brandId); } else { t.status="Completed"; t.completedAt=Date.now(); mbAct("Tasks","completed",t.title,t.brandId); } t.updatedAt=Date.now(); mbSave(); renderMasterbook(); }
+function mbTaskDelete(id){ const t=mb.tasks.find(x=>x.id===id); if(!t)return; confirmAction("Delete task?","Delete \""+t.title+"\"? This cannot be undone.","Delete",()=>{ mb.tasks=mb.tasks.filter(x=>x.id!==id); mbAct("Tasks","deleted",t.title,t.brandId); mbSave(); renderMasterbook(); toast("Task deleted","ok"); }); }
+
+/* ---------- Brands ---------- */
+function mbBrandsView(){
+  if(mbUI.brandOpen){ const b=mbBrandById(mbUI.brandOpen); if(b)return mbBrandDetail(b); mbUI.brandOpen=null; }
+  const brands=mbBrands();
+  const bar=`<div class="mb-card"><div class="mb-row">
+    <input class="input" id="mbBrandNew" placeholder="New brand name…" style="max-width:240px" onkeydown="if(event.key==='Enter')mbBrandAdd()">
+    <button class="btn btn-primary" onclick="mbBrandAdd()">+ Add brand</button>
+    <span style="flex:1"></span>
+    <button class="btn" onclick="mbToggleHideBrands()">${mb.settings.hideBrands?"Show brand names":"Hide brand names"}</button>
+  </div>${mb.settings.hideBrands?`<div class="sub" style="margin-top:8px">Names hidden as “Brand 1, 2, 3…”. Real names are safe.</div>`:""}</div>`;
+  if(!brands.length)return bar+`<div class="mb-card"><div class="mb-empty">No brands yet — add your first brand above. Brands are shared with the Calculator.</div></div>`;
+  const cards=brands.map(b=>{
+    const tasks=mb.tasks.filter(t=>t.brandId===b.id), tdone=tasks.filter(t=>t.status==="Completed").length;
+    const calcs=(b.history||[]).length; const note=(mb.brandMeta[b.id]&&mb.brandMeta[b.id].notes)||"";
+    return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0">
+      <div class="mb-item-title">${esc(mbBrandName(b))}</div>
+      <div class="mb-item-meta"><span>📋 ${tasks.length} task(s)${tasks.length?` · ${tdone} done`:""}</span><span>🧮 ${calcs} calc(s)</span></div>
+      ${note?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(note.slice(0,120))}</div>`:""}
+    </div><div class="mb-acts"><button class="go" onclick="mbBrandOpen('${b.id}')">Open</button><button class="danger" onclick="mbBrandDelete('${b.id}')">Delete</button></div></div></div>`;
+  }).join("");
+  return bar+`<div class="mb-card"><h3>Brands (${brands.length})</h3>${cards}</div>`;
+}
+function mbBrandDetail(b){
+  const tasks=mb.tasks.filter(t=>t.brandId===b.id), tdone=tasks.filter(t=>t.status==="Completed").length;
+  const pct=tasks.length?Math.round(tdone/tasks.length*100):0;
+  const note=(mb.brandMeta[b.id]&&mb.brandMeta[b.id].notes)||"";
+  const hist=(b.history||[]).slice(0,8).map(h=>`<div class="mb-item-meta" style="margin:0 0 6px"><b style="color:var(--text-2)">${esc(h.title||"Calculation")}</b> · Net ${typeof calcMoney==="function"?calcMoney((h.results&&h.results.netProfit)||0):((h.results&&h.results.netProfit)||0)} <span style="margin-left:auto">${esc(h.dateStr||"")}</span></div>`).join("")||`<div class="mb-empty">No calculations yet — use the Calculator.</div>`;
+  const tlist=tasks.slice(0,8).map(t=>`<div class="mb-item-meta" style="margin:0 0 6px"><span class="mb-badge ${MB_ST_CLASS[t.status]||""}">${esc(t.status)}</span> ${esc(t.title)}</div>`).join("")||`<div class="mb-empty">No tasks linked to this brand.</div>`;
+  return `<div class="mb-card"><div class="mb-row"><button class="btn" onclick="mbBrandBack()">‹ All brands</button></div></div>
+  <div class="mb-head" style="margin:6px 0 14px"><div class="mb-logo" style="background:linear-gradient(135deg,#0ea5e9,#6366f1)">${esc((mbBrandName(b)[0]||"B").toUpperCase())}</div><div class="mb-title"><h1 style="font-size:21px">${esc(mbBrandName(b))}</h1><div class="sub">Brand dashboard · ${tasks.length} task(s) · ${(b.history||[]).length} calculation(s)</div></div></div>
+  <div class="mb-card"><h3>Progress</h3><div class="sub" style="margin-bottom:8px">${tdone}/${tasks.length} tasks completed · ${pct}%</div><div style="height:10px;border-radius:6px;background:var(--surface-3);overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#0ea5e9,#6366f1)"></div></div></div>
+  <div class="mb-card"><h3>Brand notes</h3><textarea class="textarea" style="width:100%;box-sizing:border-box" rows="3" placeholder="Notes for this brand…" oninput="mbBrandNote('${b.id}',this.value)">${esc(note)}</textarea></div>
+  <div class="mb-card"><h3>Linked tasks</h3>${tlist}</div>
+  <div class="mb-card"><h3>Calculation history</h3>${hist}</div>`;
+}
+function mbBrandOpen(id){ mbUI.brandOpen=id; renderMasterbook(); window.scrollTo({top:0,behavior:"smooth"}); }
+function mbBrandBack(){ mbUI.brandOpen=null; renderMasterbook(); }
+function mbBrandAdd(){ const el=$("#mbBrandNew"); const name=((el&&el.value)||"").trim(); if(!name){ toast("Enter a brand name","warn"); return; } if(!_calcLoaded){ try{calcLoad();_calcLoaded=true;}catch(e){} } if(mbBrands().some(b=>b.name.toLowerCase()===name.toLowerCase())){ toast("That brand already exists","warn"); return; } const b={id:uid(),name,history:[]}; calcData.brands.push(b); calcData.selectedBrandId=b.id; calcSave(); mbAct("Brands","added",name,b.id); renderMasterbook(); toast("Brand added","ok"); }
+function mbBrandDelete(id){ const b=mbBrandById(id); if(!b)return; confirmAction("Delete brand?","This permanently deletes \""+(b.name)+"\" and its "+((b.history||[]).length)+" calculation(s), and unlinks its tasks. This cannot be undone.","Delete brand",()=>{ calcData.brands=calcData.brands.filter(x=>x.id!==id); if(calcData.selectedBrandId===id)calcData.selectedBrandId=calcData.brands.length?calcData.brands[0].id:null; calcSave(); delete mb.brandMeta[id]; mb.tasks.forEach(t=>{ if(t.brandId===id)t.brandId=""; }); mbAct("Brands","deleted",b.name); mbUI.brandOpen=null; mbSave(); renderMasterbook(); toast("Brand deleted","ok"); }); }
+function mbBrandNote(id,v){ mb.brandMeta[id]=mb.brandMeta[id]||{}; mb.brandMeta[id].notes=v; mbSave(); }
+function mbToggleHideBrands(){ mb.settings.hideBrands=!mb.settings.hideBrands; if(typeof calcData==="object"&&calcData){ calcData.hideNames=mb.settings.hideBrands; try{calcSave();}catch(e){} } mbSave(); renderMasterbook(); }
+
+/* ---------- Calculator (reuses calcData + calc engine) ---------- */
+function mbCalcView(){
+  const brands=mbBrands();
+  if(!mbUI.calcBrandId||!mbBrandById(mbUI.calcBrandId)) mbUI.calcBrandId=(calcData&&calcData.selectedBrandId)||(brands[0]&&brands[0].id)||null;
+  const bsel=`<div class="mb-card"><div class="mb-row">
+    <div style="flex:1;min-width:180px"><label class="field-label">Brand (history saves here)</label>
+    <select class="select" style="width:100%" onchange="mbCalcSelBrand(this.value)">${brands.length?brands.map(b=>`<option value="${b.id}" ${b.id===mbUI.calcBrandId?"selected":""}>${esc(mbBrandName(b))}</option>`).join(""):`<option>— add a brand first —</option>`}</select></div>
+    <input class="input" id="mbCalcNewBrand" placeholder="New brand…" style="max-width:180px" onkeydown="if(event.key==='Enter')mbCalcAddBrand()">
+    <button class="btn" onclick="mbCalcAddBrand()">+ Brand</button>
+  </div></div>`;
+  if(typeof CALC_FIELDS==="undefined")return bsel+`<div class="mb-card"><div class="mb-empty">Calculator engine unavailable.</div></div>`;
+  const inputs=CALC_FIELDS.map(s=>`<div class="mb-card"><h3>${esc(s.g)}</h3><div class="calc-grid">${s.f.map(f=>`<div class="calc-fld"><label class="field-label">${esc(f[1])} ${f[2]?`<span class="calc-unit">${esc(f[2])}</span>`:""}</label><input class="input" type="number" step="any" inputmode="decimal" value="${esc(calcInputs[f[0]]??"")}" placeholder="0" oninput="mbCalcSetInput('${f[0]}',this.value)"></div>`).join("")}</div></div>`).join("");
+  const b=mbBrandById(mbUI.calcBrandId);
+  const hist=b&&b.history&&b.history.length?b.history.slice(0,12).map(h=>`<div class="mb-item"><div class="mb-item-head"><div style="min-width:0"><div class="mb-item-title">${esc(h.title||"Calculation")}</div><div class="mb-item-meta">${esc(h.dateStr||"")} ${esc(h.timeStr||"")} · Net ${calcMoney((h.results&&h.results.netProfit)||0)} · ROI ${calcPct((h.results&&h.results.roi)||0)}</div></div></div></div>`).join(""):`<div class="mb-empty">No saved calculations for this brand yet.</div>`;
+  return bsel+inputs+`<div class="mb-card"><h3>Results</h3><div id="mbCalcResults">${calcResultsHTML()}</div></div>
+  <div class="mb-card"><h3>Save calculation</h3><div class="mb-form"><div class="full"><label class="field-label">Title</label><input class="input" id="mbCalcTitle" placeholder="e.g. June 24 PPC check"></div><div class="full"><label class="field-label">Notes</label><textarea class="textarea" id="mbCalcNotes" rows="2" placeholder="Optional notes…"></textarea></div></div><div class="mb-row" style="margin-top:12px"><button class="btn btn-primary" onclick="mbCalcSave()">Save calculation</button><button class="btn" onclick="mbCalcClearInputs()">Clear inputs</button></div></div>
+  <div class="mb-card"><h3>This brand's history</h3><div class="mb-row" style="margin-bottom:10px"><button class="btn" onclick="mbCalcExport()">Export CSV</button><button class="btn danger" onclick="mbCalcClearHistory()">Clear history</button></div><div id="mbCalcHist">${hist}</div></div>`;
+}
+function mbCalcSelBrand(id){ mbUI.calcBrandId=id; if(typeof calcData==="object"&&calcData)calcData.selectedBrandId=id; renderMasterbook(); }
+function mbCalcAddBrand(){ const el=$("#mbCalcNewBrand"); const name=((el&&el.value)||"").trim(); if(!name){ toast("Enter a brand name","warn"); return; } if(mbBrands().some(b=>b.name.toLowerCase()===name.toLowerCase())){ toast("That brand already exists","warn"); return; } const b={id:uid(),name,history:[]}; calcData.brands.push(b); calcData.selectedBrandId=b.id; mbUI.calcBrandId=b.id; calcSave(); mbAct("Brands","added",name,b.id); renderMasterbook(); toast("Brand added","ok"); }
+function mbCalcSetInput(k,v){ calcInputs[k]=v; const el=$("#mbCalcResults"); if(el)el.innerHTML=calcResultsHTML(); }
+function mbCalcClearInputs(){ calcInputs={}; renderMasterbook(); }
+function mbCalcSave(){
+  const b=mbBrandById(mbUI.calcBrandId); if(!b){ toast("Add or select a brand first","warn"); return; }
+  const title=(($("#mbCalcTitle")&&$("#mbCalcTitle").value)||"").trim();
+  const notes=(($("#mbCalcNotes")&&$("#mbCalcNotes").value)||"").trim();
+  const inputs={}; (CALC_ALLKEYS||[]).forEach(k=>{ inputs[k]=calcInputs[k]??""; });
+  const now=new Date();
+  b.history.unshift({id:uid(),title:title||("Calculation "+now.toLocaleDateString()),notes,inputs,results:calcCompute(),createdAt:Date.now(),dateStr:now.toLocaleDateString(),timeStr:now.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})});
+  calcSave(); mbAct("Calculator","saved",title||"calculation",b.id); renderMasterbook(); toast("Calculation saved to "+mbBrandName(b),"ok");
+}
+function mbCalcClearHistory(){ const b=mbBrandById(mbUI.calcBrandId); if(!b||!(b.history||[]).length){ toast("No history to clear","warn"); return; } confirmAction("Clear history?","Delete all "+b.history.length+" saved calculation(s) for \""+b.name+"\"? This cannot be undone.","Clear",()=>{ b.history=[]; calcSave(); mbAct("Calculator","cleared history",b.name,b.id); renderMasterbook(); toast("History cleared","ok"); }); }
+function mbCalcExport(){ const b=mbBrandById(mbUI.calcBrandId); if(!b||!(b.history||[]).length){ toast("No history to export","warn"); return; } const keys=CALC_ALLKEYS||[]; const rkeys=["netProfit","totalRevenue","totalCost","profitMargin","roi","tacos"]; const head=["Title","Date","Time",...keys,...rkeys].join(","); const esc2=v=>'"'+String(v==null?"":v).replace(/"/g,'""')+'"'; const rows=b.history.map(h=>[h.title,h.dateStr,h.timeStr,...keys.map(k=>(h.inputs&&h.inputs[k])||""),...rkeys.map(k=>(h.results&&h.results[k])||"")].map(esc2).join(",")); try{ downloadBlob(new Blob([head+"\n"+rows.join("\n")],{type:"text/csv"}),"masterbook-"+(b.name.replace(/[^\w]+/g,"-").toLowerCase())+"-calcs.csv"); mbAct("Calculator","exported history",b.name,b.id); toast("Exported","ok"); }catch(e){ toast("Export failed","err"); } }
+
+/* ---------- Reports ---------- */
+function mbReportRange(days){ const since=Date.now()-days*86400000; const added=mb.tasks.filter(t=>t.createdAt>=since); const completed=mb.tasks.filter(t=>t.completedAt&&t.completedAt>=since); return {added,completed}; }
+function mbReportsView(){
+  const stat=(k,v,s)=>`<div class="mb-stat"><div class="k">${k}</div><div class="v">${v}</div>${s?`<div class="sub" style="margin-top:2px">${s}</div>`:""}</div>`;
+  const d=mbReportRange(1),w=mbReportRange(7),m=mbReportRange(30);
+  const range=mbUI.repRange, sel=mbReportRange(range);
+  const byBrand={},byOwner={}; sel.completed.forEach(t=>{ const bn=t.brandId?(mbBrandName(mbBrandById(t.brandId))||"—"):"(no brand)"; byBrand[bn]=(byBrand[bn]||0)+1; const o=t.owner||"(unassigned)"; byOwner[o]=(byOwner[o]||0)+1; });
+  const list=sel.completed.slice(0,40).map(t=>`<div class="mb-item-meta" style="margin:0 0 6px"><span class="mb-badge ${MB_PRI_CLASS[t.priority]||""}">${esc(t.priority)}</span> ${esc(t.title)} <span style="margin-left:auto">${t.completedAt?mbFmtTs(t.completedAt):""}</span></div>`).join("")||`<div class="mb-empty">Nothing completed in this range.</div>`;
+  const grp=o=>Object.keys(o).length?Object.entries(o).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="mb-badge mb-st-completed" style="margin:2px">${esc(k)}: ${v}</span>`).join(""):`<span class="mb-empty">—</span>`;
+  return `<div class="mb-grid">${stat("Today","✓ "+d.completed.length,"+"+d.added.length+" added")}${stat("This week","✓ "+w.completed.length,"+"+w.added.length+" added")}${stat("This month","✓ "+m.completed.length,"+"+m.added.length+" added")}</div>
+  <div class="mb-card" style="margin-top:14px"><div class="mb-row"><h3 style="margin:0">Completed work summary</h3><span style="flex:1"></span>
+    <select class="select" onchange="mbRepRange(this.value)"><option value="1" ${range==1?"selected":""}>Today</option><option value="7" ${range==7?"selected":""}>Last 7 days</option><option value="30" ${range==30?"selected":""}>Last 30 days</option><option value="90" ${range==90?"selected":""}>Last 90 days</option></select>
+    <button class="btn" onclick="mbReportExport()">Export</button></div>
+    <div class="mb-item-meta" style="margin-top:12px"><b style="color:var(--text-2)">By brand:</b> ${grp(byBrand)}</div>
+    <div class="mb-item-meta" style="margin-top:8px"><b style="color:var(--text-2)">By owner:</b> ${grp(byOwner)}</div>
+  </div>
+  <div class="mb-card"><h3>Completed tasks (${sel.completed.length})</h3>${list}</div>`;
+}
+function mbRepRange(v){ mbUI.repRange=parseInt(v)||30; renderMasterbook(); }
+function mbReportExport(){ const range=mbUI.repRange, sel=mbReportRange(range); let t="MASTERBOOK REPORT — last "+range+" day(s)\nGenerated "+new Date().toLocaleString()+"\n\nCompleted: "+sel.completed.length+"\nAdded: "+sel.added.length+"\n\nCOMPLETED TASKS:\n"; sel.completed.forEach(x=>{ t+="- "+x.title+" ["+x.priority+"]"+(x.owner?" — "+x.owner:"")+(x.brandId?" — "+mbBrandName(mbBrandById(x.brandId)):"")+(x.completedAt?" ("+new Date(x.completedAt).toLocaleDateString()+")":"")+"\n"; }); try{ downloadBlob(new Blob([t],{type:"text/plain"}),"masterbook-report-"+range+"d.txt"); mbAct("Reports","exported","last "+range+"d"); toast("Report exported","ok"); }catch(e){ toast("Export failed","err"); } }
+
+/* ---------- History ---------- */
+function mbHistoryView(){
+  const secs=["all","Tasks","Brands","Calculator","Reports","Notes","Files","Settings"];
+  const bar=`<div class="mb-card"><div class="mb-row">
+    <input class="input" placeholder="Search history…" style="max-width:240px" value="${esc(mbUI.hist.q)}" oninput="mbHistSearch(this.value)">
+    <select class="select" onchange="mbHistFilter(this.value)">${secs.map(s=>`<option value="${s}" ${mbUI.hist.section===s?"selected":""}>${s==="all"?"All sections":s}</option>`).join("")}</select>
+    <span style="flex:1"></span><button class="btn danger" onclick="mbHistClear()">Clear activity log</button>
+  </div></div>`;
+  return bar+`<div id="mbHistList">${mbHistListHTML()}</div>`;
+}
+function mbHistListHTML(){
+  const q=mbUI.hist.q.trim().toLowerCase(), sec=mbUI.hist.section;
+  let items=mb.activity.filter(a=>{ if(sec!=="all"&&a.section!==sec)return false; if(q&&!((a.section||"")+" "+(a.action||"")+" "+(a.detail||"")).toLowerCase().includes(q))return false; return true; });
+  if(!items.length)return `<div class="mb-card"><div class="mb-empty">No matching activity.</div></div>`;
+  return `<div class="mb-card">`+items.slice(0,200).map(a=>`<div class="mb-item-meta" style="margin:0 0 8px"><b style="color:var(--text-2);min-width:74px">${esc(a.section)}</b><span>${esc(a.action)}${a.detail?" — "+esc(a.detail):""}</span><span style="margin-left:auto">${mbFmtTs(a.ts)}</span></div>`).join("")+`</div>`;
+}
+function mbRenderHistList(){ const el=$("#mbHistList"); if(el)el.innerHTML=mbHistListHTML(); }
+function mbHistSearch(v){ mbUI.hist.q=v; mbRenderHistList(); }
+function mbHistFilter(v){ mbUI.hist.section=v; mbRenderHistList(); }
+function mbHistClear(){ if(!mb.activity.length){ toast("Nothing to clear","warn"); return; } confirmAction("Clear activity log?","Delete the entire activity history? Tasks, brands and calculations are kept.","Clear",()=>{ mb.activity=[]; mbSave(); renderMasterbook(); toast("Activity log cleared","ok"); }); }
+
+/* ---------- Notes ---------- */
+function mbNotesView(){
+  const draft=mbUI.noteDraft;
+  let form="";
+  if(draft){ form=`<div class="mb-card"><h3>${draft.id?"Edit note":"New note"}</h3><div class="mb-form">
+    <div class="full"><label class="field-label">Title</label><input class="input" id="mbNd_title" value="${esc(draft.title||"")}" placeholder="Idea / note title"></div>
+    <div><label class="field-label">Category</label><input class="input" id="mbNd_category" value="${esc(draft.category||"")}" placeholder="e.g. Strategy, PPC, Sourcing"></div>
+    <div><label class="field-label">Related brand</label><select class="select" id="mbNd_brandId">${mbBrandOptions(draft.brandId,true)}</select></div>
+    <div class="full"><label class="field-label">Note</label><textarea class="textarea" id="mbNd_body" rows="3" placeholder="Write your idea…">${esc(draft.body||"")}</textarea></div>
+  </div><div class="mb-row" style="margin-top:12px"><button class="btn btn-primary" onclick="mbNoteSaveDraft()">${draft.id?"Update note":"Add note"}</button><button class="btn" onclick="mbNoteCancel()">Cancel</button></div></div>`; }
+  const bar=`<div class="mb-card"><div class="mb-row"><button class="btn btn-primary" onclick="mbNoteNew()">+ Add note</button><input class="input" placeholder="Search notes…" style="max-width:240px" value="${esc(mbUI.noteQ||"")}" oninput="mbNoteSearch(this.value)"></div></div>`;
+  return form+bar+`<div id="mbNoteList">${mbNoteListHTML()}</div>`;
+}
+function mbNoteListHTML(){
+  const q=(mbUI.noteQ||"").trim().toLowerCase();
+  let items=mb.notes.filter(n=>!q||((n.title||"")+" "+(n.body||"")+" "+(n.category||"")).toLowerCase().includes(q));
+  if(!items.length)return `<div class="mb-card"><div class="mb-empty">No notes${q?" match your search":" yet"}.</div></div>`;
+  return `<div class="mb-card">`+items.map(n=>{ const b=n.brandId?mbBrandById(n.brandId):null; return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0"><div class="mb-item-title">${esc(n.title||"Untitled")}</div><div class="mb-item-meta">${n.category?`<span class="mb-badge mb-pri-low">${esc(n.category)}</span>`:""}${b?`<span>🏷 ${esc(mbBrandName(b))}</span>`:""}<span>${mbFmtTs(n.updatedAt||n.createdAt)}</span></div>${n.body?`<div class="mb-item-meta" style="color:var(--text-2);white-space:pre-wrap">${esc(n.body)}</div>`:""}</div><div class="mb-acts"><button onclick="mbNoteEdit('${n.id}')">Edit</button><button class="danger" onclick="mbNoteDelete('${n.id}')">Delete</button></div></div></div>`; }).join("")+`</div>`;
+}
+function mbRenderNoteList(){ const el=$("#mbNoteList"); if(el)el.innerHTML=mbNoteListHTML(); }
+function mbNoteSearch(v){ mbUI.noteQ=v; mbRenderNoteList(); }
+function mbNoteNew(){ mbUI.noteDraft={id:null,title:"",body:"",category:"",brandId:""}; renderMasterbook(); }
+function mbNoteEdit(id){ const n=mb.notes.find(x=>x.id===id); if(!n)return; mbUI.noteDraft={id:n.id,title:n.title||"",body:n.body||"",category:n.category||"",brandId:n.brandId||""}; renderMasterbook(); window.scrollTo({top:0,behavior:"smooth"}); }
+function mbNoteCancel(){ mbUI.noteDraft=null; renderMasterbook(); }
+function mbNoteSaveDraft(){ const g=id=>{ const el=$("#mbNd_"+id); return el?el.value:""; }; const title=g("title").trim(), body=g("body").trim(); if(!title&&!body){ toast("Note is empty","warn"); return; } const d={title:title||"Untitled",body,category:g("category").trim(),brandId:g("brandId")}; const editing=mbUI.noteDraft&&mbUI.noteDraft.id; if(editing){ const n=mb.notes.find(x=>x.id===editing); if(n){ Object.assign(n,d); n.updatedAt=Date.now(); mbAct("Notes","updated",d.title,d.brandId); } } else { mb.notes.unshift({id:uid(),...d,createdAt:Date.now(),updatedAt:Date.now()}); mbAct("Notes","added",d.title,d.brandId); } mbUI.noteDraft=null; mbSave(); renderMasterbook(); toast(editing?"Note updated":"Note added","ok"); }
+function mbNoteDelete(id){ const n=mb.notes.find(x=>x.id===id); if(!n)return; confirmAction("Delete note?","Delete \""+(n.title||"this note")+"\"?","Delete",()=>{ mb.notes=mb.notes.filter(x=>x.id!==id); mbAct("Notes","deleted",n.title); mbSave(); renderMasterbook(); toast("Note deleted","ok"); }); }
+
+/* ---------- Files / Links ---------- */
+function mbFilesView(){
+  const bar=`<div class="mb-card"><h3>Add a file or link</h3><div class="mb-form">
+    <div><label class="field-label">Name</label><input class="input" id="mbFl_name" placeholder="Display name"></div>
+    <div><label class="field-label">Link (optional URL)</label><input class="input" id="mbFl_link" placeholder="https://…"></div>
+    <div><label class="field-label">Category</label><input class="input" id="mbFl_category" placeholder="e.g. Supplier, Report, Design"></div>
+    <div><label class="field-label">Related brand</label><select class="select" id="mbFl_brandId">${mbBrandOptions("",true)}</select></div>
+    <div class="full"><label class="field-label">Notes</label><input class="input" id="mbFl_note" placeholder="Optional notes"></div>
+  </div><div class="mb-row" style="margin-top:12px"><button class="btn btn-primary" onclick="mbFileAddLink()">Add link/entry</button><button class="btn" onclick="mbFilePick()">Upload a file…</button></div><div class="sub" style="margin-top:8px">Small files (&lt;1MB) are stored so you can re-download them; larger files are saved by name only.</div></div>`;
+  const items=mb.files.length?mb.files.map(f=>{ const b=f.brandId?mbBrandById(f.brandId):null; const open=f.dataUrl?`<a class="btn btn-sm" href="${f.dataUrl}" download="${esc(f.name)}" style="text-decoration:none">Download</a>`:(f.link?`<a class="btn btn-sm" href="${esc(f.link)}" target="_blank" rel="noopener" style="text-decoration:none">Open</a>`:""); return `<div class="mb-item"><div class="mb-item-head"><div style="min-width:0"><div class="mb-item-title">${esc(f.name)}</div><div class="mb-item-meta">${f.category?`<span class="mb-badge mb-pri-low">${esc(f.category)}</span>`:""}${b?`<span>🏷 ${esc(mbBrandName(b))}</span>`:""}${f.size?`<span>${(f.size/1024).toFixed(0)} KB</span>`:""}<span>${mbFmtTs(f.addedAt)}</span></div>${f.note?`<div class="mb-item-meta" style="color:var(--text-2)">${esc(f.note)}</div>`:""}</div><div class="mb-acts">${open}<button class="danger" onclick="mbFileDelete('${f.id}')">Delete</button></div></div></div>`; }).join(""):`<div class="mb-empty">No files or links yet.</div>`;
+  return bar+`<div class="mb-card"><h3>Files & links (${mb.files.length})</h3>${items}</div>`;
+}
+function mbFileAddLink(){ const g=id=>{ const el=$("#mbFl_"+id); return el?el.value.trim():""; }; const name=g("name")||g("link"); if(!name){ toast("Enter a name or link","warn"); return; } mb.files.unshift({id:uid(),name,link:g("link"),category:g("category"),brandId:g("brandId"),note:g("note"),size:0,addedAt:Date.now()}); mbAct("Files","added link",name,g("brandId")); mbSave(); renderMasterbook(); toast("Added","ok"); }
+function mbFilePick(){ let i=document.getElementById("mbFileInput"); if(!i){ i=document.createElement("input"); i.type="file"; i.id="mbFileInput"; i.multiple=true; i.style.display="none"; document.body.appendChild(i); } i.value=""; i.onchange=()=>{ if(i.files&&i.files.length)mbFileAddPicked(i.files); }; i.click(); }
+async function mbFileAddPicked(files){ let ok=0; for(const f of files){ let dataUrl=""; if((f.size||0)<=1000000){ try{ dataUrl=await new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=()=>res(""); r.readAsDataURL(f); }); }catch(e){} } mb.files.unshift({id:uid(),name:f.name||"file",link:"",category:"",brandId:"",note:dataUrl?"":"Large file — stored by name only",size:f.size||0,dataUrl,addedAt:Date.now()}); ok++; } mbAct("Files","uploaded",ok+" file(s)"); mbSave(); renderMasterbook(); toast(ok+" file(s) added","ok"); }
+function mbFileDelete(id){ const f=mb.files.find(x=>x.id===id); if(!f)return; confirmAction("Delete file?","Remove \""+f.name+"\"?","Delete",()=>{ mb.files=mb.files.filter(x=>x.id!==id); mbAct("Files","deleted",f.name); mbSave(); renderMasterbook(); toast("Deleted","ok"); }); }
+
+/* ---------- Settings ---------- */
+function mbSettingsView(){
+  const visRows=MB_SECTIONS.filter(([k])=>k!=="dashboard"&&k!=="settings").map(([k,t])=>`<label style="display:flex;gap:9px;align-items:center;margin-bottom:8px"><input type="checkbox" ${mb.settings.hidden[k]?"":"checked"} onchange="mbSetVisible('${k}',this.checked)"> ${t}</label>`).join("");
+  return `<div class="mb-card"><h3>Brand privacy</h3><div class="mb-row"><button class="btn" onclick="mbToggleHideBrands()">${mb.settings.hideBrands?"Show brand names":"Hide brand names"}</button><span class="sub" style="align-self:center">Masks every brand as “Brand 1, 2, 3…” for screenshots & sharing.</span></div></div>
+  <div class="mb-card"><h3>Theme</h3><div class="mb-row"><select class="select" onchange="mbSetTheme(this.value)"><option value="light" ${state.theme==="light"?"selected":""}>Light</option><option value="dark" ${state.theme==="dark"?"selected":""}>Dark</option></select></div></div>
+  <div class="mb-card"><h3>Section visibility</h3><div class="sub" style="margin-bottom:10px">Hide sections you don't use (Dashboard & Settings always stay).</div>${visRows}</div>
+  <div class="mb-card"><h3>Data</h3><div class="mb-row"><button class="btn" onclick="mbExportData()">Export Masterbook data</button><button class="btn" onclick="mbImportPick()">Import data</button><button class="btn danger" onclick="mbReset()">Reset Masterbook</button></div><div class="sub" style="margin-top:8px">Export/import covers tasks, notes, files, activity & settings. Brands & calculations live in the Calculator store and are kept on reset.</div></div>`;
+}
+function mbSetVisible(k,checked){ if(checked)delete mb.settings.hidden[k]; else mb.settings.hidden[k]=true; mbSave(); renderMasterbook(); }
+function mbSetTheme(v){ state.theme=v; try{ applyTheme(); savePrefs(); }catch(e){} renderMasterbook(); }
+function mbExportData(){ try{ downloadBlob(new Blob([JSON.stringify({app:"Masterbook",version:1,exportedAt:Date.now(),data:mb},null,2)],{type:"application/json"}),"masterbook-backup-"+mbToday()+".json"); mbAct("Settings","exported data"); toast("Exported","ok"); }catch(e){ toast("Export failed","err"); } }
+function mbImportPick(){ let i=document.getElementById("mbImportInput"); if(!i){ i=document.createElement("input"); i.type="file"; i.id="mbImportInput"; i.accept=".json,application/json"; i.style.display="none"; document.body.appendChild(i); } i.value=""; i.onchange=async()=>{ if(!i.files||!i.files[0])return; let o; try{ o=JSON.parse(await i.files[0].text()); }catch(e){ toast("Couldn't read that file","err"); return; } const data=(o&&o.data)?o.data:o; if(!data||typeof data!=="object"){ toast("Not a Masterbook backup","err"); return; } confirmAction("Import & replace?","This replaces your current Masterbook tasks, notes, files, activity & settings with the backup. Brands/calculations are untouched.","Import",()=>{ mb={tasks:Array.isArray(data.tasks)?data.tasks:[],notes:Array.isArray(data.notes)?data.notes:[],files:Array.isArray(data.files)?data.files:[],brandMeta:data.brandMeta||{},activity:Array.isArray(data.activity)?data.activity:[],settings:Object.assign({hideBrands:false,hidden:{}},data.settings||{})}; mbSave(); renderMasterbook(); toast("Imported","ok"); }); }; i.click(); }
+function mbReset(){ confirmAction("Reset Masterbook?","Deletes all Masterbook tasks, notes, files and activity. Brands & calculations are kept. This cannot be undone.","Reset",()=>{ mb={tasks:[],notes:[],files:[],brandMeta:{},activity:[],settings:{hideBrands:mb.settings.hideBrands,hidden:mb.settings.hidden}}; mbSave(); renderMasterbook(); toast("Masterbook reset","ok"); }); }
+
 function opOverview(){
   const p=overallProgress(); const dc=daysComplete();
   let next=1; for(let d=1;d<=30;d++){ if(dayStatus(d)!=="done"){ next=d; break; } if(d===30)next=30; }
@@ -4210,7 +4561,7 @@ function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes ev
 function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
 
 function renderCurrentView(){
-  const map={dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
+  const map={masterbook:renderMasterbook,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
