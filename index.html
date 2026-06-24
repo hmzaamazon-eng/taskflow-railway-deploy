@@ -2760,12 +2760,18 @@ async function tfExtractText(file){
 }
 async function tfIngestFiles(files){
   try{ await loadBot(); }catch(e){}
-  let ok=0,skip=0;
+  const onWb=(state.view==="workbook"&&typeof mwb!=="undefined"&&mwb&&mwb.account&&mwb.data&&mwb.data[mwb.account]);
+  let ok=0,skip=0,analyzed=0;
   for(const f of files){
-    try{ const r=await tfExtractText(f); await botAddKnowledge({title:(f.name||("file-"+Date.now())),text:r.text||"",note:r.note||"",scope:"file",kind:r.kind,size:f.size||0,source:"Drag & drop"}); ok++; }
+    const name=f.name||"";
+    if(onWb&&(TF_SHEET_EXT.test(name)||/\.(csv|tsv|txt)$/i.test(name))){
+      try{ const per=Math.max(1,parseInt(($("#wbPeriod")||{}).value)||(mwb.data[mwb.account].manual.lastPeriod||30)); const res=await mwbProcessFile(mwb.account,f,per); if(res&&!res.skipped){ analyzed++; mwb.data[mwb.account].lastImportAt=mwbNow(); mwbSave(mwb.account); } }catch(e){}
+    }
+    try{ const r=await tfExtractText(f); await botAddKnowledge({title:(name||("file-"+Date.now())),text:r.text||"",note:r.note||"",scope:"file",kind:r.kind,size:f.size||0,source:"Drag & drop"}); ok++; }
     catch(e){ skip++; }
   }
-  if(ok)toast(ok+" file"+(ok>1?"s":"")+" added — the Amazon Bot can now read "+(ok>1?"them":"it"),"ok");
+  if(analyzed){ toast(analyzed+" report"+(analyzed>1?"s":"")+" analyzed into "+mwb.account+" Workbook · also added to Bot","ok"); if(typeof renderWorkbook==="function")renderWorkbook(); }
+  else if(ok){ toast(ok+" file"+(ok>1?"s":"")+" added — the Amazon Bot can now read "+(ok>1?"them":"it"),"ok"); }
   if(skip)toast(skip+" file"+(skip>1?"s":"")+" couldn't be added","warn");
   if(state.view==="bot"&&typeof renderBot==="function")renderBot();
 }
@@ -3420,7 +3426,7 @@ function wbWorkspace(){
     <div id="wbBody">${body}</div>`;
 }
 function wbKpi(k,v,sub,cls){ return `<div class="wb-kpi"><div class="k">${k}</div><div class="v ${cls||""}">${v}</div>${sub?`<div class="s">${esc(sub)}</div>`:""}</div>`; }
-function wbInsuf(arr){ return arr&&arr.length?`<div class="wb-insuf"><b>Insufficient data</b><ul>${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:""; }
+function wbInsuf(arr){ return arr&&arr.length?`<div class="wb-insuf"><b>Insufficient data</b><ul>${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><button class="btn btn-primary btn-sm" onclick="mwbAnalyzePick()" style="margin-top:8px"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-2px;margin-right:6px"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>Upload &amp; analyze a report</button></div>`:""; }
 function wbStatusBadge(s){ const map={stockout:["Stockout risk","st-bad"],low:["Low","st-warn"],over:["Overstock","st-warn"],healthy:["Healthy","st-ok"],nodata:["No data","st-mut"]}; const x=map[s]||map.nodata; return `<span class="wb-badge ${x[1]}">${x[0]}</span>`; }
 
 function wbDashboard(acc){
@@ -3506,6 +3512,12 @@ async function mwbOnFiles(fileList){
   toast(okCount?`Imported ${okCount} file${okCount===1?"":"s"}`:"No files imported",okCount?"ok":"warn");
   renderWorkbook();
   setTimeout(()=>{ const s=$("#wbImportStatus"); if(s) s.innerHTML=msgs.map(esc).join("<br>"); },40);
+}
+function mwbAnalyzePick(){
+  if(!mwb.account){ toast("Open an account first","warn"); return; }
+  let i=document.getElementById("mwbAnalyzeInput");
+  if(!i){ i=document.createElement("input"); i.type="file"; i.id="mwbAnalyzeInput"; i.accept=".csv,.tsv,.txt,.xlsx,.xls,text/csv"; i.multiple=true; i.style.display="none"; document.body.appendChild(i); }
+  i.value=""; i.onchange=()=>{ if(i.files&&i.files.length) mwbOnFiles(i.files); }; i.click();
 }
 async function mwbPreview(id){
   if(_wbPrev.id===id){ _wbPrev={id:null,page:0,rows:null}; const b=$("#wbPreviewBox"); if(b)b.innerHTML=""; return; }
