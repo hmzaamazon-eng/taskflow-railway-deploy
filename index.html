@@ -2809,12 +2809,12 @@ async function tfIngestFiles(files){
   for(const f of files){
     const name=f.name||"";
     if(onWb&&(TF_SHEET_EXT.test(name)||/\.(csv|tsv|txt)$/i.test(name))){
-      try{ const per=Math.max(1,parseInt(($("#wbPeriod")||{}).value)||(mwb.data[mwb.account].manual.lastPeriod||30)); const res=await mwbProcessFile(mwb.account,f,per); if(res&&!res.skipped){ analyzed++; mwb.data[mwb.account].lastImportAt=mwbNow(); mwbSave(mwb.account); } }catch(e){}
+      try{ const per=Math.max(1,parseInt(($("#wbPeriod")||{}).value)||(mwb.data[mwb.account].manual.lastPeriod||30)); const res=await mwbProcessFile(mwb.account,f,per); if(res&&!res.skipped){ analyzed++; mwb.data[mwb.account].lastImportAt=mwbNow(); try{ mwbAutoRecs(mwb.account); }catch(_){} mwbSave(mwb.account); } }catch(e){}
     }
     try{ const r=await tfExtractText(f); await botAddKnowledge({title:(name||("file-"+Date.now())),text:r.text||"",note:r.note||"",scope:"file",kind:r.kind,size:f.size||0,source:"Drag & drop"}); ok++; }
     catch(e){ skip++; }
   }
-  if(analyzed){ toast(analyzed+" report"+(analyzed>1?"s":"")+" analyzed into "+mwb.account+" Workbook · also added to Bot","ok"); if(typeof renderWorkbook==="function")renderWorkbook(); }
+  if(analyzed){ toast(analyzed+" report"+(analyzed>1?"s":"")+" analyzed into "+mwb.account+" Workbook · also added to Bot","ok"); try{ mwb.tab="analysis"; mwb.analysisTab="sales"; }catch(_){} if(typeof renderWorkbook==="function")renderWorkbook(); }
   else if(ok){ toast(ok+" file"+(ok>1?"s":"")+" added — the Amazon Bot can now read "+(ok>1?"them":"it"),"ok"); }
   if(skip)toast(skip+" file"+(skip>1?"s":"")+" couldn't be added","warn");
   if(state.view==="bot"&&typeof renderBot==="function")renderBot();
@@ -3447,7 +3447,12 @@ function mwbIngest(ds,type,map,rows,periodDays){
     for(const id in snap){ const s=mwbEnsureSku(ds,id,snap[id].title,snap[id].asin); if(!s)continue; s.stock=snap[id].stock; s.inbound=snap[id].inbound; }
     return;
   }
-  for(const raw of rows){ const r=mwbCanon(raw,map); const id=mwbSkuId(r); if(!id)continue; const s=mwbEnsureSku(ds,id,(r.title||"").toString().trim(),(r.asin||"").toString().trim()); if(!s)continue;
+  for(const raw of rows){ const r=mwbCanon(raw,map); const id=mwbSkuId(r);
+    if(!id){ // by-date / totals-only report (no SKU/ASIN column) → accumulate account-level totals so analysis still works
+      if(type==="business"||type==="sales"||type==="order"||type==="generic"){ ds.totals=ds.totals||{}; const tu=mNum(r.unitsSold); if(isN(tu))ds.totals.unitsSold=nz(ds.totals.unitsSold)+tu; const trev=mNum(r.revenue); if(isN(trev))ds.totals.revenue=nz(ds.totals.revenue)+trev; const tse=mNum(r.sessions); if(isN(tse))ds.totals.sessions=nz(ds.totals.sessions)+tse; const to=mNum(r.orders); if(isN(to))ds.totals.orders=nz(ds.totals.orders)+to; ds.totals.rows=nz(ds.totals.rows)+1; }
+      continue;
+    }
+    const s=mwbEnsureSku(ds,id,(r.title||"").toString().trim(),(r.asin||"").toString().trim()); if(!s)continue;
     if(type==="business"||type==="sales"||type==="order"||type==="generic"){
       const u=mNum(r.unitsSold); if(isN(u))s.unitsSold+=u;
       const rev=mNum(r.revenue); if(isN(rev))s.revenue+=rev;
@@ -3462,7 +3467,7 @@ function mwbIngest(ds,type,map,rows,periodDays){
 /* ---- analyses (all guard against missing data) ---- */
 function mwbVelocity(ds,manual){
   const pd=isN(ds&&ds.periodDays)&&ds.periodDays>0?ds.periodDays:null;
-  const totalUnits=ds?Object.values(ds.skus).reduce((a,s)=>a+nz(s.unitsSold),0):0;
+  let totalUnits=ds?Object.values(ds.skus).reduce((a,s)=>a+nz(s.unitsSold),0):0; if(!totalUnits&&ds&&ds.totals&&isN(ds.totals.unitsSold))totalUnits=nz(ds.totals.unitsSold);
   let daily=NaN;
   if(pd&&totalUnits>0) daily=totalUnits/pd;
   else if(isN(mNum(manual.unitsPerDay))) daily=mNum(manual.unitsPerDay);
@@ -3472,7 +3477,7 @@ function mwbVelocity(ds,manual){
 }
 function mwbAnalyzeSales(ds,manual){
   const skus=Object.values(ds.skus); const v=mwbVelocity(ds,manual);
-  let totalRevenue=skus.reduce((a,s)=>a+nz(s.revenue),0); if(!totalRevenue&&isN(mNum(manual.revenue))) totalRevenue=mNum(manual.revenue);
+  let totalRevenue=skus.reduce((a,s)=>a+nz(s.revenue),0); if(!totalRevenue&&ds.totals&&isN(ds.totals.revenue))totalRevenue=nz(ds.totals.revenue); if(!totalRevenue&&isN(mNum(manual.revenue))) totalRevenue=mNum(manual.revenue);
   const totalUnits=v.totalUnits||nz(mNum(manual.orderCount));
   const ranked=skus.filter(s=>nz(s.unitsSold)>0).sort((a,b)=>nz(b.unitsSold)-nz(a.unitsSold));
   const top=ranked.slice(0,5), slow=ranked.slice(-5).reverse().filter(s=>!top.includes(s));
@@ -3859,8 +3864,8 @@ async function mwbOnFiles(fileList){
       okCount++; msgs.push(`✓ ${file.name} → ${wbTypeLabel(res.type)}, ${fNum(res.rowCount)} rows${res.missing.length?` (missing: ${res.missing.join(", ")} — analyzed what's available)`:""}`);
     }catch(err){ msgs.push(`✕ ${(err&&err.friendly)?err.friendly:("Couldn't read "+file.name)}`); }
   }
-  if(okCount){ mwb.data[acc].lastImportAt=mwbNow(); mwbSave(acc); }
-  toast(okCount?`Imported ${okCount} file${okCount===1?"":"s"}`:"No files imported",okCount?"ok":"warn");
+  if(okCount){ mwb.data[acc].lastImportAt=mwbNow(); try{ mwbAutoRecs(acc); }catch(e){} mwbSave(acc); mwb.tab="analysis"; mwb.analysisTab="sales"; }
+  toast(okCount?`Imported ${okCount} file${okCount===1?"":"s"} — analyzed`:"No files imported",okCount?"ok":"warn");
   renderWorkbook();
   setTimeout(()=>{ const s=$("#wbImportStatus"); if(s) s.innerHTML=msgs.map(esc).join("<br>"); },40);
 }
@@ -3937,6 +3942,7 @@ function wbRecs(acc){ const st=mwb.data[acc], recs=st.recommendations||[];
   const when=st.lastRecAt?`Last generated ${new Date(st.lastRecAt).toLocaleString()}`:"Not generated yet";
   return `<div class="card" style="padding:20px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap"><div><div style="font-family:var(--font-display);font-weight:600">Recommendations</div><div class="sub">${when} · analyzes all saved data for ${esc(acc)}</div></div><button class="btn btn-primary" onclick="mwbGenerate()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>Generate recommendations</button></div>${cards}`;
 }
+function mwbAutoRecs(acc){ const st=mwb.data[acc]; if(!st)return; try{ const recs=mwbRecommend(st.dataset,st.manual); st.recommendations=recs; st.lastRecAt=mwbNow(); mwbHist(acc,"recs",`Auto-generated ${recs.length} recommendations on import`); }catch(e){} }
 function mwbGenerate(){ const acc=mwb.account, st=mwb.data[acc]; if(!st)return; let recs=[]; try{ recs=mwbRecommend(st.dataset,st.manual); }catch(e){ console.error(e); toast("Couldn't generate recommendations","err"); return; } st.recommendations=recs; st.lastRecAt=mwbNow(); mwbHist(acc,"recs",`Generated ${recs.length} recommendations`); mwbSave(acc); renderWorkbook(); toast(`Generated ${recs.length} recommendations`,recs.length?"ok":"warn"); }
 
 function wbEvents(acc){ const up=mwbUpcoming(new Date(),150);
