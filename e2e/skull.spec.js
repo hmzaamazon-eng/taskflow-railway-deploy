@@ -122,6 +122,47 @@ test("T4: history date filter (year/month/day) narrows to the chosen date", asyn
   expect(n).toBe(0);
 });
 
+// Realistic Search Term Report engineered to trigger every decision branch.
+const STR = [
+  "Campaign Name,Ad Group Name,Customer Search Term,Match Type,Impressions,Clicks,Spend,7 Day Total Sales,7 Day Total Orders (#)",
+  "SP-Charger-Broad,AG1,magsafe charger stand,Broad,4000,60,30.00,300.00,12",   // low ACOS, proven, broad → MOVE TO EXACT
+  "SP-Charger-Exact,AG2,wireless charger,Exact,3000,40,24.00,160.00,8",          // ACOS 15%, exact, strong → SCALE
+  "SP-Charger-Broad,AG1,free phone charger,Broad,2200,25,18.00,0,0",             // 0 orders, shares "charger" → NEG EXACT
+  "SP-Charger-Broad,AG1,dog leash holder,Broad,1800,20,15.00,0,0",               // 0 orders, off-intent → NEG PHRASE
+  "SP-Charger-Broad,AG1,car charger mount,Broad,900,6,5.00,25.00,1",             // 1 order → INCREASE BID (not scale)
+  "SP-Charger-Broad,AG1,charger cable fast,Broad,2600,30,40.00,50.00,2",         // ACOS 80% converting → REDUCE BID
+].join("\n");
+
+test("PPC: Search Term Report yields an operator Action Board, not a summary", async ({ page }) => {
+  await freshWithBrands(page);
+  await gotoSkull(page);
+  await analyze(page, BRANDS.A.id, "Sponsored Products Search term report.csv", STR);
+
+  // structured A–H sections present
+  const view = page.locator("#view-skull");
+  await expect(view).toContainText("PPC Operator");
+  await expect(view).toContainText("Search Term Report");
+  await expect(view).toContainText("Direct seller decision");
+  await expect(view).toContainText("Final action board");
+  await expect(view).toContainText("7-day follow-up");
+  // profit-first guardrail wording
+  await expect(view).toContainText(/Don.t scale the whole campaign/);
+
+  // the engine produced a board with the right per-term decisions
+  const ppc = await page.evaluate(() => {
+    const r = skAll[0];
+    return { rt: r.ppc.reportType, decs: r.ppc.board.map((b) => b.dec), m: r.ppc.metrics, tgt: r.ppc.targetAcos };
+  });
+  expect(ppc.rt).toBe("Search Term Report");
+  for (const d of ["SCALE", "MOVE TO EXACT", "ADD NEGATIVE EXACT", "ADD NEGATIVE PHRASE", "INCREASE BID", "REDUCE BID"])
+    expect(ppc.decs, `expected a ${d} decision, got ${ppc.decs.join(",")}`).toContain(d);
+  // metrics computed from real numbers (spend 132, sales 535)
+  expect(Math.round(ppc.m.spend)).toBe(132);
+  expect(Math.round(ppc.m.sales)).toBe(535);
+  expect(ppc.m.acos).toBeGreaterThan(0.24);   // 132/535 ≈ 24.7%
+  expect(ppc.m.wasted).toBeGreaterThan(30);    // 18 + 15 wasted on 0-order terms
+});
+
 test("T5+T6: reports persist across reload; Back keeps data", async ({ page }) => {
   await freshWithBrands(page);
   await gotoSkull(page);

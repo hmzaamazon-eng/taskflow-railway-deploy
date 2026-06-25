@@ -528,6 +528,24 @@ html[data-theme="dark"] .mb-pri-low,html[data-theme="dark"] .mb-pri-medium,html[
 @keyframes skspin{to{transform:rotate(360deg)}}
 .sk-decision{background:var(--surface-3);border-radius:11px;padding:12px 14px;font-size:14px;font-weight:600;border-left:3px solid #6366f1}
 html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="dark"] .sk-lo{background:var(--surface-3);color:var(--text-2)}
+/* PPC operator engine */
+.sk-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:8px;margin:6px 0 4px}
+.sk-kpi{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.sk-kpi .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-3);font-weight:700}
+.sk-kpi .v{font-family:var(--font-display);font-weight:700;font-size:16px;margin-top:2px}
+.sk-kpi.warn .v{color:#dc2626}.sk-kpi.good .v{color:#16a34a}
+.sk-direct{background:color-mix(in srgb,#6366f1 8%,var(--surface-2));border:1px solid color-mix(in srgb,#6366f1 30%,var(--border));border-radius:12px;padding:14px 16px;font-size:14.5px;font-weight:600;line-height:1.55}
+.sk-board-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-top:8px;-webkit-overflow-scrolling:touch}
+.sk-board{width:100%;border-collapse:collapse;font-size:12.5px;min-width:880px}
+.sk-board th{position:sticky;top:0;background:var(--surface-3);text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--text-2);font-weight:700;padding:8px 9px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.sk-board td{padding:8px 9px;border-bottom:1px solid var(--border);vertical-align:top}
+.sk-board tr:last-child td{border-bottom:0}
+.sk-dec{font-size:10px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap;letter-spacing:.02em}
+.sk-dec.scale,.sk-dec.exact,.sk-dec.incbid{background:#dcfce7;color:#15803d}
+.sk-dec.neg,.sk-dec.pause,.sk-dec.redbid{background:#fee2e2;color:#dc2626}
+.sk-dec.test,.sk-dec.data,.sk-dec.rebuild{background:#fef9c3;color:#a16207}
+html[data-theme="dark"] .sk-dec{background:var(--surface-3)!important;color:var(--text-2)!important}
+.sk-board td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .op-tbl{width:100%;border-collapse:collapse;font-size:14px}
 .op-tbl th{text-align:left;color:var(--text-2);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
 .op-tbl td{padding:10px 12px;border-bottom:1px solid var(--border)}
@@ -3201,7 +3219,7 @@ function skLoadTesseract(){ if(window.Tesseract)return Promise.resolve(window.Te
 /* ---- TASK INTELLIGENCE LAYER: detect expert mode, build mode-specific analysis, block generic output ---- */
 function skTimeout(ms){ return new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),ms)); }
 const SK_MODE_META={
-  ppc:{label:"Amazon PPC Operator Mode",needs:["campaign","spend","sales","impressions","clicks","orders"],ai:"You are an Amazon PPC operator. From the real numbers give: (1) the exact NEGATIVE keywords/ASINs to add — list the specific wasted search terms (clicks/spend, ~0 orders); (2) what to SCALE — terms/campaigns with ACOS below target, with new daily budget and bid % changes; (3) what to PAUSE/CUT; (4) a concrete new campaign build (type, match types, starting bids in $, daily budget); (5) target ACOS vs break-even and a clear ROAS verdict."},
+  ppc:{label:"Amazon PPC Operator Mode",needs:["campaign","spend","sales","impressions","clicks","orders"],ai:"You are a senior Amazon PPC operator deciding with real money — protect profit first, then scale. NEVER recommend scaling a whole campaign if only one keyword works. For EACH named search term/keyword/target give a concrete decision from this set only: SCALE, MOVE TO EXACT, ADD NEGATIVE EXACT, ADD NEGATIVE PHRASE, REDUCE BID, INCREASE BID, PAUSE, KEEP TESTING, REBUILD CAMPAIGN, NEEDS MORE DATA. Rules: SCALE/INCREASE only with an exact bid % (+10–15% normal, +20–30% only if ACOS is very low, CVR strong, and budget-capped); MOVE TO EXACT only with a starting bid (≈CPC or +10%) AND a daily budget; never say 'add negatives' without specifying negative EXACT (term is bad, keep root) vs negative PHRASE (clearly off-intent/irrelevant); for a thin winner (1 order) do NOT scale — nudge or keep testing and say what's missing. Compute CTR, CPC, CVR, ACOS, ROAS, CPA, AOV and wasted spend from the real numbers. If break-even ACOS can't be computed, say you need selling price, COGS, FBA fee, referral fee, shipping cost and target margin — but STILL give the best PPC actions from the ad data. Tie every action to the keyword name, the number behind it, and why."},
   product:{label:"Amazon FBA Product Launch Mode",needs:["price","bsr","reviews","competitor","cost","search volume"],ai:"You are an FBA product-launch analyst. Give: demand read, competition level, pricing position, gross-margin estimate, differentiation angle, launch risk, PPC cost risk, first-order inventory qty, and a clear GO / NO-GO."},
   listing:{label:"Amazon Listing Optimization Mode",needs:["title","bullet","description","keyword","sessions"],ai:"You are a listing-optimization expert. Give: a rewritten title (≤200 chars), 5 rewritten bullets, backend keywords to add, image/A+ priorities, and the single highest-impact change first."},
   profit:{label:"Amazon Profit / Margin Mode",needs:["price","cost","fee","units"],ai:"You are a profit analyst. Compute per-unit and total: revenue, total cost, gross & net profit, margin %, ROI %, break-even price and break-even ACOS, with exact figures, then the keep / raise-price / cut decision."},
@@ -3368,6 +3386,200 @@ async function skAITry(det,S,ex,brand,meta){
     analysis:{summary:String(obj.summary||""),extracted:arr(obj.extracted),findings:arr(obj.findings),strong:arr(obj.strong),weak:arr(obj.weak),risks:arr(obj.risks),insights:arr(obj.insights)},
     recommendations:{high:arr(obj.recommendations.high),medium:arr(obj.recommendations.medium),low:arr(obj.recommendations.low),finalDecision:String(obj.recommendations.finalDecision||""),nextActions:arr(obj.recommendations.nextActions)} };
 }
+/* ===================== PPC OPERATOR ENGINE =====================
+   Deterministic, money-safe Amazon Ads analysis. Real math drives every
+   decision (never the LLM). Produces the A–I structure + Action Board. */
+const SK_PPC_COLS={
+  impr:["impressions"], clicks:["clicks"], spend:["spend","cost"],
+  sales:["7 day total sales","14 day total sales","30 day total sales","total sales","attributed sales","ordered product sales","sales"],
+  orders:["7 day total orders","14 day total orders","total orders (#)","total orders","orders","conversions","7 day total units","units ordered"],
+  term:["customer search term","search term"], target:["targeting","keyword text","keyword","target"],
+  campaign:["campaign name","campaign"], adgroup:["ad group name","ad group"], match:["match type","match"]
+};
+function skPpcCol(headers,keys){ return headers.find(h=>{ const x=String(h).toLowerCase(); return keys.some(k=>x.includes(k)); }); }
+function skPpcReportType(headers,name){
+  const f=keys=>skPpcCol(headers,keys), nm=(name||"").toLowerCase();
+  if(f(SK_PPC_COLS.term)||/search.?term/.test(nm)) return "Search Term Report";
+  if(f(["placement"])||/placement/.test(nm)) return "Placement Report";
+  if(f(["advertised asin","advertised sku","advertised product"])||/advertised/.test(nm)) return "Advertised Product Report";
+  if((f(["budget"])&&!f(SK_PPC_COLS.spend))||/budget.?report/.test(nm)) return "Budget Report";
+  if(f(["targeting"])||/targeting/.test(nm)) return "Targeting Report";
+  if(f(["keyword"])||/keyword/.test(nm)) return "Keyword Report";
+  if(f(SK_PPC_COLS.campaign)&&!f(SK_PPC_COLS.adgroup)) return "Campaign Report";
+  return "Campaign / Targeting Report";
+}
+function skPct(n){ return isFinite(n)?(n*100).toFixed(n>=10?0:1)+"%":"—"; }
+// Builds the full PPC operator report, or {needsColumns} if the file isn't an ad report.
+function skPpcBuild(ex,S,brand,meta){
+  const headers=ex.headers||[], rows=ex.rows||[];
+  const C={ impr:skPpcCol(headers,SK_PPC_COLS.impr), clicks:skPpcCol(headers,SK_PPC_COLS.clicks), spend:skPpcCol(headers,SK_PPC_COLS.spend),
+    sales:skPpcCol(headers,SK_PPC_COLS.sales), orders:skPpcCol(headers,SK_PPC_COLS.orders),
+    term:skPpcCol(headers,SK_PPC_COLS.term), target:skPpcCol(headers,SK_PPC_COLS.target),
+    campaign:skPpcCol(headers,SK_PPC_COLS.campaign), adgroup:skPpcCol(headers,SK_PPC_COLS.adgroup), match:skPpcCol(headers,SK_PPC_COLS.match) };
+  const reportType=skPpcReportType(headers,(meta&&meta.fileName)||"");
+  if(!rows.length || !C.spend || (!C.sales && !C.orders)){
+    return { needsColumns:true, reportType,
+      missing:["a spend column",!C.sales?"a sales column":null,!C.orders?"an orders column":null,!rows.length?"row-level data (this file had no readable table)":null].filter(Boolean) };
+  }
+  const labelH=C.term||C.target||C.campaign||S.labelH||headers[0];
+  const num=(r,h)=>h?skParseNum(r[h]):NaN;
+  const recs=rows.map(r=>({ label:String(r[labelH]||"").slice(0,70),
+    campaign:C.campaign?String(r[C.campaign]||""):"", adGroup:C.adgroup?String(r[C.adgroup]||""):"",
+    match:C.match?String(r[C.match]||""):"",
+    impr:num(r,C.impr), clicks:num(r,C.clicks), spend:num(r,C.spend), sales:num(r,C.sales), orders:num(r,C.orders) }));
+  const T={impr:0,clicks:0,spend:0,sales:0,orders:0};
+  recs.forEach(r=>["impr","clicks","spend","sales","orders"].forEach(k=>{ if(isFinite(r[k]))T[k]+=r[k]; }));
+  const sd=(a,b)=>(isFinite(a)&&isFinite(b)&&b>0)?a/b:NaN;
+  const m={ spend:T.spend, sales:T.sales, orders:T.orders, clicks:T.clicks, impr:T.impr,
+    ctr:sd(T.clicks,T.impr), cpc:sd(T.spend,T.clicks), cvr:sd(T.orders,T.clicks),
+    acos:sd(T.spend,T.sales), roas:sd(T.sales,T.spend), cpa:sd(T.spend,T.orders), aov:sd(T.sales,T.orders) };
+  m.wasted=recs.reduce((s,r)=>s+((isFinite(r.spend)&&(!isFinite(r.orders)||r.orders===0))?r.spend:0),0);
+  // account context for thresholds
+  const acctCPC=isFinite(m.cpc)&&m.cpc>0?m.cpc:1;
+  const convRows=recs.filter(r=>isFinite(r.orders)&&r.orders>0);
+  const convSpend=convRows.reduce((s,r)=>s+(isFinite(r.spend)?r.spend:0),0);
+  const convOrders=convRows.reduce((s,r)=>s+r.orders,0);
+  const avgCPA=convOrders>0?convSpend/convOrders:NaN;
+  const TGT=(brand&&isFinite(brand.targetAcos))?brand.targetAcos:0.30;
+  const tgtAssumed=!(brand&&isFinite(brand.targetAcos));
+  const safeTest=Math.max(isFinite(avgCPA)?avgCPA:0, acctCPC*3, 2);          // $ a 0-order term may spend before it's "wasted"
+  const clickThresh=Math.max(10, Math.round((isFinite(m.cvr)&&m.cvr>0)?1/m.cvr:12)); // clicks needed to judge a 0-order term
+  const isST=reportType==="Search Term Report";
+  // converting-term tokens — used to tell off-intent (negative phrase) from a wasted exact term
+  const goodTokens=new Set(); convRows.forEach(r=>String(r.label).toLowerCase().split(/[^a-z0-9]+/).forEach(t=>{ if(t.length>2)goodTokens.add(t); }));
+  const board=recs.map(r=>{
+    const acos=sd(r.spend,r.sales), cvr=sd(r.orders,r.clicks), cpc=sd(r.spend,r.clicks);
+    const cl=isFinite(r.clicks)?r.clicks:0, sp=isFinite(r.spend)?r.spend:0, ord=isFinite(r.orders)?r.orders:0;
+    const bcpc=isFinite(cpc)&&cpc>0?cpc:acctCPC;
+    let pri="Low",dec="NEEDS MORE DATA",bid="",budget="",neg="",reason="",expect="";
+    const canExact=isST && !/exact/i.test(r.match||"");
+    if(ord>0){
+      if(isFinite(acos)&&acos<=TGT){
+        if(canExact && ord>=3 && acos<=TGT*0.8){
+          pri="High"; dec="MOVE TO EXACT";
+          bid="Exact start bid "+skMoney(bcpc*1.1)+" (CPC +10%)"; budget="New exact campaign $10/day";
+          neg="Keep source running; add as negative exact there only if it duplicates spend after exact ramps";
+          reason="Proven converter ("+ord+" orders, ACOS "+skPct(acos)+" ≤ target "+skPct(TGT)+") — isolate in exact for clean control & scale.";
+          expect="Clean, scalable ACOS on a winning term.";
+        } else if(ord<2){
+          pri="Medium"; dec="INCREASE BID";
+          bid="Increase bid +10% → "+skMoney(bcpc*1.1);
+          reason="Only 1 order — promising (ACOS "+skPct(acos)+") but not proven. Nudge, don't scale on one data point.";
+          expect="A 2nd/3rd order confirms it before any real scale.";
+        } else {
+          const hot=(acos<=TGT*0.5 && ord>=3 && isFinite(cvr)&&cvr>=0.1);
+          pri="High"; dec="SCALE";
+          bid="Increase bid +"+(hot?25:12)+"% → "+skMoney(bcpc*(hot?1.25:1.12));
+          budget=hot?"If campaign is budget-capped: +25% daily budget":"Hold budget unless campaign is hitting its cap";
+          reason="Profitable: ACOS "+skPct(acos)+" ≤ target "+skPct(TGT)+", "+ord+" orders"+(hot?", very low ACOS + strong CVR "+skPct(cvr):"")+".";
+          expect="More orders at similar ACOS; stop if ACOS rises above "+skPct(TGT)+".";
+        }
+      } else if(isFinite(acos)&&acos<=TGT*1.5){
+        pri="Medium"; dec="REDUCE BID";
+        bid="Reduce bid −15% → "+skMoney(bcpc*0.85);
+        reason="Converts but ACOS "+skPct(acos)+" is above target "+skPct(TGT)+" — lower bid to pull ACOS down, keep the sales.";
+        expect="ACOS trends toward "+skPct(TGT)+" without losing the orders.";
+      } else {
+        if(ord<2){ pri="High"; dec="PAUSE"; reason="ACOS "+skPct(acos)+" far above target with only "+ord+" order — stop the bleed."; expect="Wasted spend stops; revisit with tighter targeting later."; }
+        else { pri="High"; dec="REDUCE BID"; bid="Reduce bid −30% → "+skMoney(bcpc*0.7); reason="High ACOS "+skPct(acos)+" on "+ord+" orders — cut bid hard before pausing."; expect="If ACOS still > "+skPct(TGT*1.5)+" in 7 days, pause."; }
+      }
+    } else {
+      if(sp>=safeTest || cl>=clickThresh){
+        pri="High";
+        const tokens=String(r.label).toLowerCase().split(/[^a-z0-9]+/).filter(t=>t.length>2);
+        const offIntent=tokens.length>=3 && tokens.every(t=>!goodTokens.has(t));
+        if(canExact && offIntent){ dec="ADD NEGATIVE PHRASE"; neg="Negative phrase"+(r.campaign?" in “"+r.campaign+"”":"")+" — clearly off-intent for this product"; reason="Wasted "+skMoney(sp)+" / "+cl+" clicks, 0 orders; shares no token with any converting term → block the whole intent."; }
+        else { dec="ADD NEGATIVE EXACT"; neg="Negative exact"+(r.campaign?" in “"+r.campaign+"”":"")+(canExact?"":" (target)")+" — keeps the root keyword open"; reason="Wasted "+skMoney(sp)+" / "+cl+" clicks, 0 orders (≥ safe-test "+skMoney(safeTest)+"). Block this term only."; }
+        expect="Reclaim ≈ "+skMoney(sp)+" of wasted spend per period.";
+      } else if(cl>=Math.max(3,Math.round(clickThresh/2))){
+        pri="Low"; dec="KEEP TESTING";
+        reason="0 orders but only "+cl+" clicks / "+skMoney(sp)+" — too early to judge (need ~"+clickThresh+" clicks).";
+        expect="Decide once it hits "+clickThresh+" clicks or "+skMoney(safeTest)+" spend.";
+      } else {
+        pri="Low"; dec="NEEDS MORE DATA";
+        reason="Barely any data ("+cl+" clicks). Let it run.";
+        expect="Re-check after it accumulates clicks.";
+      }
+    }
+    return {pri,campaign:r.campaign,adGroup:r.adGroup,label:r.label,match:r.match,spend:sp,sales:r.sales,orders:ord,clicks:cl,acos,dec,bid,budget,neg,reason,expect};
+  });
+  const PRO={High:0,Medium:1,Low:2};
+  board.sort((a,b)=>(PRO[a.pri]-PRO[b.pri])||((b.spend||0)-(a.spend||0)));
+  const has=d=>board.filter(b=>d.includes(b.dec));
+  const winners=has(["SCALE","MOVE TO EXACT","INCREASE BID"]);
+  const exacts=has(["MOVE TO EXACT"]);
+  const negs=has(["ADD NEGATIVE EXACT","ADD NEGATIVE PHRASE"]);
+  const reduce=has(["REDUCE BID"]);
+  const pause=has(["PAUSE"]);
+  const wasters=negs.concat(pause).concat(reduce);
+  const needWork=has(["KEEP TESTING","NEEDS MORE DATA","REBUILD CAMPAIGN"]);
+  // A — direct seller decision (counts, profit-first, never "scale the campaign")
+  const parts=[];
+  if(has(["SCALE"]).length)parts.push("scale "+has(["SCALE"]).length+" term"+(has(["SCALE"]).length>1?"s":""));
+  if(exacts.length)parts.push("move "+exacts.length+" to exact");
+  if(negs.length)parts.push("add "+negs.length+" negative"+(negs.length>1?"s":""));
+  if(reduce.length)parts.push("reduce bids on "+reduce.length+" target"+(reduce.length>1?"s":""));
+  if(pause.length)parts.push("pause "+pause.length);
+  const directDecision=(winners.length
+    ? "Don't scale the whole campaign — "+(parts.length?parts.join(", "):"hold")+". Protect profit first, then push only what's proven."
+    : "Nothing here is proven enough to scale yet — "+(parts.length?parts.join(", "):"keep testing")+". Cut waste and gather data before adding spend.");
+  const missing=["selling price","COGS","FBA fee","referral fee","shipping cost","target profit margin"];
+  const followUp=["ACOS vs target ("+skPct(TGT)+")","total spend & wasted spend","clicks & CVR on scaled terms","orders / CPA trend","CPC after bid changes","whether scaled campaigns hit their budget cap"];
+  return { reportType, metrics:m, targetAcos:TGT, tgtAssumed, safeTest, clickThresh,
+    board, winners, exacts, negs, reduce, pause, wasters, needWork, directDecision, followUp, missing };
+}
+// Renders the PPC operator report (sections A–I + Action Board).
+function skPpcHTML(p){
+  if(!p) return "";
+  if(p.needsColumns){
+    return `<div class="mb-card"><div class="sk-sec" style="margin-top:0">Amazon Ads report detected — but missing columns</div>
+      <div class="sub" style="color:var(--text-2)">To run the PPC operator engine on a <b>${esc(p.reportType||"PPC")}</b> I need ${p.missing.map(esc).join(", ")}. Re-export the bulk/ads report with those columns included.</div></div>`;
+  }
+  const m=p.metrics, kpi=(k,v,cls)=>`<div class="sk-kpi ${cls||""}"><div class="k">${k}</div><div class="v">${v}</div></div>`;
+  const acosCls=isFinite(m.acos)?(m.acos<=p.targetAcos?"good":(m.acos<=p.targetAcos*1.5?"":"warn")):"";
+  const kpis=`<div class="sk-kpis">
+    ${kpi("Spend",skMoney(m.spend))}${kpi("Sales",skMoney(m.sales))}${kpi("Orders",isFinite(m.orders)?Math.round(m.orders):"—")}
+    ${kpi("ACOS",skPct(m.acos),acosCls)}${kpi("ROAS",isFinite(m.roas)?m.roas.toFixed(2):"—")}${kpi("CVR",skPct(m.cvr))}
+    ${kpi("CPC",skMoney(m.cpc))}${kpi("CTR",skPct(m.ctr))}${kpi("CPA",skMoney(m.cpa))}
+    ${kpi("AOV",skMoney(m.aov))}${kpi("Clicks",isFinite(m.clicks)?Math.round(m.clicks):"—")}${kpi("Wasted",skMoney(m.wasted),m.wasted>0?"warn":"")}</div>`;
+  const li=arr=>arr.length?`<ul class="sk-ul">${arr.join("")}</ul>`:`<div class="sub">None.</div>`;
+  const winLines=p.winners.map(b=>`<li><b>${esc(b.label)}</b> — ${esc(b.dec)}. ${b.bid?esc(b.bid)+". ":""}${b.budget?esc(b.budget)+". ":""}<span class="sub">ACOS ${skPct(b.acos)}, ${b.orders} orders, spend ${skMoney(b.spend)}. ${esc(b.reason)}</span></li>`);
+  const wasteLines=p.negs.concat(p.pause).map(b=>`<li><b>${esc(b.label)}</b> — ${esc(b.dec)}. ${b.neg?esc(b.neg)+". ":""}<span class="sub">${b.clicks} clicks, spend ${skMoney(b.spend)}, 0–low orders. ${esc(b.reason)}</span></li>`);
+  const exactLines=p.exacts.map(b=>`<li><b>${esc(b.label)}</b> → new Exact campaign. ${esc(b.bid)}; ${esc(b.budget)}. <span class="sub">${esc(b.neg)}</span></li>`);
+  const negLines=p.negs.map(b=>`<li><b>${esc(b.label)}</b> — ${esc(b.dec.replace("ADD ",""))}. ${esc(b.neg)}. <span class="sub">${esc(b.reason)}</span></li>`);
+  const workLines=p.needWork.concat(p.reduce).map(b=>`<li><b>${esc(b.label)}</b> — ${esc(b.dec)}. <span class="sub">${esc(b.reason)} ${esc(b.expect)}</span></li>`);
+  const decCls=d=>({"SCALE":"scale","MOVE TO EXACT":"exact","INCREASE BID":"incbid","ADD NEGATIVE EXACT":"neg","ADD NEGATIVE PHRASE":"neg","REDUCE BID":"redbid","PAUSE":"pause","KEEP TESTING":"test","NEEDS MORE DATA":"data","REBUILD CAMPAIGN":"rebuild"})[d]||"data";
+  const rowsH=p.board.map(b=>`<tr>
+    <td><span class="sk-pri ${b.pri==="High"?"sk-hi":b.pri==="Medium"?"sk-md":"sk-lo"}">${b.pri}</span></td>
+    <td>${esc(b.campaign||"—")}</td><td>${esc(b.adGroup||"—")}</td>
+    <td><b>${esc(b.label)}</b></td><td>${esc(b.match||"—")}</td>
+    <td class="num">${skMoney(b.spend)}</td><td class="num">${skMoney(b.sales)}</td><td class="num">${isFinite(b.orders)?Math.round(b.orders):0}</td><td class="num">${isFinite(b.clicks)?Math.round(b.clicks):0}</td><td class="num">${skPct(b.acos)}</td>
+    <td><span class="sk-dec ${decCls(b.dec)}">${b.dec}</span></td>
+    <td>${esc(b.bid||b.neg||b.budget||"—")}</td><td>${esc(b.bid||"—")}</td><td>${esc(b.budget||"—")}</td><td>${esc(b.neg||"—")}</td>
+    <td>${esc(b.reason)}</td><td>${esc(b.expect||"—")}</td></tr>`).join("");
+  const board=`<div class="sk-board-wrap"><table class="sk-board"><thead><tr>
+    <th>Priority</th><th>Campaign</th><th>Ad Group</th><th>Keyword / Term / Target</th><th>Match</th>
+    <th>Spend</th><th>Sales</th><th>Orders</th><th>Clicks</th><th>ACOS</th>
+    <th>Decision</th><th>Exact Action</th><th>Bid Change</th><th>Budget Change</th><th>Negative</th><th>Reason</th><th>Expected Result</th>
+  </tr></thead><tbody>${rowsH}</tbody></table></div>`;
+  return `<div class="mb-card">
+    <div class="mb-item-meta" style="margin-bottom:6px"><span class="mb-badge sk-lo">PPC Operator</span><span class="mb-badge sk-md">${esc(p.reportType)}</span>${p.tgtAssumed?`<span class="sub">target ACOS ${skPct(p.targetAcos)} (assumed — see below)</span>`:`<span class="sub">target ACOS ${skPct(p.targetAcos)}</span>`}</div>
+    <div class="sk-sec" style="margin-top:0">A · Direct seller decision</div>
+    <div class="sk-direct">${esc(p.directDecision)}</div>
+    <div class="sk-sec">Account metrics</div>${kpis}
+    <div class="mb-grid">
+      <div><div class="sk-sec">B · What's working</div>${li(winLines)}</div>
+      <div><div class="sk-sec">C · What's wasting money</div>${li(wasteLines)}</div>
+    </div>
+    <div class="sk-sec">D · Scaling plan</div>${li(p.winners.map(b=>`<li><b>${esc(b.label)}</b>: ${esc(b.dec)} — ${esc(b.bid||"—")}; ${esc(b.budget||"hold budget")}. <span class="sub">${esc(b.reason)}</span></li>`))}
+    <div class="sk-sec">E · Negative targeting plan</div>${li(negLines)}
+    <div class="sk-sec">F · Exact campaign plan</div>${li(exactLines.length?exactLines:[])}
+    <div class="sk-sec">G · Campaigns / targets that need more work</div>${li(workLines)}
+    <div class="sk-sec">H · Final action board</div>${board}
+    <div class="sk-sec">I · 7-day follow-up check</div><ul class="sk-ul">${p.followUp.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    <div class="sub" style="margin-top:10px;color:#c2620c">For a full <b>profit</b> decision (break-even ACOS) I still need: ${p.missing.map(esc).join(", ")}. The actions above are the best PPC moves from the ad data alone.</div>
+  </div>`;
+}
 async function skProduceAnalysis(ex,brand,meta){
   const det=skDetectMode(ex,meta), S=skBaseStats(ex);
   const rule=skRuleReport(det,S,ex,brand,meta);
@@ -3382,6 +3594,7 @@ async function skProduceAnalysis(ex,brand,meta){
     if(!out.analysis||!out.analysis.summary)out.analysis=rule.analysis;
   } else { out={analysis:rule.analysis,recommendations:skDeGeneric(rule.recommendations),understanding:rule.understanding,missing:rule.missing,decision:rule.decision,engine:"local",provider:""}; }
   out.mode=det.mode; out.modeLabel=det.modeLabel; out.taskType=det.taskType;
+  if(det.mode==="ppc"){ try{ out.ppc=skPpcBuild(ex,S,brand,meta); }catch(e){ out.ppc=null; } }
   return out;
 }
 async function skRunOCR(id){
@@ -3393,7 +3606,7 @@ async function skRunOCR(id){
     const brand=mbBrandById(r.brandId)||{name:r.brandName,id:r.brandId};
     const ex={kind:"image",text:text,note:"",rows:[],headers:[]};
     const out=await skProduceAnalysis(ex,brand,{fileName:r.fileName,fileType:r.fileType});
-    r.extractedText=text.slice(0,20000); r.analysis=out.analysis; r.recommendations=out.recommendations; r.engine=out.engine; r.provider=out.provider||""; r.extractNote=""; r.mode=out.mode; r.modeLabel=out.modeLabel; r.taskType=out.taskType; r.understanding=out.understanding; r.missing=out.missing; r.decision=out.decision; r.status=out.engine==="ai"?"Analyzed (AI · OCR)":"Analyzed (OCR)";
+    r.extractedText=text.slice(0,20000); r.analysis=out.analysis; r.recommendations=out.recommendations; r.ppc=out.ppc||null; r.engine=out.engine; r.provider=out.provider||""; r.extractNote=""; r.mode=out.mode; r.modeLabel=out.modeLabel; r.taskType=out.taskType; r.understanding=out.understanding; r.missing=out.missing; r.decision=out.decision; r.status=out.engine==="ai"?"Analyzed (AI · OCR)":"Analyzed (OCR)";
     await skPut(r); skUI.ocr=false; if(skUI.current&&skUI.current.id===id)skUI.current=r; renderSkull(); toast("OCR complete — re-analyzed","ok");
   }catch(e){ console.error(e); skUI.ocr=false; renderSkull(); toast("OCR failed on this image","err"); }
 }
@@ -3512,7 +3725,7 @@ async function skAnalyzeNow(){
       understanding:out.understanding, missing:out.missing, decision:out.decision,
       rowCount:(ex.rows&&ex.rows.length)||0, columns:ex.headers||[],
       extractedText:(ex.text||"").slice(0,20000), imageData:imageData, extractNote:ex.note||"",
-      analysis:out.analysis, recommendations:out.recommendations, notes:"" };
+      analysis:out.analysis, recommendations:out.recommendations, ppc:out.ppc||null, notes:"" };
     await skPut(rec); skAll.unshift(rec);
     skUI.busy=false; skUI.draft=null; skUI.current=rec; skUI.view="result"; renderSkull();
     toast((out.engine==="ai"?"AI-analyzed":"Analyzed")+" & saved under "+brand.name,"ok");
@@ -3622,7 +3835,7 @@ function skSetNotes(id,v){ const r=skAll.find(x=>x.id===id); if(!r)return; r.not
 function skReportHTML(r,full){
   const A=r.analysis||{},R=r.recommendations||{};
   const ul=(arr,cls)=>arr&&arr.length?`<ul class="sk-ul">${arr.map(x=>`<li>${cls?`<span class="sk-pri ${cls}">${cls==="sk-hi"?"High":cls==="sk-md"?"Med":"Low"}</span> `:""}${esc(x)}</li>`).join("")}</ul>`:`<div class="mb-empty">—</div>`;
-  return `<div class="mb-card">
+  return `${r.ppc?skPpcHTML(r.ppc):""}<div class="mb-card">
     <div class="mb-item-head"><div style="min-width:0"><h3 style="margin:0">${esc(r.fileName)}</h3>
       <div class="mb-item-meta"><span class="mb-badge sk-lo">Skull</span><span>🏷 ${esc(r.brandName)}</span><span>ID ${esc(r.reportId)}</span><span>${skFmtDate(r.createdAt)}</span><span class="mb-badge ${r.status&&r.status.indexOf("Analyzed")===0?"mb-st-completed":"mb-st-pending"}">${esc(r.status)}</span><span class="mb-badge ${r.engine==="ai"?"sk-lo":"mb-st-pending"}">${r.engine==="ai"?("AI"+(r.provider?" · "+esc(r.provider):"")):"Local engine"}</span></div></div></div>
     <div class="sk-meta" style="margin-top:8px"><span>Type: ${esc(String(r.fileType))}</span><span>Size: ${skFmtSize(r.fileSize)}</span>${r.rowCount?`<span>Rows: ${r.rowCount}</span>`:""}${r.columns&&r.columns.length?`<span>Cols: ${r.columns.length}</span>`:""}<span>Brand ID: ${esc(r.brandId)}</span><span>Section: Skull</span><span>Mode: <b style="color:var(--text-2)">${esc(r.modeLabel||"—")}</b></span></div>
