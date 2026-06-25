@@ -14,7 +14,7 @@ function provider() {
 }
 function modelFor(p) {
   if (BOT_MODEL) return BOT_MODEL;
-  return p === "anthropic" ? "claude-3-5-sonnet-latest" : "gpt-4o-mini";
+  return p === "anthropic" ? "claude-sonnet-4-6" : "gpt-4o-mini";
 }
 function botStatus() {
   const p = provider();
