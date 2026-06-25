@@ -788,7 +788,6 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
     </div>
     <div class="nav-label">Overview</div>
     <nav class="nav" id="nav">
-      <button class="nav-item" data-view="masterbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/></svg>Masterbook</button>
       <button class="nav-item" data-view="skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.3" fill="currentColor"/><circle cx="15" cy="11" r="1.3" fill="currentColor"/><path d="M10 19v2M12 19v2M14 19v2"/></svg>Skull</button>
       <button class="nav-item active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</button>
       <button class="nav-item" data-view="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 12H3M16 6H3M21 18H3"/><path d="M18 9l2 2 4-4" transform="translate(-3 0)"/></svg>Tasks</button>
@@ -1061,9 +1060,6 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
         <div id="execRoot"></div>
       </section>
 
-      <!-- ===== MASTERBOOK ===== -->
-      <section class="view" id="view-masterbook"></section>
-
       <!-- ===== SKULL ===== -->
       <section class="view" id="view-skull"></section>
 
@@ -1095,7 +1091,6 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
     <!-- bottom nav (mobile) -->
     <nav class="botnav" id="botnav">
       <button class="active" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Home</button>
-      <button data-view="masterbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c-1.8-1.2-4-1.5-6-1v11c2-.5 4.2-.2 6 1 1.8-1.2 4-1.5 6-1V6c-2-.5-4.2-.2-6 1z"/><path d="M12 7v12"/></svg>Master</button>
       <button data-view="skull"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-4.4 0-8 3.2-8 7.4 0 2.3 1.1 4 2.5 5.1.3.3.5.6.5 1V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.5c0-.4.2-.7.5-1C18.9 14.4 20 12.7 20 10.4 20 6.2 16.4 3 12 3z"/><circle cx="9" cy="11" r="1.3" fill="currentColor"/><circle cx="15" cy="11" r="1.3" fill="currentColor"/></svg>Skull</button>
       <button data-view="calculator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 10h.5M12 10h.5M15 10h.5M9 14h.5M12 14h.5M15 14h.5M9 18h4"/></svg>Calc</button>
       <button id="moreBtn" type="button" onclick="openMore()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>More</button>
@@ -3574,7 +3569,7 @@ function renderSkull(){
   if(skUI.brandId&&!mbBrandById(skUI.brandId))skUI.brandId=null;
   if(!skUI.brandId&&brands.length)skUI.brandId=(calcData&&calcData.selectedBrandId&&mbBrandById(calcData.selectedBrandId)?calcData.selectedBrandId:brands[0].id);
   const head=`<div class="mb-head"><div class="sk-logo">${SK_LOGO}</div><div class="mb-title"><h1>Skull</h1><div class="sub">Import any file → analyze it for the selected brand → save a brand-isolated report.</div></div></div>`;
-  if(!brands.length){ host.innerHTML=head+`<div class="mb-card"><div class="mb-empty">No brands yet. Create a brand first — every Skull report is tied to a brand.</div><div class="mb-row" style="margin-top:10px"><button class="btn btn-primary" onclick="switchView('masterbook');setTimeout(()=>mbGo('brands'),30)">Go to Brands</button></div></div>`; return; }
+  if(!brands.length){ host.innerHTML=head+`<div class="mb-card"><div class="mb-empty">No brands yet. Create a brand first — every Skull report is tied to a brand.</div><div class="mb-row" style="margin-top:10px"><button class="btn btn-primary" onclick="switchView('calculator')">Go to Brands</button></div></div>`; return; }
   const brand=mbBrandById(skUI.brandId);
   let body;
   if(skUI.view==="result"&&skUI.current) body=skReportHTML(skUI.current,true);
@@ -5101,7 +5096,7 @@ function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes ev
 function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
 
 function renderCurrentView(){
-  const map={masterbook:renderMasterbook,skull:renderSkull,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
+  const map={skull:renderSkull,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
