@@ -3602,7 +3602,7 @@ function skHistoryHTML(){
   const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
   const mOpt=`<option value="any">Any month</option>`+months.map((m,i)=>`<option value="${i+1}" ${f.m==(i+1)?"selected":""}>${m}</option>`).join("");
   let dOpt=`<option value="any">Any day</option>`; for(let i=1;i<=31;i++)dOpt+=`<option value="${i}" ${f.d==i?"selected":""}>${i}</option>`;
-  const statuses=["all","Analyzed","Analyzed (text)","Stored (unreadable)"];
+  const statuses=["all",...Array.from(new Set(reps.map(r=>r.status).filter(Boolean)))];
   const bar=`<div class="mb-card"><h3>History — ${esc(brand.name)} <span class="sub" style="font-weight:400">(brand-isolated)</span></h3><div class="mb-row">
     <input class="input" placeholder="Search file / summary…" style="max-width:220px" value="${esc(f.q)}" oninput="skHistSet('q',this.value)">
     <select class="select" onchange="skHistSet('status',this.value)">${statuses.map(s=>`<option value="${s}" ${f.status===s?"selected":""}>${s==="all"?"All status":s}</option>`).join("")}</select>
