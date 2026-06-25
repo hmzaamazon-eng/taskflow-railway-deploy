@@ -801,7 +801,6 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
       <button class="nav-item" data-view="operator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>Operator 30</button>
       <button class="nav-item" data-view="execution"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Execution</button>
       <button class="nav-item" data-view="calculator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h.01M8 14h2M12 14h2M16 14h.01M8 18h6"/></svg>Calculator</button>
-      <button class="nav-item" data-view="workbook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v5h5M8 13h8M8 17h5"/></svg>Master Workbook</button>
       <button class="nav-item" data-view="bot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 4h6"/><circle cx="9" cy="13" r="1.1" fill="currentColor"/><circle cx="15" cy="13" r="1.1" fill="currentColor"/><path d="M2 12v3M22 12v3"/></svg>Amazon Bot</button>
       <div class="nav-label">Manage</div>
       <button class="nav-item" data-view="data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>Data &amp; Backup</button>
@@ -1069,14 +1068,6 @@ html[data-theme="dark"] .sk-hi,html[data-theme="dark"] .sk-md,html[data-theme="d
           <div><h1>Calculator</h1><div class="sub">Per-brand Amazon FBA calculator — enter numbers, get every key metric, and save a separate history for each brand.</div></div>
         </div>
         <div id="calcRoot"></div>
-      </section>
-
-      <!-- ===== MASTER WORKBOOK ===== -->
-      <section class="view" id="view-workbook">
-        <div class="view-head">
-          <div><h1>Master Workbook</h1><div class="sub">Amazon FBA USA command center — import reports, analyze deeply, get recommendations. Each account has its own command center.</div></div>
-        </div>
-        <div id="wbRoot"></div>
       </section>
 
       <!-- ===== AMAZON BOT ===== -->
@@ -5096,7 +5087,7 @@ function botClearKnowConfirm(){ confirmAction("Clear all knowledge?","Deletes ev
 function botClearChatsConfirm(){ confirmAction("Delete all chats?","Deletes every conversation. Your knowledge is kept. This can't be undone.","Delete all chats",async()=>{ botChats=[]; botUI.chatId=null; await botClearStore("chats"); renderBot(); toast("All chats deleted","ok"); }); }
 
 function renderCurrentView(){
-  const map={skull:renderSkull,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,workbook:renderWorkbook,bot:renderBot,data:renderDataPanel};
+  const map={skull:renderSkull,dashboard:renderDashboard,tasks:renderTasks,daily:renderDaily,monthly:renderMonthly,analytics:renderAnalytics,fba:renderFba,operator:renderOperator,execution:renderExecution,calculator:renderCalculator,bot:renderBot,data:renderDataPanel};
   const fn=map[state.view]; if(fn){ try{ fn(); }catch(e){ console.error(e); } }
 }
 function switchWorkspace(w){
