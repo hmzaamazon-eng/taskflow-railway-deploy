@@ -5023,6 +5023,16 @@ function botFormatAnswer(A){
   const t=[]; if(A.direct)t.push("DIRECT ANSWER: "+A.direct); if(A.reasoning&&A.reasoning.length)t.push("REASONING:\n- "+A.reasoning.join("\n- ")); if(A.official)t.push("OFFICIAL AMAZON LOGIC: "+A.official); if(A.account&&A.account.length)t.push("ACCOUNT DATA USED:\n- "+A.account.join("\n- ")); if(A.frameworks&&A.frameworks.length)t.push("FRAMEWORK USED:\n- "+A.frameworks.join("\n- ")); if(A.actions&&A.actions.length)t.push("RECOMMENDED ACTIONS:\n- "+A.actions.join("\n- ")); if(A.missing&&A.missing.length)t.push("WHAT'S MISSING:\n- "+A.missing.join("\n- ")); t.push("RISK: "+(A.risk||"Low")+" · CONFIDENCE: "+(A.confidence||50)+"%"); if(A.sources&&A.sources.length)t.push("SOURCES USED: "+A.sources.join(" · "));
   return {html:h,text:t.join("\n\n"),risk:A.risk||"Low",confidence:A.confidence||50,sources:A.sources};
 }
+function botIsRelevant(q){
+  const clean=q.replace(/[^a-zA-Z0-9\s]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+  const words=clean.split(' ').filter(w=>w.length>1);
+  if(words.length<2) return {relevant:false,reason:"Your message is too short for me to identify a question. Could you ask a full question about Amazon FBA?"};
+  const domain=["amazon","fba","seller","selling","product","inventory","stock","reorder","restock","supplier","sourcing","alibaba","moq","shipping","freight","listing","title","bullet","image","brand","registry","trademark","patent","ppc","acos","tacos","campaign","keyword","bid","sponsored","ads","profit","margin","roi","cogs","fees","referral","fulfillment","cost","revenue","sales","units","orders","sessions","conversion","cvr","bsr","rank","ranking","asin","sku","upc","category","gated","ungated","restricted","compliance","hijack","counterfeit","review","rating","feedback","customer","return","refund","warehouse","3pl","prep","label","fnsku","shipment","inbound","removal","price","pricing","coupon","deal","prime","launch","scale","niche","wholesale","arbitrage","private label","bundle","variation","flat file","business report","search term","account health","suspension","appeal","storefront","store","vine","subscribe","storage fee","capacity","ecommerce","dropship","retail","negotiate","manufacturer","factory","inspection","sample","packaging","cash flow","break even","investment","capital","tax","sop","automation","helium","jungle scout","keepa","calculator","buy box","buybox"];
+  const text=" "+clean+" ";
+  const matched=domain.some(t=>text.includes(t));
+  if(!matched) return {relevant:false,reason:"I'm an Amazon FBA specialist and I couldn't find an Amazon or e-commerce topic in your question. Try rephrasing it in relation to selling on Amazon."};
+  return {relevant:true,reason:""};
+}
 function botIntent(q,mode){ const s=" "+q.toLowerCase()+" "; const has=(...w)=>w.some(x=>s.includes(x));
   if(has("reorder","re-order","restock","stock out","stockout","run out","how many unit","units should i order","inventory","days left","safety stock","buffer stock")) return "inventory";
   if(has("acos","tacos","ppc","ad spend","campaign","keyword","bid","sponsored","wasted spend","cpc","ctr")) return "ppc";
@@ -5038,6 +5048,7 @@ function botIntent(q,mode){ const s=" "+q.toLowerCase()+" "; const has=(...w)=>w
 }
 function botLocalAnswer(q,account,mode,ctx,kb){
   const intent=botIntent(q,mode);
+  if(intent==="general"){ const rel=botIsRelevant(q); if(!rel.relevant){ const rh='<h4>I can\'t answer this</h4><p>'+esc(rel.reason)+'</p><p>Try asking about inventory, PPC ads, profit margins, listing optimization, sourcing, compliance, or any other Amazon FBA topic.</p><div class="bot-src"><b>Sources used:</b> None — question not recognized as Amazon FBA related</div>'; const rt="I can't answer this.\n\n"+rel.reason+"\n\nTry asking about inventory, PPC ads, profit margins, listing optimization, sourcing, compliance, or any other Amazon FBA topic."; return {html:rh,text:rt,risk:"Low",confidence:0,sources:["None"]}; } }
   const A={direct:"",reasoning:[],official:"",account:[],frameworks:[],missing:[],actions:[],risk:"Low",confidence:55,sources:[]};
   if(ctx&&ctx.has)A.sources.push("Master Workbook ("+account+")");
   if(kb&&kb.length)kb.forEach(k=>A.sources.push((k.scope==="official"?"Official Library":"Knowledge Base")+": "+k.title));
@@ -5208,14 +5219,14 @@ function botAnsPricing(A,q,account,ctx){
   A.confidence=botConfidence(ctx,["productCost","sellingPrice"],A.missing.length);
 }
 function botAnsGeneral(A,q,account,ctx){
-  A.direct="I read every question as an Amazon FBA USA operator. Tell me the product/SKU or pick an account above and I'll use its Master Workbook data for a precise, data-backed answer.";
+  A.direct="I recognized this as Amazon FBA related but couldn't match it to a specific topic (inventory, PPC, profit, listing, sourcing, compliance, events, or pricing). Pick a mode or rephrase with more detail for a targeted answer.";
   A.frameworks.push("The Amazon Jungle: think like a seller — demand, competition, margin, and risk before any move.");
   A.frameworks.push("Work the System: turn recurring decisions into SOPs so the business scales without you.");
   A.reasoning.push("For inventory/PPC/profit/listing questions, selecting the account makes my answer use real numbers (stock, velocity, ACOS/TACOS, margin).");
   A.actions.push("Pick an account (ANAKZ / HMZA / BD) + a mode for a sharper answer");
   A.actions.push("Or upload the relevant report in Master Workbook (Business, Inventory, PPC, Search-Term, Fee)");
   A.missing.push("The specific product/SKU or account context, and the report most relevant to your question");
-  A.confidence=ctx&&ctx.has?60:45;
+  A.confidence=ctx&&ctx.has?50:35;
 }
 
 /* ---- knowledge base / official library ---- */

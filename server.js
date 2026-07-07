@@ -1,3 +1,4 @@
+require("dotenv").config();
 // TaskFlow server for Railway.
 // Serves the single-file app AND persists tasks in Postgres so data is
 // shared across every device/browser (not just the local one).
